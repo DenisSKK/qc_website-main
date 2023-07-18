@@ -236,10 +236,6 @@ class ITCController(OphydObject): #On off laser similar to controller
         logger.debug(f"recv temperature")
         return self.temp.temp[0]
 
-    def temperature_setter(self, val):
-        logger.debug(f"set temperature")
-        self.temp.temp = val
-
     def flow_percentage(self):
         logger.debug(f"recv flow percentage")
         return self.temp.loop_fset
@@ -389,16 +385,10 @@ class ITCHeaterPower(ITCSignalBase):
         logger.info("Heater power is set to "+str(val))
         self.ITC.heater_power_setter(val)
 
-class ITCTemperature(ITCSignalBase):
+class ITCTemperature(ITCSignalRO):
     # @threadlocked
     def _get(self):
         return self.ITC.temperature()
-
-    # @threadlocked
-    def _set(self, val):
-        logger.info("Temperature is set to "+str(val))
-        self.ITC.temperature(val)
-
 
 class ITCFlowPercentage(ITCSignalBase):
     # @threadlocked
@@ -501,10 +491,6 @@ class MercuryITCDevice(Device):
             except:
                 print("Updating heater power failed")
             try:
-                self.update_temperature(self.config["ITC_temperature"])
-            except:
-                print("Updating temperature failed")
-            try:
                 self.update_flow_percentage(self.config["ITC_flow_percentage"])
             except:
                 print("Updating flow percentage failed")
@@ -530,9 +516,6 @@ class MercuryITCDevice(Device):
 
     def update_heater_power(self, val):
         self.itccontroller.heater_power_setter(val)
-
-    def update_temperature(self, val):
-        self.itccontroller.temperature_setter(val)
 
     def update_flow_percentage(self, val):
         self.itccontroller.flow_percentage_setter(val)

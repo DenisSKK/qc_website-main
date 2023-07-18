@@ -439,7 +439,7 @@ def mercury_page_view(request):
                 mercury_host["host"] = form.cleaned_data['mercury_host']
                 mercury_host["port"] = form.cleaned_data['mercury_port']
                 mercury_host["heater_power"] = form.cleaned_data['mercury_heater_power']
-                mercury_host["temperature"] = form.cleaned_data['mercury_itc_temperature']
+                # mercury_host["temperature"] = form.cleaned_data['mercury_itc_temperature']
                 mercury_host["flow_percentage"] = form.cleaned_data['mercury_itc_flow_percentage']
                 mercury_host["temperature_set_point"] = form.cleaned_data['mercury_itc_temperature_set_point']
                 mercury_host["voltage"] = form.cleaned_data['mercury_itc_voltage']
@@ -471,7 +471,7 @@ def mercury_page_view(request):
             form = MercuryFormConfig(request.POST)
             if form.is_valid():
                 mercury_host["heater_power"] = form.cleaned_data['mercury_heater_power']
-                mercury_host["ITC_temperature"] = form.cleaned_data['mercury_itc_temperature']
+                # mercury_host["ITC_temperature"] = form.cleaned_data['mercury_itc_temperature']
                 mercury_host["ITC_flow_percentage"] = form.cleaned_data['mercury_itc_flow_percentage']
                 mercury_host["ITC_temperature_set_point"] = form.cleaned_data['mercury_itc_temperature_set_point']
                 mercury_host["ITC_voltage"] = form.cleaned_data['mercury_itc_voltage']
@@ -497,7 +497,7 @@ def mercury_page_view(request):
             'mercury_host': mercury_host.get("host", ""),
             'mercury_port': mercury_host.get("port", ""),
             'mercury_heater_power': mercury_host.get("heater_power", ""),
-            'mercury_itc_temperature': mercury_host.get("ITC_temperature", ""),
+            # 'mercury_itc_temperature': mercury_host.get("ITC_temperature", ""),
             'mercury_itc_flow_percentage': mercury_host.get("ITC_flow_percentage", ""),
             'mercury_itc_temperature_set_point': mercury_host.get("ITC_temperature_set_point", ""),
             'mercury_itc_voltage': mercury_host.get("ITC_voltage", ""),
