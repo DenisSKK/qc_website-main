@@ -75,7 +75,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-heater-power">Heater Power</label>
+                    <label class="form-control-label" for="input-heater-power">Heater Power (W)</label>
                     <input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="Heater Power" type="number" step="any" value="{{ form.mercury_heater_power.value }}" />
                   </div>
                 </div>
@@ -83,7 +83,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-flow-percentage">ITC Flow Percentage</label>
+                    <label class="form-control-label" for="input-itc-flow-percentage">ITC Flow Percentage (%)</label>
                     <input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="{{ form.mercury_itc_flow_percentage.value }}" />
                   </div>
                 </div>
@@ -91,7 +91,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-temperature-set-point">ITC Temperature Set Point</label>
+                    <label class="form-control-label" for="input-itc-temperature-set-point">ITC Temperature Set Point (K)</label>
                     <input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="{{ form.mercury_itc_temperature_set_point.value }}" />
                   </div>
                 </div>
@@ -99,7 +99,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage</label>
+                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage (V)</label>
                     <input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="{{ form.mercury_itc_voltage.value }}" />
                   </div>
                 </div>
@@ -134,7 +134,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-heater-power">Heater Power</label>
+                    <label class="form-control-label" for="input-heater-power">Heater Power (W)</label>
                     {% if connected %}<input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="N/A" type="number" step="any" value="{{mercury_heater_power}}" disabled />{% else %} <input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
                 </div>
@@ -158,7 +158,7 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage (mV)</label>
+                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage (V)</label>
                     {% if connected %}<input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="{{mercury_itc_voltage}}" disabled />{% else %} <input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
                 </div>
