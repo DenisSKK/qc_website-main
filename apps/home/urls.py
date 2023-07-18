@@ -11,6 +11,7 @@ urlpatterns = [
     path('plot/', views.update_live_plot, name='plot'),
     path('laser/', views.laser_page_view, name='laser_page'),
     path('rfsoc/', views.rfsoc_page_view, name='rfsoc_page'),
+    path('sx199/', views.sx_page_view, name='sx_page'),
     path('mercury/', views.mercury_page_view, name='mercury_page'),
     path('caylar/', views.caylar_page_view, name='caylar_page'),
     path('live-data-rfsoc/', views.get_live_data_and_run_rfsoc, name='live_data_rfsoc'),

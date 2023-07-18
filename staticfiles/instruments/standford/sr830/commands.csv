@@ -1,0 +1,114 @@
+﻿name,ascii_str,ascii_str_get,getter,getter_type,setter,setter_type,setter_range ,doc,subsystem,is_config,setter_inputs,getter_inputs
+phase_shift,PHAS,,TRUE,float,TRUE,float,"[-360.0,729.99]",The PHAS command sets or queries the reference phase shift.,Reference and Phase commands,,,
+ref_source,FMOD,,TRUE,int,TRUE,int,"[0,1]",The FMOD command sets or queries the reference source. The parameter i selects internal (i=1) or external (i=0).,Reference and Phase commands,,,
+ref_freq,FREQ,,TRUE,float,TRUE,float,"[0.001, 102000]",The FREQ command sets or queries the reference frequency.,Reference and Phase commands,,,
+ref_trig,RSLP,,TRUE,int,TRUE,int,"[0,2]","The RSLP command sets or queries the reference trigger when using the
+external reference mode. ",Reference and Phase commands,,,
+harmonic,HARM,,TRUE,int,TRUE,int,"[1,19999]",The HARM command sets or queries the detection harmonic.,Reference and Phase commands,,,
+sine_out,SLVL,,TRUE,float,TRUE,float,"[0.004,5.000]",The SLVL command sets or queries the amplitude of the sine output.,Reference and Phase commands,,,
+in_conf,ISRC,,TRUE,int,TRUE,int,"[0,3]",The ISRC command sets or queries the input configuration.,Input and Filter commands,,,
+in_shield_gnd,IGND,,TRUE,int,TRUE,int,"[0,1]",The IGND command sets or queries the input shield grounding.,Input and Filter commands,,,
+in_coupling,ICPL,,TRUE,int,TRUE,int,"[0,1]",The ICPL command sets or queries the input coupling. AC (i=0) or DC (i=1).,Input and Filter commands,,,
+in_line_notch_stat,ILIN,,TRUE,int,TRUE,int,"[0,3]",The ILIN command sets or queries the input line notch filter status.,Input and Filter commands,,,
+sensitivity,SENS,,TRUE,int,TRUE,int,"[0,26]",The SENS command sets or queries the sensitivity. ,Gain and Time Constant commands,,,
+reserve_mode,RMOD,,TRUE,int,TRUE,int,"[0,2]","The RMOD command sets or queries the reserve mode.  High Reserve (i=0), Normal (i=1) or Low Noise (minimum) (i=2).",Gain and Time Constant commands,,,
+time_const,OFLT,,TRUE,int,TRUE,int,"[0,19]",The OFLT command sets or queries the time constant.,Gain and Time Constant commands,,,
+low_pass_filter_slope,OFSL,,TRUE,int,TRUE,int,"[0,3]","The OFSL command sets or queries the low pass filter slope. 6 dB/oct (i=0), 12 dB/oct (i=1), 18 dB/oct (i=2) or
+24 dB/oct (i=3).",Gain and Time Constant commands,,,
+synch_filter_status,SYNC,,TRUE,int,TRUE,int,"[0,1]",The SYNC command sets or queries the synchronous filter status.,Gain and Time Constant commands,,,
+select_ch,"DDEF {i}, {j}, {k}",DDEF ? {i},TRUE,int,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
+f_panel_out_source,"FPOP {i}, {j}",FPOP ? {i},TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
+output sources.",Display and Output commands,TRUE,2,1
+out_off,"OEXP {i}, {x}, {j}",OEXP ? {i},TRUE,int,TRUE,int,"[1,2]","The OEXP command sets or queries the output offsets and expands.X (i=1), Y (i=2) or R (i=3) and is required.",Display and Output commands,TRUE,3,1
+auto_offset,AOFF,,FALSE,none,TRUE,int,"[1,3]","The AOFF i command automatically offsets X (i=1), Y (i=2) or R (i=3) to
+zero.",Display and Output commands,,,
+aux_in_val,OAUX,,TRUE,int,FALSE,none,None,The OAUX? command queries the Aux Input values.,Display and Output commands,,,
+aux_out_volt,"AUXV {i}, {x}",AUXV ? {i},TRUE,int,TRUE,int,"[1,4]","The AUXV command sets or queries the Aux Output voltage when the
+output.",Display and Output commands,TRUE,2,1
+set_out_interface,OUTX,,TRUE,int,TRUE,int,"[0,1]","The OUTX command sets the output interface to RS232 (i=0) or GPIB
+(i=1). The OUTX i command should be sent before any query commands to direct the responses to the interface in use.",Setup commands,,,
+gpib_override,OVRM,,FALSE,none,TRUE,int,"[0,1]","In general, every GPIB interface command will put the SR830 into the
+REMOTE state with the front panel deactivated. To defeat this feature,
+use the OVRM 1 command to overide the GPIB remote. In this mode, the
+front panel is not locked out when the unit is in the REMOTE state. The
+OVRM 0 command returns the unit to normal remote operation.",Setup commands,,,
+key_click,KCLK,,TRUE,int,TRUE,int,"[0,1]","The KCLK command sets or queries the key click On (i=1) or Off (i=0)
+state.",Setup commands,,,
+alarm,ALRM,,TRUE,int,TRUE,int,"[0,1]","The ALRM command sets or queries the alarm On (i=1) or Off (i=0)
+state.",Setup commands,,,
+save_setup_buff,SSET,,FALSE,none,TRUE,int,"[0,9]","The SSET i command saves the lock-in setup in setting buffer i (1≤i≤9).
+The setting buffers are retained when the power is turned off.",Setup commands,,,
+lock_in_setup_reset,RSET,,FALSE,none,TRUE,int,"[0,9]","The RSET i command recalls the lock-in setup from setting buffer i
+(1≤i≤9).",Setup commands,,,
+auto_gain,AGAN,,FALSE,none,TRUE,none,None,"The AGAN command performs the Auto Gain function. This command is
+the same as pressing the [Auto Gain] key.",Auto Functions,,,
+auto_reserve_fun,ARSV,,FALSE,none,TRUE,none,None,The ARSV command performs the Auto Reserve function.,Auto Functions,,,
+auto_phase_fun,APHS,,FALSE,none,TRUE,none,None,"The APHS command performs the Auto Phase function. This command
+is the same as pressing the [Auto Phase] key.",Auto Functions,,,
+sample_rate,SRAT,,TRUE,int,TRUE,int,"[0,14]",The SRAT command sets or queries the data sample rate. The parameter i selects the sample rate listed below.,Data Storage commands,,,
+buff_mode,SEND,,TRUE,int,TRUE,int,"[0,1]",The SEND command sets or queries the end of buffer mode. The parameter i selects 1 Shot (i=0) or Loop (i=1).,Data Storage commands,,,
+trigger,TRIG,,FALSE,none,TRUE,none,None,"The TRIG command is the software trigger command. This command
+has the same effect as a trigger at the rear panel trigger input.",Data Storage commands,,,
+trigg_start_mode,TSTR,,TRUE,int,TRUE,int,"[0,1]",The TSTR command sets or queries the trigger start mode. The parameter i=1 selects trigger starts the scan and i=0 turns the trigger start feature off.,Data Storage commands,,,
+data_storage_start,STRT,,FALSE,none,TRUE,none,None,"The STRT command starts or resumes data storage. STRT is ignored if
+storage is already in progress.",Data Storage commands,,,
+data_storage_pause,PAUS,,FALSE,none,TRUE,none,None,"The PAUS command pauses data storage. If storage is already paused
+or reset then this command is ignored.",Data Storage commands,,,
+reset_data_buff,REST,,FALSE,none,TRUE,none,None,"The REST command resets the data buffers. The REST command can
+be sent at any time - any storage in progress, paused or not, will be
+reset. This command will erase the data buffer. 
+",Data Storage commands,,,
+read_val,,OUTP ?,TRUE,int,FALSE,none,None,"The OUTP? i command reads the value of X, Y, R or θ. The parameter
+i selects X (i=1), Y (i=2), R (i=3) or θ (i=4).",Data Transfer commands,,,
+read_ch,,OUTR ?,TRUE,int,FALSE,none,None,"The OUTR? i command reads the value of the CH1 or CH2 display.
+The parameter i selects the display (i=1 or 2).",Data Transfer commands,,,
+read_vals,,"SNAP ? {i},{j}{k}",TRUE,int,FALSE,none,None,"The SNAP? command records the values of either 2, 3, 4, 5 or 6 parameters at a single instant. For example, SNAP? is a way to query values of
+X and Y (or R and θ) which are taken at the same time. This is important
+when the time constant is very short.",Data Transfer commands,,,
+read_aux_in_val,,OAUX?,TRUE,int,FALSE,none,None,The OAUX? command reads the Aux Input values.,Data Transfer commands,,,
+buff_points,,SPTS ?,TRUE,int,FALSE,none,None,"The SPTS? command queries the number of points stored in the buffer.
+Both displays have the same number of points. If the buffer is reset, then
+0 is returned.",Data Transfer commands,,,
+ch_buff_points_ascii,,"TRCA ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCA? command queries the points stored in the Channel i buffer.
+The values are returned as ASCII floating point numbers with the units of
+the trace.",Data Transfer commands,,,
+ch_buff_points_bin,,"TRCB ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCB? command queries the points stored in the Channel i buffer.
+The values are returned as IEEE format binary floating point numbers
+(with the units of the trace).",Data Transfer commands,,,
+ch_buff_points_float,,"TRCL ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCL? command queries the points stored in the Channel i buffer.
+The values are returned in a non-normalized floating point format (with
+the units of the trace).",Data Transfer commands,,,
+data_transf_mode,FAST,,TRUE,int,TRUE,int,"[0,2]",The FAST command sets the data transfer mode on and off.,Data Transfer commands,,,
+fast_data_transf,STRD,,FALSE,none,TRUE,none,None,"After using FAST1 or FAST 2 to turn on fast data transfer, use the STRD command to 
+start the scan.",Data Transfer commands,,,
+reset,*RST,,FALSE,none,TRUE,none,None,The ❊RST command resets the SR830 to its default configurations.,Interface commands,,,
+id,*IDN,,FALSE,none,TRUE,none,None,The ❊IDN? query returns the SR830's device identification string.,Interface commands,,,
+local_remote_fun,LOCL,,TRUE,int,TRUE,int,"[0,2]","The LOCL command sets the local/remote function. If i=0 the SR830 is
+LOCAL, if i=1 the SR830 will go REMOTE, and if i=2 the SR830 will go
+into LOCAL LOCKOUT state.",Interface commands,,,
+clear_stat_reg,*CLS,,FALSE,none,TRUE,none,None,The ❊CLS command clears all status registers. The status enable registers are NOT cleared.,Status Reporting commands,,,
+stand_ev_enable_reg,"*ESE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]","The ❊ESE i command sets the standard event enable register to the
+decimal value i (0-255).",Status Reporting commands,,,
+val_stand_ev_status,,*ESR?,TRUE,int,FALSE,none,None,"The ❊ESR? command queries the value of the standard event status
+byte. The value is returned as a decimal number from 0 to 255.",Status Reporting commands,,,
+ser_poll_en_reg,"*SRE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]",The ❊SRE i command sets the serial poll enable register to the decimal value i (0-255).,Status Reporting commands,,,
+val_ser_poll_stat_byte,,*STB?,TRUE,int,FALSE,none,None,The ❊STB? command queries the value of the serial poll status byte.,Status Reporting commands,,,
+val_of_pwr_on_stat,*PSC,,TRUE,int,TRUE,int,"[0,1]","The ❊PSC command sets the value of the power-on status clear bit. If
+i=1 the power-on status clear bit is set and all status registers and enable
+registers are cleared on power up. If i=0 the bit is cleared and the status
+enable registers maintain their values at power down. This allows a service request to be generated at power up.",Status Reporting commands,,,
+err_stat_en_reg,"ERRE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]","The ERRE i command sets the error status enable register to the decimal value i (0-255). The ERRE i,j command sets bit i (0-7) to j (0 or 1).
+The ERRE? command queries the value (0-255) of the error status
+enable register. The ERRE? i command queries the value (0 or 1) of bit i.",Status Reporting commands,,,
+val_err_stat_byte,,ERRS?,TRUE,int,FALSE,none,None,"The ERRS? command queries the value of the error status byte. The
+value is returned as a decimal number from 0 to 255. The ERRS? i command queries the value (0 or 1) of bit i (0-7). Reading the entire byte will
+clear it while reading bit i will clear just bit i.",Status Reporting commands,,,
+lock_in_stat_en_reg,"LIAE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]","The LIAE command sets the lock-in (LIA) status enable register to the
+decimal value i (0-255). The LIAE i,j command sets bit i (0-7) to j (0 or 1).
+The LIAE? command queries the value of the LIA status enable register.
+The LIAE? i command queries the value (0 or 1) of bit i.",Status Reporting commands,,,
+val_lock_in_stat_byte,,LIAS?,TRUE,int,FALSE,none,None,"The LIAS? command queries the value of the lock-in (LIA) status byte.
+The value is returned as a decimal number from 0 to 255. The LIAS? i
+command queries the value (0 or 1) of bit i (0-7). Reading the entire byte
+will clear it while reading bit i will clear just bit i.
+",Status Reporting commands,,,

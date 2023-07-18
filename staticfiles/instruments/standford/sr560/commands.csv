@@ -1,0 +1,39 @@
+﻿name,ascii_str,ascii_str_get,getter,getter_type,setter,setter_type,setter_range ,doc,subsystem,is_config,setter_inputs,getter_inputs
+amp_blank,BLINK,,TRUE,str,TRUE,int,"[0,1]","Operates amplifier blanking. 
+i = 0 = not blanked, 1 = blanked",,,,
+in_coupling,CPLG,,TRUE,str,TRUE,int,"[0,2]","Sets dynamic reserve. 
+i = 0 = low noise, 1 = high DR, 
+2 = calibration gains (defaults).",,,,
+filter_m,FLTM,,TRUE,str,TRUE,int,"[0,5]",Sets filter mode.,,,,
+gain,GAIN,,TRUE,str,TRUE,int,"[0,14]",Sets the gain.,,,,
+hi_filter_freq,HFRQ,,TRUE,str,TRUE,int,"[0,11]",Sets highpass filter frequency.,,,,
+invert,INVT,,TRUE,str,TRUE,int,"[0,1]",Sets the signal invert sense.,,,,
+listen_all,LALL,,TRUE,str,TRUE,none,None,"Listen all. Makes all attached 
+SR560’s listeners.",,,,
+listen,LISN,,TRUE,str,TRUE,int,"[0,3]","Listen command. Makes 
+SR560 with address i (0,1,2,3) 
+a listener.",,,,
+lo_filter_freq,LFRQ,,TRUE,str,TRUE,int,"[0,15]","Sets lowpass filter frequency. 
+i = 0 – 15 sets frequency 
+= 0.03 Hz to 1 MHz.",,,,
+res_overload,ROLD,,TRUE,str,TRUE,none,None,Reset overload for half a second.,,,,
+in_source,SRCE,,TRUE,str,TRUE,int,"[0,2]",Sets the input source.,,,,
+ver_gain,UCAL,,TRUE,str,TRUE,int,"[0,1]","Sets the vernier gain status. 
+i = 0 = cal’d gain, 
+1 = vernier gain.",,,,
+ver_gain_set,UCGN,,TRUE,str,TRUE,int,"[0,100]","Sets the vernier gain to i %. 
+i = 0 to 100.",,,,
+unlisten,UNLS,,TRUE,str,TRUE,none,None,"Unlisten. Unaddresses all 
+attached SR560’s.",,,,
+reset,*RST,,TRUE,str,TRUE,none,None,Reset. Recalls default settings.,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

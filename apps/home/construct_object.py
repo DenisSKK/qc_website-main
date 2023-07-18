@@ -2,7 +2,9 @@ from staticfiles.RFSoC_controller import RFSoC_controller
 from staticfiles.Toptica_ophyd import LaserToptica
 from staticfiles.caylar_magnet_ophyd import CaylarMagnet
 from staticfiles.ITC_ophyd import MercuryITCDevice
-from staticfiles.XMLGenerator import xml_config_to_dict
+from staticfiles.XMLGenerator import xml_config_to_dict, dict_to_xml_file
+from staticfiles.SX199_ophyd import SX199Device
+from datetime import datetime
 
 def construct_object():
     rfsoc_host = xml_config_to_dict("staticfiles/xilinx_host.xml")
@@ -13,7 +15,17 @@ def construct_object():
     RFSoC = RFSoC_controller(config_host=rfsoc_host)
     magneticIR = CaylarMagnet("H", name="magneticIR",config_host=caylar_host)
     ITCD = MercuryITCDevice(prefix="...",name="ITCD", host="itc-optistat.psi.ch",config_host=itc_host)
-    return RFSoC, LTDLC, magneticIR, ITCD
+    SX = MercuryITCDevice(name='sx199')
+    return RFSoC, LTDLC, magneticIR, ITCD, SX
+
+def construct_sx():
+    # config file is located at ~/.instrbuilder/ (where ~ indicates your home directory)
+    SX = SX199Device(name='sx199')
+    sx_xml_dict = xml_config_to_dict("staticfiles/sx199.xml")
+    sx_xml_dict["link"] = SX.report_link()
+    sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    dict_to_xml_file(sx_xml_dict, "staticfiles/sx199.xml")
+    return SX
 
 def construct_toptica():
     toptica_host = xml_config_to_dict("staticfiles/toptica.xml")

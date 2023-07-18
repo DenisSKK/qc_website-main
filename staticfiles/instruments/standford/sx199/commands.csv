@@ -1,0 +1,65 @@
+﻿name,ascii_str,ascii_str_get,getter,getter_type,setter,setter_type,setter_range ,doc,subsystem,is_config,setter_inputs,getter_inputs
+link,LINK,,TRUE,int,TRUE,int,"[1,4]",Set or query the optical port link.,Link commands,TRUE,,
+link_serial,LNKS,,TRUE,str,TRUE,int,"[0,4]",Set (query) the optical port link status for the host RS-232 (serial) port.,Link commands,TRUE,,
+link_eth,LNKE,,TRUE,str,TRUE,int,"[0,4]",Set (query) the optical port link status for the host ethernet port.,Link commands,TRUE,,
+link_gpib,LNKG,,TRUE,str,TRUE,int,"[0,4]",Set (query) the optical port link status for the host GPIB port.,Link commands,TRUE,,
+unlink,UNLK,,FALSE,none,TRUE,none,None,This set-only command forces the SX199 to the unlinked state.,Link commands,TRUE,,
+set_esc_char,SESC,,TRUE,str,TRUE,int,"[0,255]","Set (query) the escape character {to character code i}. The valid range
+for i is 0 ≤i< 255. The default value is SESC 33 (the “!” character).",Link commands,TRUE,,
+id,*IDN,*IDN?,TRUE,str,FALSE,none,None,Query the SX199 identification string.,Interface commands,FALSE,,
+token_mode,TOKN,,TRUE,str,TRUE,str,"[""0"",""1"",""OFF"",""ON""]","Set (query) the token response mode {to z=(OFF 0, ON 1)}.",Interface commands,TRUE,,
+response_term,TERM,,TRUE,str,TRUE,str,"[""NONE"", ""0"", ""CR"", ""1"", ""LF"", ""2"",
+""CRLF"", ""3"", ""LFCR"", ""4""]","Set (query) the token response mode {to z=(NONE 0, CR 1, LF 2,
+CRLF 3, LFCR 4)}.",Interface commands,TRUE,,
+op_complete,*OPC,,TRUE,int,TRUE,none,None,"The set form, *OPC, will set the OPC bit in the Standard Event Status
+register; the query form, *OPC?, will return the value 1.",Interface commands,FALSE,,
+unlock_eth,ULOC,,TRUE,int,TRUE,int,"[0,1]",Set (query) the ethernet command lockout {to i}.,Interface commands,TRUE,,
+ip_addr,"IPAD {byte}, {value}",IPAD?{byte},TRUE,int,TRUE,int,"[0,3]",Set (query) byte i of the “Custom” internet address {to j}.,Interface commands,TRUE,2,
+netmask,"NMSK {byte}, {value}",NMSK?{byte},TRUE,int,TRUE,int,"[0,255]",Set (query) byte i of the “Custom” internet network mask {to j}.,Interface commands,TRUE,2,
+def_gateway,"GWAY {byte}, {value}",GWAY?{byte},TRUE,int,TRUE,int,"[0,255]","Set (query) byte i of the internet default gateway {to j}.
+",Interface commands,TRUE,2,
+eth_speed,ENET,,TRUE,int,TRUE,int,"[""AUTO"", ""auto"", ""0"", 0, ""M10"", ""m10"", ""1"", 1, ""M100"", ""m100"", ""2"", 2]","Set (query) the ethernet speed{to z=(AUTO 0, M10 1, M100 2)}.",Interface commands,TRUE,,
+save_usr_param,SPAR,,TRUE,int,TRUE,int,"[""0""]","Save user settings to non-volatile memory. The token
+z should always be 0.",Interface commands,TRUE,,
+reset,*RST,,TRUE,int,TRUE,none,None,Reset the SX199 to its default configuration.,Interface commands,FALSE,,
+status_byte,*STB,*STB?{value},TRUE,int,FALSE,none,None,Reads the Status Byte register [bit i].,Status commands,FALSE,,
+ser_req_enab_1,"*SRE 1, {value}",*SRE?1,TRUE,int,TRUE,int,"[0,255]",Set (query) the Service Request Enable register [bit i] {to j}.,Status commands,TRUE,2,
+ser_req_enab_2,"*SRE 2, {value}",*SRE?2,TRUE,int,TRUE,int,"[0,255]",Set (query) the Service Request Enable register [bit i] {to j}.,Status commands,TRUE,2,
+ser_req_enab_3,"*SRE 3, {value}",*SRE?3,TRUE,int,TRUE,int,"[0,255]",Set (query) the Service Request Enable register [bit i] {to j}.,Status commands,TRUE,2,
+ser_req_enab_4,"*SRE 4, {value}",*SRE?4,TRUE,int,TRUE,int,"[0,255]",Set (query) the Service Request Enable register [bit i] {to j}.,Status commands,TRUE,2,
+standard_event_status,*ESR,*ESR?{value},TRUE,int,FALSE,none,None,Reads the Standard Event Status Register [bit i].,Status commands,FALSE,,
+stand_ev_stat_enab_1,"*ESE 1, {value}",*ESE?1,TRUE,int,TRUE,int,"[0,255]",Set (query) the Standard Event Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+stand_ev_stat_enab_2,"*ESE 2, {value}",*ESE?2,TRUE,int,TRUE,int,"[0,255]",Set (query) the Standard Event Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+stand_ev_stat_enab_3,"*ESE 3, {value}",*ESE?3,TRUE,int,TRUE,int,"[0,255]",Set (query) the Standard Event Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+stand_ev_stat_enab_4,"*ESE 4, {value}",*ESE?4,TRUE,int,TRUE,int,"[0,255]",Set (query) the Standard Event Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+port_status_event,PSEV,,TRUE,int,FALSE,none,None,Reads the Port Status Event Register [bit i].,Status commands,TRUE,,
+port_stat_enab_,"PSEN 1, {value}",PSEN?1,TRUE,int,TRUE,int,"[0,255]",Set (query) the Port Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+port_stat_enab_,"PSEN 2, {value}",PSEN?2,TRUE,int,TRUE,int,"[0,255]",Set (query) the Port Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+port_stat_enab_,"PSEN 3, {value}",PSEN?3,TRUE,int,TRUE,int,"[0,255]",Set (query) the Port Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+port_stat_enab_,"PSEN 4, {value}",PSEN?4,TRUE,int,TRUE,int,"[0,255]",Set (query) the Port Status Enable Register [bit i] {to j}.,Status commands,TRUE,2,
+clear_status,*CLS,,FALSE,none,TRUE,none,None,*CLS immediately clears the ESR register and the PSEV register.,Status commands,FALSE,,
+last_exec_err,LEXE,LEXE?,TRUE,int,FALSE,none,None,"Query the last execution error code. A query of LEXE? always clears
+the error code, so a subsequent LEXE? will return 0.",Status commands,TRUE,,
+last_comm_err,LCME,LCME?,TRUE,int,FALSE,none,None,"Query the last command error code. A query of LCME? always clears
+the error code, so a subsequent LCME? will return 0.",Status commands,TRUE,,
+init,\n,\n,FALSE,none,TRUE,none,None,init with blank line,Init,TRUE,,
+cs_gain,GAIN,,TRUE,str,TRUE,str,"[""G1nA"",""0"",""G100uA"",""5"",""G10nA"",""1"",""G1mA"",""6"",""G100nA"",""2"",""G10mA"",""7"",""G1uA"",""3"",""G50mA"",""8"",""G10uA"",""4""]",Set (query) the voltage-to-current gain setting {to z}.,Configuration commands,,,
+cs_analog_in,INPT,,TRUE,str,TRUE,str,"[""0"",""1"",""OFF"",""ON""]","Set (query) the analog input mode {to z=(OFF 0, ON 1)}.",Configuration commands,,,
+cs_speed,RESP,,TRUE,str,TRUE,str,"[""0"",""1"",""FAST"",""SLOW""]","Set (query) the current source filter response speed {to z=(FAST 0,
+SLOW 1)}.",Configuration commands,,,
+cs_inner_shield,SHLD,,TRUE,str,TRUE,str,"[""0"",""1"",""GROUND"",""RETURN""]","Set (query) the inner-shield connection mode {to z=(GUARD 0, RETURN
+1)}.",Configuration commands,,,
+cs_isolation,ISOL,,TRUE,str,TRUE,str,"[""0"",""1"",""GROUND"",""FLOAT""]","Set (query) the current source isolation mode {to z=(GROUND 0, FLOAT
+1)}.
+",Configuration commands,,,
+cs_output,SOUT,,TRUE,str,TRUE,str,"[""0"",""1"",""OFF"",""ON""]","Set (query) the current source output mode {to z=(OFF 0, ON 1)}.",Configuration commands,,,
+cs_dc_curr,CURR,,TRUE,str,TRUE,float,None,"Set (query) the internally-generated DC current {to f}, in amperes.
+The default value is CURR 0.0.",Setting commands,,,
+cs_comp_volt,VOLT,,TRUE,str,TRUE,float,"[0,50]","Set (query) the compliance voltage limit {to g}, in volts. The default
+value is VOLT 10.0. Note that the allowable range for CURR depends on the GAIN setting;
+the DC current range is always ±2 V times the gain; for example,
+when GAIN G10uA, the allowed range for CURR is -20E-6 to +20E-6.",Setting commands,,,
+cs_audible_alarm,ALRM,,TRUE,str,TRUE,str,"[""0"",""1"",""OFF"",""ON""]","Set (query) audible alarms {to z=(OFF 0, ON 1)}.",Setup commands,,,
+cs_overload,OVLD,,TRUE,str,FALSE,none,None,"Reads the current value of the signal overload status. Returns an
+integer between 1 and 3 if an overload is detected, or 0 if there is no overload.",Status commands,,,
+escape,!,!,TRUE,none,TRUE,none,None,Send escape character,Escape Link,,,

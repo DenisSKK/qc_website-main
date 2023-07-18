@@ -1,0 +1,19 @@
+﻿name,ascii_str,ascii_str_get,getter,getter_type,setter,setter_type,setter_range ,doc,subsystem,is_config,setter_inputs,getter_inputs
+get_com,?,,TRUE,str,FALSE,none,None,List the available commands,,,,
+id,id?,,TRUE,str,FALSE,none,None,Get the model number and firmware version.,,,,
+freq,freq=,freq?,TRUE,str,TRUE,int,None,Get/Set internal reference frequency.,,,,
+ref_out_freq,,refoutfreq?,TRUE,str,FALSE,none,None,Get the reference output frequency.,,,,
+blade_type,blade=,blade?,TRUE,str,TRUE,int,"[0,14]",Get/Set the blade type (for set n is number indicated in section 6.4).,,,,
+phase,phase=,phase?,TRUE,str,TRUE,int,"[0,360]",Get/Set Phase adjust (0-360°).,,,,
+enable,enable=,enable?,TRUE,str,TRUE,int,"[0,1]","Get/Set Enable (0=disabled, 1=enabled).",,,,
+ref,ref=,ref?,TRUE,str,TRUE,int,"[0,3]",Get/Set reference mode.,,,,
+output,output=,output?,TRUE,str,TRUE,int,"[0,4]",Get/Set output reference mode,,,,
+oncycle,oncycle=,oncycle?,TRUE,str,TRUE,int,"[0,50]",Get/Set On Cycle (1-50%).,,,,
+intensity,intensity=,intensity?,TRUE,str,TRUE,int,"[1,10]",Get/Set the Display Intensity (1-10).,,,,
+reg_in_freq,,input?,TRUE,str,FALSE,none,None,Get the current supplied external reference frequency.,,,,
+restore,restore,,TRUE,str,TRUE,none,None,Restore the factory default parameters.,,,,
+harmonic_mul,nharmonic=,nharmonic?,TRUE,str,TRUE,int,"[1,15]",Get/Set Harmonic Multiplier applied to external reference frequency (1-15).,,,,
+harmonic_divider,dharmonic=,dharmonic?,TRUE,str,TRUE,int,"[1,15]","Get/Set the Harmonic Divider applied to external reference frequency (1-
+15).",,,,
+verbose,verbose=,verbose?,TRUE,str,TRUE,int,None,"Get/Set verbose mode is set to 1, status messages are output on the 
+USB",,,,

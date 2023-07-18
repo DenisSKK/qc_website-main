@@ -167,6 +167,9 @@ class CaylarFormConfig(forms.Form):
     caylar_current = forms.FloatField(label='Current', required=False)
     caylar_field = forms.FloatField(label='Field', required=False)
 
+class SX199Form(forms.Form):
+    sx_link = forms.IntegerField(label='Link Port', required=False)
+
 class MercuryForm(forms.Form):
     mercury_host = forms.CharField(label='IP Address', max_length=100)
     mercury_port = forms.IntegerField(label='Port', required=False)

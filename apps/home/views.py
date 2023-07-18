@@ -10,9 +10,9 @@ from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .construct_object import construct_object, construct_caylar,construct_itc,construct_rfsoc,construct_toptica
+from .construct_object import construct_object, construct_caylar,construct_itc,construct_rfsoc,construct_toptica,construct_sx
 from django.forms.formsets import formset_factory
-from .forms import LaserForm, RFSoCConfigForm,RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP,CaylarFormConfig,MercuryFormConfig,MercuryFormIP
+from .forms import LaserForm, RFSoCConfigForm,RFSoCConfigFormIP, CaylarForm, SX199Form, MercuryForm, ExperimentForm, LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP,CaylarFormConfig,MercuryFormConfig,MercuryFormIP
 from staticfiles.XMLGenerator import xml_config_to_dict, dict_to_xml_file
 
 from django.contrib import messages
@@ -405,6 +405,97 @@ def rfsoc_page_view(request):
         "formset1": Formset1
     }
     return render(request, 'home/rfsoc.html', context)
+
+
+def sx_page_view(request):
+    # Load the data from the cryostat XML file
+    context = {}
+    SX_instance = construct_sx()
+    connected = SX_instance.is_connected()
+    sx_xml_dict = xml_config_to_dict("staticfiles/sx199.xml")
+    if connected:
+        SX_instance.update_all_xml("staticfiles/sx199.xml")
+        context["link"] = SX_instance.report_link()
+        sx_xml_dict["time_update"] =  datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        dict_to_xml_file(sx_xml_dict, "staticfiles/sx199.xml")
+        sx_xml_dict = xml_config_to_dict("staticfiles/sx199.xml")
+    else:
+        info = "Parameter has not updated since "+sx_xml_dict["time_update"]+" because not connected with the device!"
+        messages.info(request, info)
+    if isinstance(sx_xml_dict, str):
+        sx_xml_dict = {}
+
+    if request.method == 'POST':
+        if "updateall" in request.POST:
+            form = SX199Form(request.POST)
+            if form.is_valid():
+                sx_xml_dict["link"] = form.cleaned_data['link']
+                dict_to_xml_file(sx_xml_dict, "staticfiles/sx199.xml")
+
+                if connected:
+                    SX_instance.update_all_xml("staticfiles/sx199.xml")
+                    messages.success(request, 'Changes saved successfully in SX199!')
+                else:
+                    # Add success message to the Django messages framework
+                    messages.success(request, 'FAILED, changes saved only to XML!')
+
+                # Redirect to the cryostat page to reload the page with the updated values
+                return redirect('sx_page')
+            else:
+                messages.warning(request, 'Cannot be updated!')
+                return redirect('sx_page')
+        elif "updateip" in request.POST:
+            form = MercuryFormIP(request.POST)
+            if form.is_valid():
+                mercury_host["host"] = form.cleaned_data['mercury_host']
+                mercury_host["port"] = form.cleaned_data['mercury_port']
+                dict_to_xml_file(mercury_host, "staticfiles/mercuryITC.xml")
+                # Add success message to the Django messages framework
+                messages.success(request, 'Changes saved successfully in XML!')
+        elif "updateconfig" in request.POST:
+            form = MercuryFormConfig(request.POST)
+            if form.is_valid():
+                mercury_host["heater_power"] = form.cleaned_data['mercury_heater_power']
+                # mercury_host["ITC_temperature"] = form.cleaned_data['mercury_itc_temperature']
+                mercury_host["ITC_flow_percentage"] = form.cleaned_data['mercury_itc_flow_percentage']
+                mercury_host["ITC_temperature_set_point"] = form.cleaned_data['mercury_itc_temperature_set_point']
+                mercury_host["ITC_voltage"] = form.cleaned_data['mercury_itc_voltage']
+                mercury_host["ITC_automatic_heating"] = form.cleaned_data['mercury_itc_automatic_heating']
+                mercury_host["ITC_automatic_pid"] = form.cleaned_data['mercury_itc_automatic_pid']
+                dict_to_xml_file(mercury_host, "staticfiles/mercuryITC.xml")
+
+                if connected:
+                    Update_mercury.update_all_xml("staticfiles/mercuryITC.xml")
+                    messages.success(request, 'Changes saved successfully in MercuryITC!')
+                else:
+                    # Add success message to the Django messages framework
+                    messages.success(request, 'Changes saved successfully in XML!')
+
+                # Redirect to the cryostat page to reload the page with the updated values
+                return redirect('mercury_page')
+            else:
+                messages.warning(request, 'Cannot be updated!')
+                return redirect('mercury_page')
+    else:
+        # Initialize the form with the current cryostat information
+        form = MercuryForm(initial={
+            'mercury_host': mercury_host.get("host", ""),
+            'mercury_port': mercury_host.get("port", ""),
+            'mercury_heater_power': mercury_host.get("heater_power", ""),
+            # 'mercury_itc_temperature': mercury_host.get("ITC_temperature", ""),
+            'mercury_itc_flow_percentage': mercury_host.get("ITC_flow_percentage", ""),
+            'mercury_itc_temperature_set_point': mercury_host.get("ITC_temperature_set_point", ""),
+            'mercury_itc_voltage': mercury_host.get("ITC_voltage", ""),
+            'mercury_itc_automatic_heating': mercury_host.get("ITC_automatic_heating", ""),
+            'mercury_itc_automatic_pid': mercury_host.get("ITC_automatic_pid", ""),
+        })
+
+    # Assign the variables with the initial values
+    # cryostat_host = mercury_host.get("host", "")
+    # cryostat_port = mercury_host.get("port", "")
+    context['connected'] = connected
+    context['form']=form
+    return render(request, 'home/sx199.html', context)
 
 
 def mercury_page_view(request):
