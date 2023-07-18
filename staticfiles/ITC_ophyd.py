@@ -229,6 +229,14 @@ class ITCController(OphydObject): #On off laser similar to controller
         logger.debug(f"set scan end")
         self.htr.powr = val
 
+    def voltage(self):
+        logger.debug(f"recv voltage")
+        return self.htr.volt[0]
+
+    def voltage_setter(self, val):
+        logger.debug(f"set voltage")
+        self.temp.htr = (val, 'mV')
+
     ##########################################
     # temperature module getters and setters #
     ##########################################
@@ -251,14 +259,6 @@ class ITCController(OphydObject): #On off laser similar to controller
     def temperature_set_point_setter(self, val):
         logger.debug(f"set temperature set point")
         self.temp.loop_tset = val
-
-    def voltage(self):
-        logger.debug(f"recv voltage")
-        return self.temp.volt[0]
-
-    def voltage_setter(self, val):
-        logger.debug(f"set voltage")
-        self.temp.volt = (val, 'mV')
 
     def automatic_heating(self):
         logger.debug(f"recv automatic heating")
