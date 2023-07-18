@@ -1,0 +1,88 @@
+<nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <!-- Brand -->
+    <div class="sidenav-header align-items-center">
+      <a class="navbar-brand" href="/">
+        <img src="/static/assets/img/brand/psi.svg" class="navbar-brand-img" alt="Argon Design - Jinja Template Logo." />
+      </a>
+    </div>
+    <div class="navbar-inner">
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Nav items -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="/">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'history' in segment %} active {% endif %}" href="/history.html">
+              <i class="ni ni-planet text-orange"></i>
+              <span class="nav-link-text">History</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'laser_page' in segment %} active {% endif %}" href="{% url 'laser_page' %}">
+              <i class="ni ni-sound-wave text-primary"></i>
+              <span class="nav-link-text">Laser Toptica</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'mercury_page' in segment %} active {% endif %}" href="{% url 'mercury_page' %}">
+              <i class="ni ni-vector text-yellow"></i>
+              <span class="nav-link-text">MercuryITC</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'caylar_page' in segment %} active {% endif %}" href="{% url 'caylar_page' %}">
+              <i class="ni ni-pin-3 text-primary"></i>
+              <span class="nav-link-text">Caylar Magnetic</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'rfsoc_page' in segment %} active {% endif %}" href="{% url 'rfsoc_page' %}">
+              <i class="ni ni-bullet-list-67 text-default"></i>
+              <span class="nav-link-text">RFSoC</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}" onclick="return confirmLogout()">
+              <i class="ni ni-user-run text-red"></i>
+              <span class="nav-link-text">Logout</span>
+            </a>
+          </li>
+        </ul>
+        <!-- Divider -->
+        <hr class="my-3" />
+        <!-- Heading -->
+        <h6 class="navbar-heading p-0 text-muted">
+          <span class="docs-normal">Resources</span>
+        </h6>
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" target="_blank" href="https://www.psi.ch/en/lxn/quantum-technologies">
+              <i class="ni ni-archive-2"></i>
+              <span class="nav-link-text">Quantum Photon Science</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active active-pro" target="_blank" href="mailto:guy.matmon@psi.ch">
+              <i class="ni ni-send text-dark"></i>
+              <span class="nav-link-text">Contact Us</span>
+            </a>
+            <script>
+              function confirmLogout() {
+                return confirm("Are you sure you want to logout?");
+              }
+            </script>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

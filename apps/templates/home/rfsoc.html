@@ -1,0 +1,535 @@
+{% extends 'layouts/base.html' %} {% block title %} RFSoC {% endblock title %} {% block content %}
+<!-- Page content -->
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          {% if messages %} {% for message in messages %} {% if message.tags == 'info' %}
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == 'warning' %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == 'success' %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %} {% endfor %} {% endif %}
+
+          <form method="post" action="{% url 'rfsoc_page' %}">
+            {% csrf_token %}
+            <!-- RFSoC information -->
+            <div class="col-12">
+              <div class="row">
+                <div class="row ml-1">
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
+                  <!-- <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button> -->
+                </div>
+                <div class="col-6 text-right">
+                  <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+
+            <h6 class="heading-small text-muted mb-4">RFSoC information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-host">IP Address</label>
+                    <input id="input-host" class="form-control" name="rfsoc_host" placeholder="RFSoC IP Address" type="text" value="{{ form.rfsoc_host.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-port">Port</label>
+                    <input type="number" step="any" id="input-port" class="form-control" name="rfsoc_port" placeholder="Port" value="{{ form.rfsoc_port.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Username</label>
+                    <input id="input-username" class="form-control" name="rfsoc_username" placeholder="Username" value="{{ form.rfsoc_username.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-password">Password</label>
+                    <input id="input-password" class="form-control" name="rfsoc_password" placeholder="Password" value="{{ form.rfsoc_password.value }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- Configuration - General -->
+            <h6 class="heading-small text-muted mb-4">Configuration - General</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-adc-trig-offset">ADC Trigger Offset</label>
+                    <input type="number" step="any" id="input-adc-trig-offset" class="form-control" name="adc_trig_offset" placeholder="ADC Trigger Offset" value="{{ form.adc_trig_offset.value }}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-soft-avgs">Soft Averages</label>
+                    <input type="number" step="any" id="input-soft-avgs" class="form-control" name="soft_avgs" placeholder="Soft Averages" value="{{ form.soft_avgs.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-relax-delay">Relax Delay</label>
+                    <input type="number" step="any" id="input-relax-delay" class="form-control" name="relax_delay" placeholder="Relax Delay" value="{{ form.relax_delay.value }}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-readout-length">Readout Length</label>
+                    <input type="number" step="any" id="input-readout-length" class="form-control" name="readout_length" placeholder="Readout Length" value="{{ form.readout_length.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-pulse-freq">Pulse Frequency</label>
+                    <input type="number" step="any" id="input-pulse-freq" class="form-control" name="pulse_freq" placeholder="Pulse Frequency" value="{{ form.pulse_freq.value|floatformat }}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-reps">Reps</label>
+                    <input type="number" step="any" id="input-reps" class="form-control" name="reps" placeholder="Reps" value="{{ form.reps.value }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- Configuration - EOM -->
+            <h5 class="heading-small text-muted mb-4">Configuration - EOM - Channel</h6>
+            <h6 class="heading-small text-muted mb-4">Configuration - EOM - Channel 1</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-eom-zone1">Nyquist Zone</label>
+                  <input type="number" step="any" id="input-eom-zone1" class="form-control" name="eom_zone1" placeholder="Nyquist Zone 1" value="{{ form.eom_zone1.value }}" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-eom-mode1">Mode</label>
+                  <input type="text" id="input-eom-mode1" class="form-control" name="eom_mode1" placeholder="Mode 1" value="{{ form.eom_mode1.value }}" />
+                </div>
+              </div>
+              <!-- Add more fields for EOM configuration if needed -->
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" for="input-eom-length1">Pulse Length</label>
+                <input type="number" step="any" id="input-eom-length1" class="form-control" name="eom_length1" placeholder="Pulse Length 1" value="{{ form.eom_length1.value }}" />
+              </div>
+            </div>
+            <!-- Configuration - Frequency A -->
+            <h6 class="heading-small text-muted mb-4">Configuration - EOM - Channel 0</h6>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-eom-zone0">Nyquist Zone</label>
+                  <input type="number" step="any" id="input-eom-zone0" class="form-control" name="eom_zone0" placeholder="Nyquist Zone 0" value="{{ form.eom_zone0.value }}" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-eom-mode0">Mode</label>
+                  <input type="text" id="input-eom-mode0" class="form-control" name="eom_mode0" placeholder="Mode 0" value="{{ form.eom_mode0.value }}" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-eom-length0">Pulse Length</label>
+                  <input type="number" step="any" id="input-eom-length0" class="form-control" name="eom_length0" placeholder="Pulse Length 0" value="{{ form.eom_length0.value }}" />
+                </div>
+              </div>
+              <hr class="my-4" />
+              <!-- Add more fields for EOM configuration if needed -->
+              <div class="col">
+                <div class="form-group">
+                  {% if formset0 %}
+                  <h6 class="heading-small text-muted mb-4">Sequence</h6>
+                  {{formset0.management_form}}
+                  <table id="form0-list">
+                    <thead>
+                      <tr>
+                        <th>Channel</th>
+                        <th>Frequency</th>
+                        <th>Phase</th>
+                        <th>Gain</th>
+                        <th>Time Start</th>
+                        <th>Length</th>
+                      </tr>
+                    </thead>
+                    <tbody id="empty-form0" class="hidden">
+                      <tr>
+                        <td>
+                          <select name="channel0">
+                            <option>--Select--</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="01">0 & 1</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input style="width: 100%" type="number" step="any" name="frequency0"/>
+                        </td>
+                        <td>
+                          <input style="width: 100%" type="number" step="any" name="phase0"/>
+                        </td>
+                        <td>
+                          <input style="width: 100%" type="number" step="any" name="gain0"/>
+                        </td>
+                        <td>
+                          <input style="width: 100%" type="number" step="any" name="time0"/>
+                        </td>
+                        <td>
+                          <input style="width: 100%" type="number" step="any" name="length0"/>
+                        </td>
+                        <td>
+                          <button style="width: 100%" type="button" class="btn btn-sm btn-danger delete-btn0">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    {% for form0 in formset0 %}
+                    <tbody id="formset0-{{ forloop.counter|add:'-1' }}" class="channel0-form">
+                      <tr>
+                        <td>
+                          <select name="formset0-{{ forloop.counter|add:'-1' }}-channel0">
+                            {% if form0.channel0.value == '0' %}
+                            <option>--Select--</option>
+                            <option value="0" selected>0</option>
+                            <option value="1">1</option>
+                            <option value="01">0 & 1</option>
+                            {% elif form0.channel0.value == '1' %}
+                            <option>--Select--</option>
+                            <option value="0">0</option>
+                            <option value="1" selected>1</option>
+                            <option value="01">0 & 1</option>
+                            {% elif form0.channel0.value == '01' %}
+                            <option>--Select--</option>
+                            <option value="0">0</option>
+                            <option value="1" >1</option>
+                            <option value="01" selected>0 & 1</option>
+                            {% else %}
+                            <option>--Select--</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="01">0 & 1</option>
+                            {% endif %}
+                          </select>
+                        </td>
+                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-frequency0" name="formset0-{{ forloop.counter|add:'-1' }}-frequency0" value="{{ form0.frequency0.value }}"/></td>
+                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-phase0" name="formset0-{{ forloop.counter|add:'-1' }}-phase0" value="{{ form0.phase0.value }}"/></td>
+                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-gain0" name="formset0-{{ forloop.counter|add:'-1' }}-gain0" value="{{ form0.gain0.value }}"/></td>
+                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-time0" name="formset0-{{ forloop.counter|add:'-1' }}-time0" value="{{ form0.time0.value }}"/></td>
+                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-length0" name="formset0-{{ forloop.counter|add:'-1' }}-length0" value="{{ form0.length0.value }}"/></td>
+                        <td>
+                          <button type="button" class="btn btn-sm btn-danger delete-btn0">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                  <button id="add-more0" type="button" class="btn btn-sm btn-primary">Add More</button>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+
+            <hr class="my-4" />
+
+            <!-- Add more configuration fields as necessary -->
+            {% if formset1 %}
+            <h6 class="heading-small text-muted mb-4">Sequence</h6>
+            {{formset1.management_form}}
+            <table id="form1-list">
+              <thead>
+                <tr>
+                  <th>AOM Pins</th>
+                  <th>Time Start</th>
+                  <th>Length</th>
+                </tr>
+              </thead>
+              <tbody id="empty-form1" class="hidden">
+                <tr>
+                  <td>
+                    <div class="form-check">
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="0" />
+                        <label class="form-check-label">0</label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="1" />
+                        <label class="form-check-label">1</label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="2" />
+                        <label class="form-check-label">2</label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="3" />
+                        <label class="form-check-label">3</label>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <input type="number" step="any" name="time1"/>
+                  </td>
+                  <td>
+                    <input type="number" step="any" name="length1"/>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-danger delete-btn1">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+              {% for form1 in formset1 %}
+              <tbody id="formset1-{{ forloop.counter|add:'-1' }}" class="channel1-form">
+                <tr>
+                  <td>
+                    <div class="form-check">
+                      <div class="form-check-inline">
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_0" type="checkbox" value="0" {% if 0 in form1.aom_pins.value %}checked{% endif %}/>
+                        <label class="form-check-label">0</label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_1" type="checkbox" value="1" {% if 1 in form1.aom_pins.value %}checked{% endif %}/>
+                        <label class="form-check-label">1</label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_2" type="checkbox" value="2" {% if 2 in form1.aom_pins.value %}checked{% endif %}/>
+                        <label class="form-check-label">2</label>
+                      </div>
+                      <div class="form-check-inline">
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_3" type="checkbox" value="3" {% if 3 in form1.aom_pins.value %}checked{% endif %}/>
+                        <label class="form-check-label">3</label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ form1.time1 }}</td>
+                  <td>{{ form1.length1 }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-danger delete-btn1">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+              {% endfor %}
+            </table>
+            <button id="add-more1" type="button" class="btn btn-sm btn-primary">Add More</button>
+            {% endif %}
+            <hr class="my-4" />
+
+            <!-- Form submission buttons -->
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row ml-1">
+                    <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
+                    <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
+                    <!-- <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button> -->
+                  </div>
+                </div>
+                <div class="col-6 text-right">
+                  <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block javascripts %}
+<script>
+  const addMoreBtn0 = document.getElementById("add-more0");
+  const addMoreBtn1 = document.getElementById("add-more1");
+  const totalNewForms0 = document.getElementById("id_formset0-TOTAL_FORMS");
+  const totalNewForms1 = document.getElementById("id_formset1-TOTAL_FORMS");
+  let currentChannel0Forms = document.getElementsByClassName("channel0-form");
+  let currentChannel1Forms = document.getElementsByClassName("channel1-form");
+  const form0List = document.getElementById("form0-list");
+  const form1List = document.getElementById("form1-list");
+  addMoreBtn0.addEventListener("click", add_new_form0);
+  addMoreBtn1.addEventListener("click", add_new_form1);
+  // Event delegation to handle the delete button click for the specific table
+  form0List.addEventListener("click", function (event) {
+    if (event.target && event.target.classList.contains("delete-btn0")) {
+      event.preventDefault();
+      delete_form0(event.target);
+    }
+  });
+  form1List.addEventListener("click", function (event) {
+    if (event.target && event.target.classList.contains("delete-btn1")) {
+      event.preventDefault();
+      delete_form1(event.target);
+    }
+  });
+  function delete_form0(deleteButton, ch) {
+    const formRow = deleteButton.closest("tbody");
+    const formTableBody = formRow.parentNode;
+    let currentForm0Count = currentChannel0Forms.length;
+    console.log(currentForm0Count);
+    if (currentForm0Count === 1) {
+      return;
+    }
+    formTableBody.removeChild(formRow);
+    totalNewForms0.setAttribute("value", currentChannel0Forms.length);
+  }
+  function delete_form1(deleteButton, ch) {
+    const formRow = deleteButton.closest("tbody");
+    const formTableBody = formRow.parentNode;
+    let currentForm1Count = currentChannel1Forms.length;
+    console.log(currentForm1Count);
+    if (currentForm1Count === 1) {
+      return;
+    }
+    formTableBody.removeChild(formRow);
+    totalNewForms1.setAttribute("value", currentChannel1Forms.length);
+  }
+  function add_new_form0(args) {
+    if (event) {
+      event.preventDefault();
+    }
+    const currentForm0Count = currentChannel0Forms.length;
+    // console.log(currentChannel0Forms.length);
+    const formCopyTarget0 = document.getElementById("form0-list");
+    const copyEmptyFormEl0 = document.getElementById("empty-form0").cloneNode(true);
+    copyEmptyFormEl0.setAttribute("class", "channel0-form");
+    copyEmptyFormEl0.setAttribute("id", `formset0-${currentForm0Count}`);
+    const regex = new RegExp("__prefix__", "g");
+    copyEmptyFormEl0.innerHTML = copyEmptyFormEl0.innerHTML.replace(regex, currentForm0Count);
+    const tr = copyEmptyFormEl0.firstElementChild;
+    const trParentElement = tr.parentElement;
+    trParentElement.children[0].children[0].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-channel0`);
+    trParentElement.children[0].children[0].children[0].setAttribute("name", `formset0-${currentForm0Count}-channel0`);
+    trParentElement.children[0].children[1].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-frequency0`);
+    trParentElement.children[0].children[1].children[0].setAttribute("name", `formset0-${currentForm0Count}-frequency0`);
+    trParentElement.children[0].children[2].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-phase0`);
+    trParentElement.children[0].children[2].children[0].setAttribute("name", `formset0-${currentForm0Count}-phase0`);
+    trParentElement.children[0].children[3].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-gain0`);
+    trParentElement.children[0].children[3].children[0].setAttribute("name", `formset0-${currentForm0Count}-gain0`);
+    trParentElement.children[0].children[4].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-time0`);
+    trParentElement.children[0].children[4].children[0].setAttribute("name", `formset0-${currentForm0Count}-time0`);
+    trParentElement.children[0].children[5].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-length0`);
+    trParentElement.children[0].children[5].children[0].setAttribute("name", `formset0-${currentForm0Count}-length0`);
+    // tdElement.setAttribute("id", `form-${currentForm0Count}-frequency0`);
+    console.log(currentForm0Count);
+    totalNewForms0.setAttribute("value", currentForm0Count + 1);
+    console.log(totalNewForms0);
+    // Add new form
+    formCopyTarget0.append(copyEmptyFormEl0);
+  }
+  function add_new_form1(args) {
+    if (event) {
+      event.preventDefault();
+    }
+    const currentForm1Count = currentChannel1Forms.length;
+    // console.log(currentChannel1Forms.length);
+    const formCopyTarget1 = document.getElementById("form1-list");
+    const copyEmptyFormEl1 = document.getElementById("empty-form1").cloneNode(true);
+    copyEmptyFormEl1.setAttribute("class", "channel1-form");
+    copyEmptyFormEl1.setAttribute("id", `formset1-${currentForm1Count}`);
+    const regex = new RegExp("__prefix__", "g");
+    copyEmptyFormEl1.innerHTML = copyEmptyFormEl1.innerHTML.replace(regex, currentForm1Count);
+    const tr = copyEmptyFormEl1.firstElementChild;
+    const trParentElement = tr.parentElement;
+    console.log(trParentElement.children[0].children[0].children[0].children[0].children[0]);
+    trParentElement.children[0].children[0].children[0].children[0].children[0].setAttribute("id", `id_formset1-${currentForm1Count}-aom_pins_0`);
+    trParentElement.children[0].children[0].children[0].children[0].children[0].setAttribute("name", `formset1-${currentForm1Count}-aom_pins`);
+    trParentElement.children[0].children[0].children[0].children[1].children[0].setAttribute("id", `id_formset1-${currentForm1Count}-aom_pins_1`);
+    trParentElement.children[0].children[0].children[0].children[1].children[0].setAttribute("name", `formset1-${currentForm1Count}-aom_pins`);
+    trParentElement.children[0].children[0].children[0].children[2].children[0].setAttribute("id", `id_formset1-${currentForm1Count}-aom_pins_2`);
+    trParentElement.children[0].children[0].children[0].children[2].children[0].setAttribute("name", `formset1-${currentForm1Count}-aom_pins`);
+    trParentElement.children[0].children[0].children[0].children[3].children[0].setAttribute("id", `id_formset1-${currentForm1Count}-aom_pins_3`);
+    trParentElement.children[0].children[0].children[0].children[3].children[0].setAttribute("name", `formset1-${currentForm1Count}-aom_pins`);
+    trParentElement.children[0].children[1].children[0].setAttribute("id", `id_formset1-${currentForm1Count}-time1`);
+    trParentElement.children[0].children[1].children[0].setAttribute("name", `formset1-${currentForm1Count}-time1`);
+    trParentElement.children[0].children[2].children[0].setAttribute("id", `id_formset1-${currentForm1Count}-length1`);
+    trParentElement.children[0].children[2].children[0].setAttribute("name", `formset1-${currentForm1Count}-length1`);
+    // tdElement.setAttribute("id", `form-${currentForm1Count}-frequency0`);
+    totalNewForms1.setAttribute("value", currentForm1Count + 1);
+    // Add new form
+    formCopyTarget1.append(copyEmptyFormEl1);
+  }
+</script>
+<script>
+  // Get all the checkbox inputs, time inputs, and length inputs
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="selected_pins[]"]');
+  const timeInputs = document.querySelectorAll(".time-input");
+  const lengthInputs = document.querySelectorAll(".length-input");
+
+  // Add event listeners to the checkboxes
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      const timeInputId = this.getAttribute("data-time-input");
+      const timeInput = document.getElementById(timeInputId);
+      const timeInputLabel = document.querySelector(`label[for="${timeInputId}"]`);
+
+      const lengthInputId = this.getAttribute("data-length-input");
+      const lengthInput = document.getElementById(lengthInputId);
+      const lengthInputLabel = document.querySelector(`label[for="${lengthInputId}"]`);
+
+      // Show or hide the time and length inputs and their labels based on the checkbox's checked state
+      if (this.checked) {
+        timeInput.style.display = "block";
+        timeInputLabel.style.display = "block";
+        lengthInput.style.display = "block";
+        lengthInputLabel.style.display = "block";
+      } else {
+        timeInput.style.display = "none";
+        timeInputLabel.style.display = "none";
+        lengthInput.style.display = "none";
+        lengthInputLabel.style.display = "none";
+      }
+    });
+
+    // Trigger the change event to show or hide the time and length inputs and their labels initially based on the checkbox's checked state
+    checkbox.dispatchEvent(new Event("change"));
+  });
+</script>
+
+{% endblock javascripts %}

@@ -1,0 +1,212 @@
+<!-- mercury.html -->
+{% extends 'layouts/base.html' %} {% block title %} Mercury ITC {% endblock title %} {% block content %}
+<!-- Page content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if messages %} {% for message in messages %} {% if message.tags == 'info' %}
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == 'warning' %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == 'success' %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %} {% endfor %} {% endif %}
+
+          <form method="post" action="{% url 'mercury_page' %}">
+            {% csrf_token %}
+            <div class="col-12">
+              <div class="row">
+                <div class="row ml-1">
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button>
+                </div>
+                <div class="col-6 text-right">
+                  <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+
+            <h6 class="heading-small text-muted mb-4">Mercury ITC Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-host">IP Address</label>
+                    <input id="input-host" class="form-control" name="mercury_host" placeholder="Mercury ITC IP Address" type="text" value="{{ form.mercury_host.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-port">Port</label>
+                    <input type="number" id="input-port" class="form-control" name="mercury_port" placeholder="Port" value="{{ form.mercury_port.value }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Mercury ITC Configuration</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-heater-power">Heater Power</label>
+                    <input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="Heater Power" type="number" step="any" value="{{ form.mercury_heater_power.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-temperature">ITC Temperature</label>
+                    <input id="input-itc-temperature" class="form-control" name="mercury_itc_temperature" placeholder="ITC Temperature" type="number" step="any" value="{{ form.mercury_itc_temperature.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-flow-percentage">ITC Flow Percentage</label>
+                    <input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="{{ form.mercury_itc_flow_percentage.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-temperature-set-point">ITC Temperature Set Point</label>
+                    <input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="{{ form.mercury_itc_temperature_set_point.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage</label>
+                    <input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="{{ form.mercury_itc_voltage.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-automatic-heating">ITC Automatic Heating</label>
+<!--                    <input id="input-itc-automatic-heating" class="form-control" name="mercury_itc_automatic_heating" placeholder="ITC Automatic Heating" type="number" step="any" value="{{ form.mercury_itc_automatic_heating.value }}" />-->
+                    <select name="mercury_itc_automatic_heating" id="input-itc-automatic-heating">
+                      <option value="OFF">OFF</option>
+                      <option value="ON">ON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-automatic-pid">ITC Automatic PID</label>
+                    <select name="mercury_itc_automatic_pid" id="input-itc-automatic-pid">
+                      <option value="OFF">OFF</option>
+                      <option value="ON">ON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Mercury ITC Actual Value</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-heater-power">Heater Power</label>
+                    {% if connected %}<input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="N/A" type="number" step="any" value="{{mercury_heater_power}}" disabled />{% else %} <input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-temperature">ITC Temperature (K)</label>
+                    {% if connected %}<input id="input-itc-temperature" class="form-control" name="mercury_itc_temperature" placeholder="ITC Temperature" type="number" step="any" value="{{mercury_itc_temperature}}" disabled />{% else %} <input id="input-itc-temperature" class="form-control" name="mercury_itc_temperature" placeholder="ITC Temperature" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-flow-percentage">ITC Flow Percentage (%)</label>
+                    {% if connected %}<input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="{{mercury_itc_flow_percentage}}" disabled />{% else %} <input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-temperature-set-point">ITC Temperature Set Point (K)</label>
+                    {% if connected %}<input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="{{mercury_itc_temperature_set_point}}" disabled />{% else %} <input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage (mV)</label>
+                    {% if connected %}<input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="{{mercury_itc_voltage}}" disabled />{% else %} <input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-automatic-heating">ITC Automatic Heater (ON/OFF)</label>
+                    {% if connected %}<input id="input-itc-automatic-heating" class="form-control" name="mercury_itc_automatic_heating" placeholder="ITC Automatic Heating" type="text" step="any" value="{{mercury_itc_automatic_heating}}" disabled />{% else %} <input id="input-itc-automatic-heating" class="form-control" name="mercury_itc_automatic_heating" placeholder="ITC Automatic Heating" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-automatic-pid">ITC Automatic PID (ON/OFF)</label>
+                    {% if connected %}<input id="input-itc-automatic-pid" class="form-control" name="mercury_itc_automatic_pid" placeholder="ITC Automatic PID" type="text" step="any" value="{{mercury_itc_automatic_pid}}" disabled />{% else %} <input id="input-itc-automatic-pid" class="form-control" name="mercury_itc_automatic_pid" placeholder="ITC Automatic PID" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-itc-valve-open-percentage">ITC Valve Open Percentage (%)</label>
+                    {% if connected %}<input id="input-itc-valve-open-percentage" class="form-control" name="mercury_itc_valve_open_percentage" placeholder="ITC Valve Open Percentage" type="number" step="any" value="{{mercury_itc_valve_open_percentage}}" disabled />{% else %} <input id="input-itc-valve-open-percentage" class="form-control" name="mercury_itc_valve_open_percentage" placeholder="ITC Valve Open Percentage" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <div class="col-12">
+              <div class="row">
+                <div class="row ml-1">
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button>
+                </div>
+                <div class="col-6 text-right">
+                  <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

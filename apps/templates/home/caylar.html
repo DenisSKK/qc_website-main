@@ -1,0 +1,170 @@
+<!-- caylar.html -->
+{% extends 'layouts/base.html' %} {% block title %} Caylar {% endblock title %} {% block content %}
+<!-- Page content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if messages %} {% for message in messages %} {% if message.tags == 'info' %}
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == 'warning' %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == 'success' %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %} {% endfor %} {% endif %}
+
+          <form method="post" action="{% url 'caylar_page' %}">
+            <div class="col-12">
+              <div class="row">
+                <div class="row ml-1">
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button>
+                </div>
+                <div class="col-6 text-right">
+                  <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+
+            {% csrf_token %}
+            <h6 class="heading-small text-muted mb-4">Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-host">IP Address</label>
+                    <input id="input-host" class="form-control" name="caylar_host" placeholder="Caylar IP Address" type="text" value="{{ form.caylar_host.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-port">Port</label>
+                    <input type="number" id="input-port" class="form-control" name="caylar_port" placeholder="Port" value="{{ form.caylar_port.value }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Configuration</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-current">Current (A)</label>
+                    <input id="input-current" class="form-control" name="caylar_current" placeholder="Caylar Current" type="number" step="any" value="{{ form.caylar_current.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-field">Field (G)</label>
+                    <input id="input-field" class="form-control" name="caylar_field" placeholder="Caylar Field" type="number" step="any" value="{{ form.caylar_field.value }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Actual Value</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-current">Current (A)</label>
+                    {% if connected %}
+                    <input id="input-current" class="form-control" name="caylar_current" placeholder="Caylar Current" type="number" step="any" value="{{caylar_current}}" disabled />{% else %} <input id="input-current" class="form-control" name="caylar_current" placeholder="Caylar Current" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group"><label class="form-control-label" for="input-field">Field (G)</label>{% if connected %} <input id="input-field" class="form-control" name="caylar_field" placeholder="Caylar Field" type="number" step="any" value="{{caylar_field}}" disabled />{% else %} <input id="input-field" class="form-control" name="caylar_field" placeholder="Caylar Field" type="number" step="any" value="NA" disabled />{% endif %}</div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-voltage">Voltage (V)</label>
+                    {% if connected %}
+                    <input id="input-voltage" class="form-control" name="caylar_voltage" placeholder="Caylar voltage" type="number" step="any" value="{{caylar_voltage}}" disabled />{% else %} <input id="input-voltage" class="form-control" name="caylar_voltage" placeholder="Caylar voltage" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-ADCDAC_temp">ADC DAC Temp (C)</label>
+                    {% if connected %}
+                    <input id="input-ADCDAC_temp" class="form-control" name="caylar_ADCDAC_temp" placeholder="Caylar ADCDAC_temp" type="number" step="any" value="{{caylar_ADCDAC_temp}}" disabled />{% else %} <input id="input-ADCDAC_temp" class="form-control" name="caylar_ADCDAC_temp" placeholder="Caylar ADCDAC_temp" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-box_temp">Box Temp (C)</label>
+                    {% if connected %}
+                    <input id="input-box_temp" class="form-control" name="caylar_box_temp" placeholder="Caylar box_temp" type="number" step="any" value="{{caylar_box_temp}}" disabled />{% else %} <input id="input-box_temp" class="form-control" name="caylar_box_temp" placeholder="Caylar box_temp" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-rack_temp">Rack Temp (C)</label>
+                    {% if connected %}
+                    <input id="input-rack_temp" class="form-control" name="caylar_rack_temp" placeholder="Caylar rack_temp" type="number" step="any" value="{{caylar_rack_temp}}" disabled />{% else %} <input id="input-rack_temp" class="form-control" name="caylar_rack_temp" placeholder="Caylar rack_temp" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-water_temp">Water Temp (C)</label>
+                    {% if connected %}
+                    <input id="input-water_temp" class="form-control" name="caylar_water_temp" placeholder="Caylar water_temp" type="number" step="any" value="{{caylar_water_temp}}" disabled />{% else %} <input id="input-water_temp" class="form-control" name="caylar_water_temp" placeholder="Caylar water_temp" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-water_flow">Water Flow (L/Min)</label>
+                    {% if connected %}
+                    <input id="input-water_flow" class="form-control" name="caylar_water_flow" placeholder="Caylar water_flow" type="number" step="any" value="{{caylar_water_flow}}" disabled />{% else %} <input id="input-water_flow" class="form-control" name="caylar_water_flow" placeholder="Caylar water_flow" type="number" step="any" value="NA" disabled />{% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+            <div class="col-12">
+              <div class="row">
+                <div class="row ml-1">
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button>
+                </div>
+                <div class="col-6 text-right">
+                  <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
