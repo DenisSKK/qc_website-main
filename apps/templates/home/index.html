@@ -115,6 +115,26 @@
             <div class="card-body">ITC Temperature: <span id="itc_temperature_number">-</span></div>
           </div>
         </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body" id="card_body_mercury">
+              <a href="{% url 'sx_page' %}">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">SX199</h5>
+                    <span class="h2 font-weight-bold mb-0" id="sx_status">Connecting</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                      <i class="ni ni-chart-bar-32"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
       <button type="submit" class="btn btn-secondary my-4" id="update_button">Update Status</button>
     </div>
@@ -586,6 +606,7 @@
   let statusLaserElement = $("#laser_status");
   let statusRFSoCElement = $("#rfsoc_status");
   let statusMercuryElement = $("#mercury_status");
+  let statusSXElement = $("#sx_status");
 
   function updateStatusColor(statusElement) {
     let statusText = statusElement.text().trim();
@@ -698,10 +719,12 @@
         document.getElementById("laser_status").innerHTML = data.laser_status == "ON" ? "Connected" : "Not Connected";
         document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
         document.getElementById("caylar_status").innerHTML = data.caylar_status == "ON" ? "Connected" : "Not Connected";
+        document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
         updateStatusColor(statusLaserElement);
         updateStatusColor(statusCaylarElement);
         updateStatusColor(statusMercuryElement);
         updateStatusColor(statusRFSoCElement);
+        updateStatusColor(statusSXElement);
         $("#messageLastUpdate").html('<div class="alert alert-info" role="alert">Last Update Status: ' + data.Dtime + "</div>");
       },
       error: function (xhr, errmsg, err) {
@@ -724,6 +747,23 @@
       success: function (data) {
         document.getElementById("laser_status").innerHTML = data.laser_status == "ON" ? "Connected" : "Not Connected";
         updateStatusColor(statusLaserElement);
+      },
+      error: function (xhr, errmsg, err) {
+        console.log(xhr.status + ": " + xhr.responseText);
+      },
+      complete: function () {
+        updateStatusSX();
+      },
+    });
+  }
+  function updateStatusSX() {
+    $.ajax({
+      url: "{% url 'statussx' %}", // URL mapped to the status view
+      type: "GET",
+      dataType: "json",
+      success: function (data) {
+        document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
+        updateStatusColor(statusSXElement);
       },
       error: function (xhr, errmsg, err) {
         console.log(xhr.status + ": " + xhr.responseText);
@@ -796,6 +836,7 @@
     updateStatusColor(statusCaylarElement);
     updateStatusColor(statusMercuryElement);
     updateStatusColor(statusRFSoCElement);
+    updateStatusColor(statusSXElement);
     isDashboardUpdating = false;
     updateStatusLaser(); // Update the status immediately when the page loads
   });
@@ -810,12 +851,14 @@
       updateStatusColor(statusCaylarElement);
       updateStatusColor(statusMercuryElement);
       updateStatusColor(statusRFSoCElement);
+      updateStatusColor(statusSXElement);
       updateStatusLaser(); // Update the status immediately when the page loads
     } else {
       updateStatusColor(statusLaserElement);
       updateStatusColor(statusCaylarElement);
       updateStatusColor(statusMercuryElement);
       updateStatusColor(statusRFSoCElement);
+      updateStatusColor(statusSXElement);
       updateStatus();
     }
   });

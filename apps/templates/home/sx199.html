@@ -34,14 +34,13 @@
           </div>
           {% endif %} {% endfor %} {% endif %}
 
-          <form method="post" action="{% url 'mercury_page' %}">
+          <form method="post" action="{% url 'sx_page' %}">
             {% csrf_token %}
             <div class="col-12">
               <div class="row">
                 <div class="row ml-1">
-                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
-                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
-                  <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-1">Update Link 1</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-2">Update Link 2</button>
                 </div>
                 <div class="col-6 text-right">
                   <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
@@ -50,134 +49,286 @@
             </div>
             <hr class="my-4" />
 
-            <h6 class="heading-small text-muted mb-4">Mercury ITC Information</h6>
+
+            <h6 class="heading-small text-muted mb-4">SX199 & CS580 Configuration</h6>
             <div class="pl-lg-4">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-host">IP Address</label>
-                    <input id="input-host" class="form-control" name="mercury_host" placeholder="Mercury ITC IP Address" type="text" value="{{ form.mercury_host.value }}" />
+                    <label class="form-control-label" for="input-gain-1">CS580 1 Gain</label>
+                    <select name="gain1" id="input-gain-1" class="form-control">
+                      <option value="0" {% if form.gain1.value == '0' %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if form.gain1.value == '1' %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if form.gain1.value == '2' %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if form.gain1.value == '3' %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if form.gain1.value == '4' %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if form.gain1.value == '5' %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if form.gain1.value == '6' %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if form.gain1.value == '7' %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if form.gain1.value == '8' %}selected{% endif %}>50mA</option>
+                    </select>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-port">Port</label>
-                    <input type="number" id="input-port" class="form-control" name="mercury_port" placeholder="Port" value="{{ form.mercury_port.value }}" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr class="my-4" />
-            <h6 class="heading-small text-muted mb-4">Mercury ITC Configuration</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-heater-power">Heater Power (W)</label>
-                    <input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="Heater Power" type="number" step="any" value="{{ form.mercury_heater_power.value }}" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-itc-flow-percentage">ITC Flow Percentage (%)</label>
-                    <input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="{{ form.mercury_itc_flow_percentage.value }}" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-itc-temperature-set-point">ITC Temperature Set Point (K)</label>
-                    <input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="{{ form.mercury_itc_temperature_set_point.value }}" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage (V)</label>
-                    <input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="{{ form.mercury_itc_voltage.value }}" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-itc-automatic-heating">ITC Automatic Heating</label>
-<!--                    <input id="input-itc-automatic-heating" class="form-control" name="mercury_itc_automatic_heating" placeholder="ITC Automatic Heating" type="number" step="any" value="{{ form.mercury_itc_automatic_heating.value }}" />-->
-                    <select name="mercury_itc_automatic_heating" id="input-itc-automatic-heating">
-                      <option value="OFF">OFF</option>
-                      <option value="ON">ON</option>
+                    <label class="form-control-label" for="input-gain-2">CS580 2 Gain</label>
+                    <select name="gain2" id="input-gain-2" class="form-control">
+                      <option value="0" {% if form.gain1.value == '0' %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if form.gain1.value == '1' %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if form.gain1.value == '2' %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if form.gain1.value == '3' %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if form.gain1.value == '4' %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if form.gain1.value == '5' %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if form.gain1.value == '6' %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if form.gain1.value == '7' %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if form.gain1.value == '8' %}selected{% endif %}>50mA</option>
                     </select>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-automatic-pid">ITC Automatic PID</label>
-                    <select name="mercury_itc_automatic_pid" id="input-itc-automatic-pid">
-                      <option value="OFF">OFF</option>
-                      <option value="ON">ON</option>
+                    <label class="form-control-label" for="input-input-1">CS580 1 Input</label>
+                    <select class="form-control" name="input1" id="input-input-1">
+                      <option value="0" {% if form.input1.value == '0' %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.input1.value == '1' %}selected{% endif %}>ON</option>
                     </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-input-2">CS580 2 Input</label>
+                     <select class="form-control"name="input2" id="input-input-2">
+                      <option value="0" {% if form.input2.value == '0' %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.input2.value == '1' %}selected{% endif %}>ON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-speed-1">CS580 1 Speed</label>
+                     <select class="form-control"name="speed1" id="input-speed-1">
+                      <option value="0" {% if form.speed1.value == '0' %}selected{% endif %}>FAST</option>
+                      <option value="1" {% if form.speed1.value == '1' %}selected{% endif %}>SLOW</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-speed-2">CS580 2 Speed</label>
+                     <select class="form-control"name="speed2" id="input-speed-2">
+                      <option value="0" {% if form.speed2.value == '0' %}selected{% endif %}>FAST</option>
+                      <option value="1" {% if form.speed2.value == '1' %}selected{% endif %}>SLOW</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-shield-1">CS580 1 Inner Shield</label>
+                     <select class="form-control"name="shield1" id="input-shield-1">
+                      <option value="0" {% if form.shield1.value == '0' %}selected{% endif %}>GUARD</option>
+                      <option value="1" {% if form.shield1.value == '1' %}selected{% endif %}>RETURN</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-shield-2">CS580 2 Inner Shield</label>
+                     <select class="form-control"name="shield2" id="input-shield-2">
+                      <option value="0" {% if form.shield2.value == '0' %}selected{% endif %}>GUARD</option>
+                      <option value="1" {% if form.shield2.value == '1' %}selected{% endif %}>RETURN</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-isolation-1">CS580 1 Isolation</label>
+                     <select class="form-control"name="isolation1" id="input-isolation-1">
+                      <option value="0" {% if form.isolation1.value == '0' %}selected{% endif %}>GROUND</option>
+                      <option value="1" {% if form.isolation1.value == '1' %}selected{% endif %}>FLOAT</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-isolation-2">CS580 2 Isolation</label>
+                     <select class="form-control"name="isolation2" id="input-isolation-2">
+                      <option value="0" {% if form.isolation2.value == '0' %}selected{% endif %}>GROUND</option>
+                      <option value="1" {% if form.isolation2.value == '1' %}selected{% endif %}>FLOAT</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-output-1">CS580 1 Output</label>
+                     <select class="form-control"name="output1" id="input-output-1">
+                      <option value="0" {% if form.output1.value == '0' %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.output1.value == '1' %}selected{% endif %}>ON</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-output-2">CS580 2 Output</label>
+                     <select class="form-control"name="output2" id="input-output-2">
+                      <option value="0" {% if form.output2.value == '0' %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.output2.value == '1' %}selected{% endif %}>ON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-curr-1">CS580 1 DC Current</label>
+                    <input id="input-curr-1" class="form-control" name="curr1" placeholder="CS580 1 DC Current value" type="number" step="any" value="{{ form.curr1.value }}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-curr-2">CS580 2 DC Current</label>
+                    <input id="input-curr-2" class="form-control" name="curr2" placeholder="CS580 2 DC Current value" type="number" step="any" value="{{ form.curr2.value }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-volt-1">CS580 1 Voltage</label>
+                    <input id="input-volt-1" class="form-control" name="volt1" placeholder="CS580 1 Voltage value" type="number" step="any" value="{{ form.volt1.value }}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-volt-2">CS580 2 Voltage</label>
+                    <input id="input-volt-2" class="form-control" name="volt2" placeholder="CS580 2 Voltage value" type="number" step="any" value="{{ form.volt2.value }}" />
                   </div>
                 </div>
               </div>
             </div>
             <hr class="my-4" />
-            <h6 class="heading-small text-muted mb-4">Mercury ITC Actual Value</h6>
+
+
+            <h6 class="heading-small text-muted mb-4">CS580 Actual Value</h6>
             <div class="pl-lg-4">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-heater-power">Heater Power (W)</label>
-                    {% if connected %}<input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="N/A" type="number" step="any" value="{{mercury_heater_power}}" disabled />{% else %} <input id="input-heater-power" class="form-control" name="mercury_heater_power" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-gain-1">CS580 1 Gain</label>
+                    {% if connectedlink1 %}<input id="input-gain-1" class="form-control" name="gain1" placeholder="N/A" type="text" step="any" value="{{gain1}}" disabled />{% else %} <input id="input-gain-1" class="form-control" name="gain1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-temperature">ITC Temperature (K)</label>
-                    {% if connected %}<input id="input-itc-temperature" class="form-control" name="mercury_itc_temperature" placeholder="ITC Temperature" type="number" step="any" value="{{mercury_itc_temperature}}" disabled />{% else %} <input id="input-itc-temperature" class="form-control" name="mercury_itc_temperature" placeholder="ITC Temperature" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-gain-2">CS580 2 Gain</label>
+                    {% if connectedlink2 %}<input id="input-gain-2" class="form-control" name="gain2" placeholder="N/A" type="text" step="any" value="{{gain2}}" disabled />{% else %} <input id="input-gain-2" class="form-control" name="gain2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-flow-percentage">ITC Flow Percentage (%)</label>
-                    {% if connected %}<input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="{{mercury_itc_flow_percentage}}" disabled />{% else %} <input id="input-itc-flow-percentage" class="form-control" name="mercury_itc_flow_percentage" placeholder="ITC Flow Percentage" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-input-1">CS580 1 Input</label>
+                    {% if connectedlink1 %}<input id="input-input-1" class="form-control" name="input1" placeholder="N/A" type="text" step="any" value="{{input1}}" disabled />{% else %} <input id="input-input-1" class="form-control" name="input1" placeholder="Disconnected" type="number" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-temperature-set-point">ITC Temperature Set Point (K)</label>
-                    {% if connected %}<input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="{{mercury_itc_temperature_set_point}}" disabled />{% else %} <input id="input-itc-temperature-set-point" class="form-control" name="mercury_itc_temperature_set_point" placeholder="ITC Temperature Set Point" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-input-2">CS580 2 Input</label>
+                    {% if connectedlink2 %}<input id="input-input-2" class="form-control" name="input2" placeholder="N/A" type="text" step="any" value="{{input2}}" disabled />{% else %} <input id="input-input-2" class="form-control" name="input2" placeholder="Disconnected" type="number" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-voltage">ITC Voltage (V)</label>
-                    {% if connected %}<input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="{{mercury_itc_voltage}}" disabled />{% else %} <input id="input-itc-voltage" class="form-control" name="mercury_itc_voltage" placeholder="ITC Voltage" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-speed-1">CS580 1 Speed</label>
+                    {% if connectedlink1 %}<input id="input-speed-1" class="form-control" name="speed1" placeholder="N/A" type="text" step="any" value="{{speed1}}" disabled />{% else %} <input id="input-speed-1" class="form-control" name="speed1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-automatic-heating">ITC Automatic Heater (ON/OFF)</label>
-                    {% if connected %}<input id="input-itc-automatic-heating" class="form-control" name="mercury_itc_automatic_heating" placeholder="ITC Automatic Heating" type="text" step="any" value="{{mercury_itc_automatic_heating}}" disabled />{% else %} <input id="input-itc-automatic-heating" class="form-control" name="mercury_itc_automatic_heating" placeholder="ITC Automatic Heating" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-speed-2">CS580 2 Speed</label>
+                    {% if connectedlink2 %}<input id="input-speed-2" class="form-control" name="speed2" placeholder="N/A" type="text" step="any" value="{{speed2}}" disabled />{% else %} <input id="input-speed-2" class="form-control" name="speed2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-automatic-pid">ITC Automatic PID (ON/OFF)</label>
-                    {% if connected %}<input id="input-itc-automatic-pid" class="form-control" name="mercury_itc_automatic_pid" placeholder="ITC Automatic PID" type="text" step="any" value="{{mercury_itc_automatic_pid}}" disabled />{% else %} <input id="input-itc-automatic-pid" class="form-control" name="mercury_itc_automatic_pid" placeholder="ITC Automatic PID" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-shield-1">CS580 1 Inner Shield</label>
+                    {% if connectedlink1 %}<input id="input-shield-1" class="form-control" name="shield1" placeholder="N/A" type="text" step="any" value="{{shield1}}" disabled />{% else %} <input id="input-shield-1" class="form-control" name="shield1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-itc-valve-open-percentage">ITC Valve Open Percentage (%)</label>
-                    {% if connected %}<input id="input-itc-valve-open-percentage" class="form-control" name="mercury_itc_valve_open_percentage" placeholder="ITC Valve Open Percentage" type="number" step="any" value="{{mercury_itc_valve_open_percentage}}" disabled />{% else %} <input id="input-itc-valve-open-percentage" class="form-control" name="mercury_itc_valve_open_percentage" placeholder="ITC Valve Open Percentage" type="number" step="any" value="NA" disabled /> {% endif %}
+                    <label class="form-control-label" for="input-shield-2">CS580 2 Inner Shield</label>
+                    {% if connectedlink2 %}<input id="input-shield-2" class="form-control" name="shield2" placeholder="N/A" type="text" step="any" value="{{shield2}}" disabled />{% else %} <input id="input-shield-2" class="form-control" name="shield2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-isolation-1">CS580 1 Isolation</label>
+                    {% if connectedlink1 %}<input id="input-isolation-1" class="form-control" name="isolation1" placeholder="N/A" type="text" step="any" value="{{isolation1}}" disabled />{% else %} <input id="input-isolation-1" class="form-control" name="isolation1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-isolation-2">CS580 2 Isolation</label>
+                    {% if connectedlink2 %}<input id="input-isolation-2" class="form-control" name="isolation2" placeholder="N/A" type="text" step="any" value="{{isolation2}}" disabled />{% else %} <input id="input-isolation-2" class="form-control" name="isolation2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-output-1">CS580 1 Output</label>
+                    {% if connectedlink1 %}<input id="input-output-1" class="form-control" name="output1" placeholder="N/A" type="text" step="any" value="{{output1}}" disabled />{% else %} <input id="input-output-1" class="form-control" name="output1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-output-2">CS580 2 Output</label>
+                    {% if connectedlink2 %}<input id="input-output-2" class="form-control" name="output2" placeholder="N/A" type="text" step="any" value="{{output2}}" disabled />{% else %} <input id="input-output-2" class="form-control" name="output2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-curr-1">CS580 1 Current</label>
+                    {% if connectedlink1 %}<input id="input-curr-1" class="form-control" name="curr1" placeholder="N/A" type="number" step="any" value="{{curr1}}" disabled />{% else %} <input id="input-curr-1" class="form-control" name="curr1" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-curr-2">CS580 2 Current</label>
+                    {% if connectedlink2 %}<input id="input-curr-2" class="form-control" name="curr2" placeholder="N/A" type="number" step="any" value="{{curr2}}" disabled />{% else %} <input id="input-curr-2" class="form-control" name="curr2" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-volt-1">CS580 1 Voltage</label>
+                    {% if connectedlink1 %}<input id="input-volt-1" class="form-control" name="volt1" placeholder="N/A" type="number" step="any" value="{{volt1}}" disabled />{% else %} <input id="input-volt-1" class="form-control" name="volt1" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-volt-2">CS580 2 Voltage</label>
+                    {% if connectedlink2 %}<input id="input-volt-2" class="form-control" name="volt2" placeholder="N/A" type="number" step="any" value="{{volt2}}" disabled />{% else %} <input id="input-volt-2" class="form-control" name="volt2" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
                 </div>
               </div>
@@ -186,9 +337,7 @@
             <div class="col-12">
               <div class="row">
                 <div class="row ml-1">
-                  <button type="submit" class="btn btn-sm btn-primary" name="updateall">Update All</button>
-                  <button type="submit" class="btn btn-sm btn-primary" name="updateip">Update IP</button>
-                  <button type="submit" class="btn btn-sm btn-primary" name="updateconfig">Update Config</button>
+                  <button type="submit" class="btn btn-sm btn-primary" name="update">Update</button>
                 </div>
                 <div class="col-6 text-right">
                   <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>

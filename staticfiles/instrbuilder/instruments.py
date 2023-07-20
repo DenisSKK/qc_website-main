@@ -32,6 +32,7 @@ class StandfordSX199(SCPI):
         comm_handle.read_termination = '\r\n'
         comm_handle.write_termination = '\r\n'
         comm_handle.write('ULOC 1\n')
+        comm_handle.write('TOKN 1\n')
         super().__init__(cmd_list, comm_handle, name=name, unconnected=unconnected)
 
 

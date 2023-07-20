@@ -15,16 +15,16 @@ def construct_object():
     RFSoC = RFSoC_controller(config_host=rfsoc_host)
     magneticIR = CaylarMagnet("H", name="magneticIR",config_host=caylar_host)
     ITCD = MercuryITCDevice(prefix="...",name="ITCD", host="itc-optistat.psi.ch",config_host=itc_host)
-    SX = MercuryITCDevice(name='sx199')
+    SX = SX199Device(name='sx199')
     return RFSoC, LTDLC, magneticIR, ITCD, SX
 
 def construct_sx():
     # config file is located at ~/.instrbuilder/ (where ~ indicates your home directory)
     SX = SX199Device(name='sx199')
-    sx_xml_dict = xml_config_to_dict("staticfiles/sx199.xml")
-    sx_xml_dict["link"] = SX.report_link()
-    sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    dict_to_xml_file(sx_xml_dict, "staticfiles/sx199.xml")
+    # sx_xml_dict = xml_config_to_dict("staticfiles/sx199.xml")
+    # sx_xml_dict["link"] = SX.report_link()
+    # sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    # dict_to_xml_file(sx_xml_dict, "staticfiles/sx199.xml")
     return SX
 
 def construct_toptica():

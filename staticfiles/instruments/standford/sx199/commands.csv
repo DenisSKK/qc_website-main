@@ -47,7 +47,7 @@ cs_gain,GAIN,,TRUE,str,TRUE,str,"[""G1nA"",""0"",""G100uA"",""5"",""G10nA"",""1"
 cs_analog_in,INPT,,TRUE,str,TRUE,str,"[""0"",""1"",""OFF"",""ON""]","Set (query) the analog input mode {to z=(OFF 0, ON 1)}.",Configuration commands,,,
 cs_speed,RESP,,TRUE,str,TRUE,str,"[""0"",""1"",""FAST"",""SLOW""]","Set (query) the current source filter response speed {to z=(FAST 0,
 SLOW 1)}.",Configuration commands,,,
-cs_inner_shield,SHLD,,TRUE,str,TRUE,str,"[""0"",""1"",""GROUND"",""RETURN""]","Set (query) the inner-shield connection mode {to z=(GUARD 0, RETURN
+cs_inner_shield,SHLD,,TRUE,str,TRUE,str,"[""0"",""1"",""GUARD"",""RETURN""]","Set (query) the inner-shield connection mode {to z=(GUARD 0, RETURN
 1)}.",Configuration commands,,,
 cs_isolation,ISOL,,TRUE,str,TRUE,str,"[""0"",""1"",""GROUND"",""FLOAT""]","Set (query) the current source isolation mode {to z=(GROUND 0, FLOAT
 1)}.
@@ -62,4 +62,4 @@ when GAIN G10uA, the allowed range for CURR is -20E-6 to +20E-6.",Setting comman
 cs_audible_alarm,ALRM,,TRUE,str,TRUE,str,"[""0"",""1"",""OFF"",""ON""]","Set (query) audible alarms {to z=(OFF 0, ON 1)}.",Setup commands,,,
 cs_overload,OVLD,,TRUE,str,FALSE,none,None,"Reads the current value of the signal overload status. Returns an
 integer between 1 and 3 if an overload is detected, or 0 if there is no overload.",Status commands,,,
-escape,!,!,TRUE,none,TRUE,none,None,Send escape character,Escape Link,,,
+escape,!,!,TRUE,none,TRUE,str,[''],Send escape character,Escape Link,,,

@@ -21,22 +21,42 @@ FREQUENCY_CHOICES = (
     ('B', 'B'),
 )
 
+GAIN_CHOICES = (
+    ('0', 'G1nA'),
+    ('1', 'G10nA'),
+    ('2', 'G100nA'),
+    ('3', 'G1uA'),
+    ('4', 'G10uA'),
+    ('5', 'G100uA'),
+    ('6', 'G1mA'),
+    ('7', 'G10mA'),
+    ('8', 'G50mA'),
+)
+
+ON_OFF_CHOICES = (
+    ('0', 'OFF'),
+    ('1', 'ON'),
+)
+
+
 class ExperimentForm(forms.Form):
     experiment_name = forms.CharField(label='Experiment Name')
     description = forms.CharField(widget=forms.Textarea, label='Description', required=False)
     file_name = forms.CharField(label='Experiment Name')
 
+
 class BaseExperimentForm(BaseFormSet):
-    def has_duplicate_keys(self,dictionary):
+    def has_duplicate_keys(self, dictionary):
         return len(dictionary) != len(set(dictionary.keys()))
+
     def clean(self):
         if any(self.errors):
             return
         # device = laser_parameter = laser_frequency = laser_amplitude = eom_frequency = eom_time_start = eom_length = aom_pins = aom_start_time = aom_length = frequency_name = frequency_frequency = frequency_phase = frequency_amplitude = []
-        device = {'laser':{},
-                  'eom':{'frequency':[],'start_time':[],'length':[]},
-                  'aom':{'start_time':[],'pins':[],'length':[]},
-                  'frequency_name':{'A':{},'B':{}}}
+        device = {'laser': {},
+                  'eom': {'frequency': [], 'start_time': [], 'length': []},
+                  'aom': {'start_time': [], 'pins': [], 'length': []},
+                  'frequency_name': {'A': {}, 'B': {}}}
         for form in self.forms:
             if form.cleaned_data:
                 device = form.cleaned_data['device']
@@ -115,12 +135,14 @@ class BaseExperimentForm(BaseFormSet):
                             )
                     elif device == "frequency" or device == "Frequency":
                         if frequency_name and frequency_frequency and frequency_amplitude and frequency_phase:
-                            if frequency_name == "A" and len(device['frequency_name']["A"])==0:
+                            if frequency_name == "A" and len(device['frequency_name']["A"]) == 0:
                                 duplicates = True
-                            device['frequency_name']["A"] = {"frequency":frequency_frequency,"amplitude":frequency_amplitude,"phase":frequency_phase}
-                            if frequency_name == "B" and len(device['frequency_name']["B"])==0:
+                            device['frequency_name']["A"] = {"frequency": frequency_frequency,
+                                                             "amplitude": frequency_amplitude, "phase": frequency_phase}
+                            if frequency_name == "B" and len(device['frequency_name']["B"]) == 0:
                                 duplicates = True
-                            device['frequency_name']["B"] = {"frequency":frequency_frequency,"amplitude":frequency_amplitude,"phase":frequency_phase}
+                            device['frequency_name']["B"] = {"frequency": frequency_frequency,
+                                                             "amplitude": frequency_amplitude, "phase": frequency_phase}
                         else:
                             raise forms.ValidationError(
                                 'All Frequency input should be chosen.',
@@ -142,9 +164,11 @@ class LaserForm(forms.Form):
     scan_freq = forms.FloatField(label='Scan Frequency')
     scan_offset = forms.FloatField(label='Scan Offset')
 
+
 class LaserFormIP(forms.Form):
     laser_host = forms.CharField(label='IP Address', max_length=100)
     laser_port = forms.IntegerField(label='Port', required=False)
+
 
 class LaserFormConfig(forms.Form):
     wavelength_act = forms.FloatField(label='Wavelength')
@@ -160,15 +184,35 @@ class CaylarForm(forms.Form):
     caylar_port = forms.IntegerField(label='Port', required=False)
     caylar_current = forms.FloatField(label='Current', required=False)
     caylar_field = forms.FloatField(label='Field', required=False)
+
+
 class CaylarFormIP(forms.Form):
     caylar_host = forms.CharField(label='IP Address', max_length=100)
     caylar_port = forms.IntegerField(label='Port', required=False)
+
+
 class CaylarFormConfig(forms.Form):
     caylar_current = forms.FloatField(label='Current', required=False)
     caylar_field = forms.FloatField(label='Field', required=False)
 
+
 class SX199Form(forms.Form):
-    sx_link = forms.IntegerField(label='Link Port', required=False)
+    gain1 = forms.ChoiceField(label='CS580 1 Gain', required=False, choices=GAIN_CHOICES)
+    gain2 = forms.ChoiceField(label='CS580 2 Gain', required=False, choices=GAIN_CHOICES)
+    input1 = forms.ChoiceField(label='CS580 1 Input', required=False, choices=ON_OFF_CHOICES)
+    input2 = forms.ChoiceField(label='CS580 2 Input', required=False, choices=ON_OFF_CHOICES)
+    speed1 = forms.ChoiceField(label='CS580 1 Speed', required=False, choices=[('0', 'FAST'), ('1', 'SLOW')])
+    speed2 = forms.ChoiceField(label='CS580 2 Speed', required=False, choices=[('0', 'FAST'), ('1', 'SLOW')])
+    shield1 = forms.ChoiceField(label='CS580 1 Inner Shield', required=False, choices=[('0', 'GUARD'), ('1', 'RETURN')])
+    shield2 = forms.ChoiceField(label='CS580 2 Inner Shield', required=False, choices=[('0', 'GUARD'), ('1', 'RETURN')])
+    isolation1 = forms.ChoiceField(label='CS580 1 Isolation', required=False, choices=[('0', 'GROUND'), ('1', 'FLOAT')])
+    isolation2 = forms.ChoiceField(label='CS580 2 Isolation', required=False, choices=[('0', 'GROUND'), ('1', 'FLOAT')])
+    output1 = forms.ChoiceField(label='CS580 1 Output', required=False, choices=ON_OFF_CHOICES)
+    output2 = forms.ChoiceField(label='CS580 2 Output', required=False, choices=ON_OFF_CHOICES)
+    curr1 = forms.FloatField(label='CS580 1 DC Current', required=False)
+    curr2 = forms.FloatField(label='CS580 2 DC Current', required=False)
+    volt1 = forms.FloatField(label='CS580 1 Voltage', required=False)
+    volt2 = forms.FloatField(label='CS580 2 Voltage', required=False)
 
 class MercuryForm(forms.Form):
     mercury_host = forms.CharField(label='IP Address', max_length=100)
@@ -177,18 +221,27 @@ class MercuryForm(forms.Form):
     mercury_itc_flow_percentage = forms.FloatField(label='ITC Flow Percentage', required=False)
     mercury_itc_temperature_set_point = forms.FloatField(label='ITC Temperature Set Point', required=False)
     mercury_itc_voltage = forms.FloatField(label='ITC Voltage', required=False)
-    mercury_itc_automatic_heating = forms.ChoiceField(label='ITC Automatic Heating', required=False, choices=[('OFF', 'OFF'), ('ON', 'ON')])
-    mercury_itc_automatic_pid = forms.ChoiceField(label='ITC Automatic PID', required=False, choices=[('OFF', 'OFF'), ('ON', 'ON')])
+    mercury_itc_automatic_heating = forms.ChoiceField(label='ITC Automatic Heating', required=False,
+                                                      choices=ON_OFF_CHOICES)
+    mercury_itc_automatic_pid = forms.ChoiceField(label='ITC Automatic PID', required=False,
+                                                  choices=ON_OFF_CHOICES)
+
+
 class MercuryFormIP(forms.Form):
     mercury_host = forms.CharField(label='IP Address', max_length=100)
     mercury_port = forms.IntegerField(label='Port', required=False)
+
+
 class MercuryFormConfig(forms.Form):
     mercury_heater_power = forms.FloatField(label='Heater Power', required=False)
     mercury_itc_flow_percentage = forms.FloatField(label='ITC Flow Percentage', required=False)
     mercury_itc_temperature_set_point = forms.FloatField(label='ITC Temperature Set Point', required=False)
     mercury_itc_voltage = forms.FloatField(label='ITC Voltage', required=False)
-    mercury_itc_automatic_heating = forms.ChoiceField(label='ITC Automatic Heating', required=False, choices=[('OFF', 'OFF'), ('ON', 'ON')])
-    mercury_itc_automatic_pid = forms.ChoiceField(label='ITC Automatic PID', required=False, choices=[('OFF', 'OFF'), ('ON', 'ON')])
+    mercury_itc_automatic_heating = forms.ChoiceField(label='ITC Automatic Heating', required=False,
+                                                      choices=ON_OFF_CHOICES)
+    mercury_itc_automatic_pid = forms.ChoiceField(label='ITC Automatic PID', required=False,
+                                                  choices=ON_OFF_CHOICES)
+
 
 class RFSoCConfigForm(forms.Form):
     rfsoc_host = forms.CharField(label='IP Address', max_length=100)
@@ -208,23 +261,29 @@ class RFSoCConfigForm(forms.Form):
     eom_mode0 = forms.CharField(label='EOM Mode 0', required=False)
     eom_zone1 = forms.FloatField(label='EOM Zone 1', required=False)
     eom_mode1 = forms.CharField(label='EOM Mode 1', required=False)
+
+
 class RFSoCConfigFormIP(forms.Form):
     rfsoc_host = forms.CharField(label='IP Address', max_length=100)
     rfsoc_port = forms.IntegerField(label='Port', required=False)
     rfsoc_username = forms.CharField(label='Username', required=False)
     rfsoc_password = forms.CharField(label='Password', required=False)
+
+
 class RFSoCEOMSequenceForm(forms.Form):
-    channel0 = forms.ChoiceField(choices=[('0', '0'), ('1', '1'),('01','01')])
+    channel0 = forms.ChoiceField(choices=[('0', '0'), ('1', '1'), ('01', '01')])
     frequency0 = forms.FloatField(label='EOM Frequency')
     phase0 = forms.FloatField(label='EOM Phase')
     gain0 = forms.FloatField(label='EOM Gain')
     time0 = forms.FloatField(label='EOM Time')
     length0 = forms.FloatField(label='EOM Length 0')
+
+
 class RFSoCAOMSequenceForm(forms.Form):
     aom_pins = forms.MultipleChoiceField(
         choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3')],
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-    time1 = forms.FloatField(label='EOM Length 1',required=False)
-    length1 = forms.FloatField(label='EOM Length 1',required=False)
+    time1 = forms.FloatField(label='EOM Length 1', required=False)
+    length1 = forms.FloatField(label='EOM Length 1', required=False)
