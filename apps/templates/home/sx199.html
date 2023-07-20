@@ -57,15 +57,15 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-gain-1">CS580 1 Gain</label>
                     <select name="gain1" id="input-gain-1" class="form-control">
-                      <option value="0" {% if form.gain1.value == '0' %}selected{% endif %}>1nA</option>
-                      <option value="1" {% if form.gain1.value == '1' %}selected{% endif %}>10nA</option>
-                      <option value="2" {% if form.gain1.value == '2' %}selected{% endif %}>100nA</option>
-                      <option value="3" {% if form.gain1.value == '3' %}selected{% endif %}>1µA</option>
-                      <option value="4" {% if form.gain1.value == '4' %}selected{% endif %}>10µA</option>
-                      <option value="5" {% if form.gain1.value == '5' %}selected{% endif %}>100µA</option>
-                      <option value="6" {% if form.gain1.value == '6' %}selected{% endif %}>1mA</option>
-                      <option value="7" {% if form.gain1.value == '7' %}selected{% endif %}>10mA</option>
-                      <option value="8" {% if form.gain1.value == '8' %}selected{% endif %}>50mA</option>
+                      <option value="0" {% if form.gain1.value == 0 %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if form.gain1.value == 1 %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if form.gain1.value == 2 %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if form.gain1.value == 3 %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if form.gain1.value == 4 %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if form.gain1.value == 5 %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if form.gain1.value == 6 %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if form.gain1.value == 7 %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if form.gain1.value == 8 %}selected{% endif %}>50mA</option>
                     </select>
                   </div>
                 </div>
@@ -73,15 +73,15 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-gain-2">CS580 2 Gain</label>
                     <select name="gain2" id="input-gain-2" class="form-control">
-                      <option value="0" {% if form.gain1.value == '0' %}selected{% endif %}>1nA</option>
-                      <option value="1" {% if form.gain1.value == '1' %}selected{% endif %}>10nA</option>
-                      <option value="2" {% if form.gain1.value == '2' %}selected{% endif %}>100nA</option>
-                      <option value="3" {% if form.gain1.value == '3' %}selected{% endif %}>1µA</option>
-                      <option value="4" {% if form.gain1.value == '4' %}selected{% endif %}>10µA</option>
-                      <option value="5" {% if form.gain1.value == '5' %}selected{% endif %}>100µA</option>
-                      <option value="6" {% if form.gain1.value == '6' %}selected{% endif %}>1mA</option>
-                      <option value="7" {% if form.gain1.value == '7' %}selected{% endif %}>10mA</option>
-                      <option value="8" {% if form.gain1.value == '8' %}selected{% endif %}>50mA</option>
+                      <option value="0" {% if form.gain2.value == 0 %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if form.gain2.value == 1 %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if form.gain2.value == 2 %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if form.gain2.value == 3 %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if form.gain2.value == 4 %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if form.gain2.value == 5 %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if form.gain2.value == 6 %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if form.gain2.value == 7 %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if form.gain2.value == 8 %}selected{% endif %}>50mA</option>
                     </select>
                   </div>
                 </div>
@@ -91,8 +91,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-input-1">CS580 1 Input</label>
                     <select class="form-control" name="input1" id="input-input-1">
-                      <option value="0" {% if form.input1.value == '0' %}selected{% endif %}>OFF</option>
-                      <option value="1" {% if form.input1.value == '1' %}selected{% endif %}>ON</option>
+                      <option value="0" {% if form.input1.value == 0 %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.input1.value == 1 %}selected{% endif %}>ON</option>
                     </select>
                   </div>
                 </div>
@@ -100,8 +100,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-input-2">CS580 2 Input</label>
                      <select class="form-control"name="input2" id="input-input-2">
-                      <option value="0" {% if form.input2.value == '0' %}selected{% endif %}>OFF</option>
-                      <option value="1" {% if form.input2.value == '1' %}selected{% endif %}>ON</option>
+                      <option value="0" {% if form.input2.value == 0 %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.input2.value == 1 %}selected{% endif %}>ON</option>
                     </select>
                   </div>
                 </div>
@@ -111,8 +111,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-speed-1">CS580 1 Speed</label>
                      <select class="form-control"name="speed1" id="input-speed-1">
-                      <option value="0" {% if form.speed1.value == '0' %}selected{% endif %}>FAST</option>
-                      <option value="1" {% if form.speed1.value == '1' %}selected{% endif %}>SLOW</option>
+                      <option value="0" {% if form.speed1.value == 0 %}selected{% endif %}>FAST</option>
+                      <option value="1" {% if form.speed1.value == 1 %}selected{% endif %}>SLOW</option>
                     </select>
                   </div>
                 </div>
@@ -120,8 +120,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-speed-2">CS580 2 Speed</label>
                      <select class="form-control"name="speed2" id="input-speed-2">
-                      <option value="0" {% if form.speed2.value == '0' %}selected{% endif %}>FAST</option>
-                      <option value="1" {% if form.speed2.value == '1' %}selected{% endif %}>SLOW</option>
+                      <option value="0" {% if form.speed2.value == 0 %}selected{% endif %}>FAST</option>
+                      <option value="1" {% if form.speed2.value == 1 %}selected{% endif %}>SLOW</option>
                     </select>
                   </div>
                 </div>
@@ -131,8 +131,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-shield-1">CS580 1 Inner Shield</label>
                      <select class="form-control"name="shield1" id="input-shield-1">
-                      <option value="0" {% if form.shield1.value == '0' %}selected{% endif %}>GUARD</option>
-                      <option value="1" {% if form.shield1.value == '1' %}selected{% endif %}>RETURN</option>
+                      <option value="0" {% if form.shield1.value == 0 %}selected{% endif %}>GUARD</option>
+                      <option value="1" {% if form.shield1.value == 1 %}selected{% endif %}>RETURN</option>
                     </select>
                   </div>
                 </div>
@@ -140,8 +140,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-shield-2">CS580 2 Inner Shield</label>
                      <select class="form-control"name="shield2" id="input-shield-2">
-                      <option value="0" {% if form.shield2.value == '0' %}selected{% endif %}>GUARD</option>
-                      <option value="1" {% if form.shield2.value == '1' %}selected{% endif %}>RETURN</option>
+                      <option value="0" {% if form.shield2.value == 0 %}selected{% endif %}>GUARD</option>
+                      <option value="1" {% if form.shield2.value == 1 %}selected{% endif %}>RETURN</option>
                     </select>
                   </div>
                 </div>
@@ -151,8 +151,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-isolation-1">CS580 1 Isolation</label>
                      <select class="form-control"name="isolation1" id="input-isolation-1">
-                      <option value="0" {% if form.isolation1.value == '0' %}selected{% endif %}>GROUND</option>
-                      <option value="1" {% if form.isolation1.value == '1' %}selected{% endif %}>FLOAT</option>
+                      <option value="0" {% if form.isolation1.value == 0 %}selected{% endif %}>GROUND</option>
+                      <option value="1" {% if form.isolation1.value == 1 %}selected{% endif %}>FLOAT</option>
                     </select>
                   </div>
                 </div>
@@ -160,8 +160,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-isolation-2">CS580 2 Isolation</label>
                      <select class="form-control"name="isolation2" id="input-isolation-2">
-                      <option value="0" {% if form.isolation2.value == '0' %}selected{% endif %}>GROUND</option>
-                      <option value="1" {% if form.isolation2.value == '1' %}selected{% endif %}>FLOAT</option>
+                      <option value="0" {% if form.isolation2.value == 0 %}selected{% endif %}>GROUND</option>
+                      <option value="1" {% if form.isolation2.value == 1 %}selected{% endif %}>FLOAT</option>
                     </select>
                   </div>
                 </div>
@@ -171,8 +171,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-output-1">CS580 1 Output</label>
                      <select class="form-control"name="output1" id="input-output-1">
-                      <option value="0" {% if form.output1.value == '0' %}selected{% endif %}>OFF</option>
-                      <option value="1" {% if form.output1.value == '1' %}selected{% endif %}>ON</option>
+                      <option value="0" {% if form.output1.value == 0 %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.output1.value == 1 %}selected{% endif %}>ON</option>
                     </select>
                   </div>
                 </div>
@@ -180,8 +180,8 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-output-2">CS580 2 Output</label>
                      <select class="form-control"name="output2" id="input-output-2">
-                      <option value="0" {% if form.output2.value == '0' %}selected{% endif %}>OFF</option>
-                      <option value="1" {% if form.output2.value == '1' %}selected{% endif %}>ON</option>
+                      <option value="0" {% if form.output2.value == 0 %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if form.output2.value == 1 %}selected{% endif %}>ON</option>
                     </select>
                   </div>
                 </div>

@@ -44,8 +44,15 @@ class SX199Device():
         return id_string.startswith("Stanford_Research_Systems,SX199")
 
     def is_cs_connected(self, link):
-        self.sx_o.link.set(1)
-        id_string = self.sx_o.id.get()
+        self.sx_o.link.set(link)
+        sleep(0.1)
+        try:
+            id_string = self.sx_o.id.get()
+        except:
+            return False
+        # sleep(0.1)
+        self.escape()
+        print(f'check: {id_string}')
         return id_string.startswith("Stanford_Research_Systems,CS580")
 
     def is_linked(self):
@@ -96,34 +103,46 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
 
+        self.update_link(2)
+        sleep(0.2)
         # Compare the attributes and update only the ones that are different
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
 
             if actual_value != last_value:
                 if attribute == "cs_gain_2":
+                    print(f"setting gain to {actual_value}")
                     self.set_value_for(2, self.update_gain, str(actual_value))
                 elif attribute == "cs_input_2":
+                    print(f"setting input to {actual_value}")
                     self.set_value_for(2, self.update_input, str(actual_value))
                 elif attribute == "cs_speed_2":
+                    print(f"setting speed to {actual_value}")
                     self.set_value_for(2, self.update_speed, str(actual_value))
                 elif attribute == "cs_shield_2":
+                    print(f"setting shield to {actual_value}")
                     self.set_value_for(2, self.update_inner_shield, str(actual_value))
                 elif attribute == "cs_isolation_2":
+                    print(f"setting isolation to {actual_value}")
                     self.set_value_for(2, self.update_isolation, str(actual_value))
                 elif attribute == "cs_output_2":
+                    print(f"setting output to {actual_value}")
                     self.set_value_for(2, self.update_output, str(actual_value))
                 elif attribute == "cs_curr_2":
-                    self.set_value_for(2, self.update_curr, str(actual_value))
+                    print(f"setting curr to {actual_value}")
+                    self.set_value_for(2, self.update_curr, actual_value)
                 elif attribute == "cs_volt_2":
-                    self.set_value_for(2, self.update_volt, str(actual_value))
+                    print(f"setting volt to {actual_value}")
+                    self.set_value_for(2, self.update_volt, actual_value)
+        sleep(0.2)
+        self.escape()
         print("SX199 Updated")
 
 
     def get_value_for(self, link, func):
         if self.is_connected():
             print('inside get_value_for()')
-            self.update_link(link)
+            self.sx_o.link.set(link)
             func_return_val = func()
             self.escape()
             return func_return_val
@@ -131,12 +150,12 @@ class SX199Device():
             print("Device is not connected.")
 
     def set_value_for(self, link, func, val):
-        if self.is_connected():
-            self.sx_o.link.set(link)
-            func(val)
-            self.escape()
-        else:
-            print("Device is not connected.")
+        # if self.is_connected():
+            # self.sx_o.link.set(link)
+        func(val)
+            # self.escape()
+        # else:
+        #     print("Device is not connected.")
 
     def escape(self):
         self.sx_o.escape.set('')
@@ -149,9 +168,9 @@ class SX199Device():
         return link
 
     def update_gain(self, val):
-        print(f'inside update_gain() {val}')
+        # print(f'inside update_gain() {val}')
         self.sx_o.cs_gain.set(val)
-        print('')
+        # print('')
         # print(self.sx_o.id.get())
         # print(f'update_gain id call {self.sx_o.id.get()}')
 

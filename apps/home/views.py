@@ -431,9 +431,9 @@ def sx_page_view(request):
     # Load the data from the cryostat XML file
     global SX_instance
     context = {}
-    connected = True
+    connected = False
     connected_link_1 = False
-    connected_link_2 = True
+    connected_link_2 = False
     xml_path = os.path.join("staticfiles", "sx199.xml")
     old_xml_path = os.path.join("staticfiles", "sx199-old.xml")
     if SX_instance == None:
@@ -441,12 +441,15 @@ def sx_page_view(request):
         SX_instance = construct_sx()
         connected = SX_instance.is_connected()
         if connected:
-            connected_link_1 = SX_instance.is_cs_connected(1)
+            # connected_link_1 = SX_instance.is_cs_connected(1)
             connected_link_2 = SX_instance.is_cs_connected(2)
     else:
         try:
             SX_instance.escape()
             connected = SX_instance.is_connected()
+            if connected:
+                # connected_link_1 = SX_instance.is_cs_connected(1)
+                connected_link_2 = SX_instance.is_cs_connected(2)
             print(f'constructed, checking connection conn: {connected}')
         except:
             print(f'constructed, checking connection FAILED, connecting conn: {connected}')
@@ -527,6 +530,7 @@ def sx_page_view(request):
                 sx_xml_dict["cs_volt_2"] = form.cleaned_data['volt2']
                 dict_to_xml_file(sx_xml_dict, xml_path)
 
+                print(f'c: {connected}, c2: {connected_link_2}')
                 if connected and connected_link_2:
                     print("is connected. attempt to update_all_xml")
                     SX_instance.update_link_2_xml(xml_path, old_xml_path)
@@ -543,6 +547,7 @@ def sx_page_view(request):
 
     else:
         # Initialize the form with the current cryostat information
+        print(sx_xml_dict.get('cs_gain_2', ''))
         form = SX199Form(initial={
             'gain1': sx_xml_dict.get("cs_gain_1", ""),
             'gain2': sx_xml_dict.get("cs_gain_2", ""),
