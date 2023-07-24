@@ -1,7 +1,5 @@
 # forms.py
-from django import forms
 from django.forms.formsets import BaseFormSet
-
 from django import forms
 
 DEVICE_CHOICES = (
@@ -196,7 +194,41 @@ class CaylarFormConfig(forms.Form):
     caylar_field = forms.FloatField(label='Field', required=False)
 
 
+# def current_validator(value, gain_value):
+#     gain_to_current = {
+#         0: (2e-09, -2e-09),
+#         1: (2e-08, -2e-08),
+#         2: (2e-07, -2e-07),
+#         3: (2e-06, -2e-06),
+#         4: (2e-05, -2e-05),
+#         5: (2e-04, -2e-04),
+#         6: (2e-03, -2e-03),
+#         7: (2e-02, -2e-02),
+#         8: (1e-01, -1e-01),
+#     }
+#     min_current, max_current = gain_to_current.get(int(gain_value), (0, 0))
+#     if min_current <= float(value) <= max_current:
+#         return value
+#     else:
+#         raise forms.ValidationError(
+#             f"Invalid current value for Gain {gain_value}. Valid range: {min_current} to {max_current}")
+
+
 class SX199Form(forms.Form):
+
+    # def curr_val_1(self):
+    #     curr1_value = self.cleaned_data.get('curr1')
+    #     gain_value = self.cleaned_data.get('gain1', 0)
+    #     return current_validator(curr1_value, gain_value)
+    #
+    # def curr_val_2(self):
+    #     self.
+    #     print(self)
+    #     curr2_value = self.cleaned_data.get('curr2')
+    #
+    #     gain_value = self.cleaned_data.get('gain2', 0)
+    #     return current_validator(curr2_value, gain_value)
+
     gain1 = forms.ChoiceField(label='CS580 1 Gain', required=False, choices=GAIN_CHOICES)
     gain2 = forms.ChoiceField(label='CS580 2 Gain', required=False, choices=GAIN_CHOICES)
     input1 = forms.ChoiceField(label='CS580 1 Input', required=False, choices=ON_OFF_CHOICES)
@@ -211,8 +243,9 @@ class SX199Form(forms.Form):
     output2 = forms.ChoiceField(label='CS580 2 Output', required=False, choices=ON_OFF_CHOICES)
     curr1 = forms.FloatField(label='CS580 1 DC Current', required=False)
     curr2 = forms.FloatField(label='CS580 2 DC Current', required=False)
-    volt1 = forms.FloatField(label='CS580 1 Voltage', required=False)
-    volt2 = forms.FloatField(label='CS580 2 Voltage', required=False)
+    volt1 = forms.FloatField(label='CS580 1 Voltage', required=False, min_value=0, max_value=50)
+    volt2 = forms.FloatField(label='CS580 2 Voltage', required=False, min_value=0, max_value=50)
+
 
 class MercuryForm(forms.Form):
     mercury_host = forms.CharField(label='IP Address', max_length=100)

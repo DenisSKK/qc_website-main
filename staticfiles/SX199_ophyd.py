@@ -45,7 +45,7 @@ class SX199Device():
 
     def is_cs_connected(self, link):
         self.sx_o.link.set(link)
-        sleep(0.1)
+        sleep(0.001)
         try:
             id_string = self.sx_o.id.get()
         except:
@@ -104,7 +104,7 @@ class SX199Device():
         last_config = xml_config_to_dict(xml_old_update)
 
         self.update_link(2)
-        sleep(0.2)
+        sleep(0.001)
         # Compare the attributes and update only the ones that are different
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
@@ -134,20 +134,35 @@ class SX199Device():
                 elif attribute == "cs_volt_2":
                     print(f"setting volt to {actual_value}")
                     self.set_value_for(2, self.update_volt, actual_value)
-        sleep(0.2)
+            sleep(0.000001)
         self.escape()
         print("SX199 Updated")
 
 
+    def report_link_2(self):
+        self.update_link(2)
+        sleep(0.001)
+        # Compare the attributes and update only the ones that are different
+        gain = self.report_gain()
+        input = self.report_input()
+        speed = self.report_speed()
+        shield = self.report_inner_shield()
+        isolation = self.report_isolation()
+        output = self.report_output()
+        curr = self.report_curr()
+        volt = self.report_volt()
+        sleep(0.001)
+        self.escape()
+        print("CS link 2 report")
+        return gain, input, speed, shield, isolation, output, curr, volt
+
+
     def get_value_for(self, link, func):
-        if self.is_connected():
-            print('inside get_value_for()')
-            self.sx_o.link.set(link)
-            func_return_val = func()
-            self.escape()
-            return func_return_val
-        else:
-            print("Device is not connected.")
+        self.sx_o.link.set(link)
+        sleep(0.001)
+        func_return_val = func()
+        self.escape()
+        return func_return_val
 
     def set_value_for(self, link, func, val):
         # if self.is_connected():
@@ -168,16 +183,10 @@ class SX199Device():
         return link
 
     def update_gain(self, val):
-        # print(f'inside update_gain() {val}')
         self.sx_o.cs_gain.set(val)
-        # print('')
-        # print(self.sx_o.id.get())
-        # print(f'update_gain id call {self.sx_o.id.get()}')
 
     def report_gain(self):
-        print('inside report_gain()')
         return self.sx_o.cs_gain.get()
-        # return self.
 
     def update_input(self, val):
         self.sx_o.cs_analog_in.set(val)
@@ -212,7 +221,8 @@ class SX199Device():
     def update_volt(self, val):
         self.sx_o.cs_comp_volt.set(val)
     def report_volt(self):
-        return self.sx_o.cs_comp_volt.get()
+        volt = self.sx_o.cs_comp_volt.get()
+        return volt
 
     def update_alarm(self, val):
         self.sx_o.cs_audible_alarm.set(val)

@@ -450,39 +450,52 @@ def sx_page_view(request):
             if connected:
                 # connected_link_1 = SX_instance.is_cs_connected(1)
                 connected_link_2 = SX_instance.is_cs_connected(2)
-            print(f'constructed, checking connection conn: {connected}')
+            # print(f'constructed, checking connection conn: {connected}')
         except:
-            print(f'constructed, checking connection FAILED, connecting conn: {connected}')
+            # print(f'constructed, checking connection FAILED, connecting conn: {connected}')
             connected = SX_instance.connect('sx199')
-            print("sx is not connected. connecting....")
+            # print("sx is not connected. connecting....")
         # SX_instance.connect('sx199')
     # else:
     #     print("sx already constructed")
     #     connected = SX_instance.is_connected()
     sx_xml_dict = xml_config_to_dict(xml_path)
-    if connected:
-        # SX_instance.update_all_xml("staticfiles/sx199.xml")
+    if connected and connected_link_1:
+        # SX_instance.update_link_1_xml(xml_path, old_xml_path)
         # context["gain1"] = SX_instance.get_value_for(1, SX_instance.report_gain)
-        # context["gain2"] = SX_instance.get_value_for(2, SX_instance.report_gain)
         # context["input1"] = SX_instance.get_value_for(1, SX_instance.report_input)
-        # context["input2"] = SX_instance.get_value_for(2, SX_instance.report_input)
         # context["speed1"] = SX_instance.get_value_for(1, SX_instance.report_speed)
-        # context["speed2"] = SX_instance.get_value_for(2, SX_instance.report_speed)
         # context["shield1"] = SX_instance.get_value_for(1, SX_instance.report_inner_shield)
-        # context["shield2"] = SX_instance.get_value_for(2, SX_instance.report_inner_shield)
         # context["isolation1"] = SX_instance.get_value_for(1, SX_instance.report_isolation)
-        # context["isolation2"] = SX_instance.get_value_for(2, SX_instance.report_isolation)
         # context["output1"] = SX_instance.get_value_for(1, SX_instance.report_output)
-        # context["output2"] = SX_instance.get_value_for(2, SX_instance.report_output)
         # context["curr1"] = SX_instance.get_value_for(1, SX_instance.report_curr)
-        # context["curr2"] = SX_instance.get_value_for(2, SX_instance.report_curr)
         # context["volt1"] = SX_instance.get_value_for(1, SX_instance.report_volt)
-        # context["volt2"] = SX_instance.get_value_for(2, SX_instance.report_volt)
         sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(sx_xml_dict, xml_path)
         sx_xml_dict = xml_config_to_dict(xml_path)
     else:
-        info = "Parameter has not updated since " + sx_xml_dict[
+        info = "Parameter for current source 1 has not updated since " + sx_xml_dict[
+            "time_update"] + " because not connected with the device!"
+        messages.info(request, info)
+
+    if connected and connected_link_2:
+        # SX_instance.update_link_2_xml(xml_path, old_xml_path)
+        sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], \
+            sx_xml_dict["cs_isolation_2"], sx_xml_dict["cs_output_2"], sx_xml_dict["cs_curr_2"], sx_xml_dict[
+            "cs_volt_2"] = SX_instance.report_link_2()
+        context["gain2"] = sx_xml_dict["cs_gain_2"]
+        context["input2"] = sx_xml_dict["cs_input_2"]
+        context["speed2"] = sx_xml_dict["cs_speed_2"]
+        context["shield2"] = sx_xml_dict["cs_shield_2"]
+        context["isolation2"] = sx_xml_dict["cs_isolation_2"]
+        context["output2"] = sx_xml_dict["cs_output_2"]
+        context["curr2"] = sx_xml_dict["cs_curr_2"]
+        context["volt2"] = sx_xml_dict["cs_volt_2"]
+        sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        dict_to_xml_file(sx_xml_dict, xml_path)
+        sx_xml_dict = xml_config_to_dict(xml_path)
+    else:
+        info = "Parameter current source 2 has not updated since " + sx_xml_dict[
             "time_update"] + " because not connected with the device!"
         messages.info(request, info)
     if isinstance(sx_xml_dict, str):
@@ -505,9 +518,9 @@ def sx_page_view(request):
                 dict_to_xml_file(sx_xml_dict, xml_path)
 
                 if connected and connected_link_1:
-                    print("is connected. attempt to update_all_xml")
+                    print("is connected. attempt to update_xml for 1")
                     SX_instance.update_link_1_xml(xml_path, old_xml_path)
-                    messages.success(request, 'Changes saved successfully in SX199!')
+                    messages.success(request, 'Changes saved successfully in current source 1!')
                 else:
                     # Add success message to the Django messages framework
                     messages.success(request, 'FAILED, changes saved only to XML!')
@@ -515,7 +528,7 @@ def sx_page_view(request):
                 # Redirect to the cryostat page to reload the page with the updated values
                 return redirect('sx_page')
             else:
-                messages.warning(request, 'Cannot be updated!')
+                messages.warning(request, 'Invalid current source 1 values! Cannot be updated!')
                 return redirect('sx_page')
         elif "update-link-2" in request.POST:
             form = SX199Form(request.POST)
@@ -530,11 +543,11 @@ def sx_page_view(request):
                 sx_xml_dict["cs_volt_2"] = form.cleaned_data['volt2']
                 dict_to_xml_file(sx_xml_dict, xml_path)
 
-                print(f'c: {connected}, c2: {connected_link_2}')
+                # print(f'c: {connected}, c2: {connected_link_2}')
                 if connected and connected_link_2:
-                    print("is connected. attempt to update_all_xml")
+                    print("is connected. attempt to update_xml for 2")
                     SX_instance.update_link_2_xml(xml_path, old_xml_path)
-                    messages.success(request, 'Changes saved successfully in SX199!')
+                    messages.success(request, 'Changes saved successfully in current source 2!')
                 else:
                     # Add success message to the Django messages framework
                     messages.success(request, 'FAILED, changes saved only to XML!')
@@ -542,12 +555,11 @@ def sx_page_view(request):
                 # Redirect to the cryostat page to reload the page with the updated values
                 return redirect('sx_page')
             else:
-                messages.warning(request, 'Cannot be updated!')
+                messages.warning(request, 'Invalid current source 2 values! Cannot be updated!')
                 return redirect('sx_page')
 
     else:
         # Initialize the form with the current cryostat information
-        print(sx_xml_dict.get('cs_gain_2', ''))
         form = SX199Form(initial={
             'gain1': sx_xml_dict.get("cs_gain_1", ""),
             'gain2': sx_xml_dict.get("cs_gain_2", ""),
@@ -555,6 +567,8 @@ def sx_page_view(request):
             'input2': sx_xml_dict.get("cs_input_2", ""),
             'shield1': sx_xml_dict.get("cs_shield_1", ""),
             'shield2': sx_xml_dict.get("cs_shield_2", ""),
+            'speed1': sx_xml_dict.get("cs_speed_1", ""),
+            'speed2': sx_xml_dict.get("cs_speed_2", ""),
             'isolation1': sx_xml_dict.get("cs_isolation_1", ""),
             'isolation2': sx_xml_dict.get("cs_isolation_2", ""),
             'output1': sx_xml_dict.get("cs_output_1", ""),
@@ -568,7 +582,6 @@ def sx_page_view(request):
     # Assign the variables with the initial values
     # cryostat_host = sx_xml_dict.get("host", "")
     # cryostat_port = sx_xml_dict.get("port", "")
-    # print(f'connected: {connected}')
     context['connected'] = connected
     context['connectedlink1'] = connected_link_1
     context['connectedlink2'] = connected_link_2
@@ -697,7 +710,7 @@ def start_experiment(request):
     choosed_device.append("RFSoC")
     off_device = ["Laser", "RFSoC", "Mercury", "Caylar"]
     on_device = []
-    RFSoC, Laser, Caylar, mercuryITC = construct_object()
+    RFSoC, Laser, Caylar, mercuryITC, SX = construct_object()
     rfsoc_status = "OFF"
     if RFSoC.try_connect():
         on_device.append(RFSoC)
@@ -936,11 +949,11 @@ def status(request):
     global ULaser
     global UCaylar
     global UmercuryITC
+    global SX_instance
     global Drfsoc_status
     global Dlaser_status
     global Dmercury_status
     global Dcaylar_status
-    global Usx
     global Dsx_status
     global Dtime
 
@@ -958,16 +971,16 @@ def status(request):
 
 def statusSX(request):
     # global URFSoC
-    global Usx
+    global SX_instance
     global Dsx_status
-    if Usx != None:
-        Usx.disconnect()
-        Usx = None
-    RFSoC, Laser, Caylar, mercuryITC, SX = construct_object()
+    if SX_instance != None:
+        SX_instance.disconnect()
+        SX_instance = None
+    SX = construct_sx()
 
     if SX.is_connected():
         sx_status = "ON"
-        Usx = Laser
+        SX_instance = SX
         # Laser.disconnect()
         Dsx_status = sx_status
     else:
@@ -987,7 +1000,7 @@ def statusLaser(request):
     if ULaser != None:
         ULaser.disconnect()
         ULaser = None
-    RFSoC, Laser, Caylar, mercuryITC = construct_object()
+    Laser = construct_toptica()
 
     if Laser.try_connect():
         laser_status = "ON"
@@ -1008,7 +1021,7 @@ def statusRFSoC(request):
     global URFSoC
     global Drfsoc_status
 
-    RFSoC, Laser, Caylar, mercuryITC = construct_object()
+    RFSoC = construct_rfsoc()
     if RFSoC.try_connect():
         rfsoc_status = "ON"
         URFSoC = RFSoC
@@ -1030,7 +1043,7 @@ def statusMercury(request):
 
     if UmercuryITC != None:
         UmercuryITC = None
-    RFSoC, Laser, Caylar, mercuryITC = construct_object()
+    mercuryITC = construct_itc()
 
     if mercuryITC.try_connect():
         mercury_status = "ON"
@@ -1053,7 +1066,7 @@ def statusCaylar(request):
     global Dtime
     if UCaylar != None:
         UCaylar = None
-    RFSoC, Laser, Caylar, mercuryITC = construct_object()
+    Caylar = construct_caylar()
 
     if Caylar.try_connect():
         caylar_status = "ON"
