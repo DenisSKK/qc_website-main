@@ -474,7 +474,7 @@ def sx_page_view(request):
         dict_to_xml_file(sx_xml_dict, xml_path)
         sx_xml_dict = xml_config_to_dict(xml_path)
     else:
-        info = "Parameter for current source 1 has not updated since " + sx_xml_dict[
+        info = "Parameter current source 1 has not updated since " + sx_xml_dict[
             "time_update"] + " because not connected with the device!"
         messages.info(request, info)
 
@@ -504,26 +504,54 @@ def sx_page_view(request):
     if request.method == 'POST':
         # Save old XML before updating
         shutil.copy(xml_path, old_xml_path)
+        gain_to_current = {
+            '0': (-2e-09, 2e-09),
+            '1': (-2e-08, 2e-08),
+            '2': (-2e-07, 2e-07),
+            '3': (-2e-06, 2e-06),
+            '4': (-2e-05, 2e-05),
+            '5': (-2e-04, 2e-04),
+            '6': (-2e-03, 2e-03),
+            '7': (-2e-02, 2e-02),
+            '8': (-1e-01, 1e-01),
+        }
+        GAIN_CHOICES = {
+            '0': '1nA',
+            '1': '10nA',
+            '2': '100nA',
+            '3': '1uA',
+            '4': '10uA',
+            '5': '100uA',
+            '6': '1mA',
+            '7': '10mA',
+            '8': '50mA',
+        }
         if "update-link-1" in request.POST:
             form = SX199Form(request.POST)
             if form.is_valid():
-                sx_xml_dict["cs_gain_1"] = form.cleaned_data['gain1']
-                sx_xml_dict["cs_input_1"] = form.cleaned_data['input1']
-                sx_xml_dict["cs_speed_1"] = form.cleaned_data['speed1']
-                sx_xml_dict["cs_shield_1"] = form.cleaned_data['shield1']
-                sx_xml_dict["cs_isolation_1"] = form.cleaned_data['isolation1']
-                sx_xml_dict["cs_output_1"] = form.cleaned_data['output1']
-                sx_xml_dict["cs_curr_1"] = form.cleaned_data['curr1']
-                sx_xml_dict["cs_volt_1"] = form.cleaned_data['volt1']
-                dict_to_xml_file(sx_xml_dict, xml_path)
-
-                if connected and connected_link_1:
-                    print("is connected. attempt to update_xml for 1")
-                    SX_instance.update_link_1_xml(xml_path, old_xml_path)
-                    messages.success(request, 'Changes saved successfully in current source 1!')
+                min_current, max_current = gain_to_current.get(form.cleaned_data['gain1'], (0, 0))
+                if min_current <= form.cleaned_data['curr1'] <= max_current:
+                    sx_xml_dict["cs_gain_1"] = form.cleaned_data['gain1']
+                    sx_xml_dict["cs_input_1"] = form.cleaned_data['input1']
+                    sx_xml_dict["cs_speed_1"] = form.cleaned_data['speed1']
+                    sx_xml_dict["cs_shield_1"] = form.cleaned_data['shield1']
+                    sx_xml_dict["cs_isolation_1"] = form.cleaned_data['isolation1']
+                    sx_xml_dict["cs_output_1"] = form.cleaned_data['output1']
+                    sx_xml_dict["cs_curr_1"] = form.cleaned_data['curr1']
+                    sx_xml_dict["cs_volt_1"] = form.cleaned_data['volt1']
+                    dict_to_xml_file(sx_xml_dict, xml_path)
+                    if connected and connected_link_1:
+                        print("is connected. attempt to update_xml for 1")
+                        SX_instance.update_link_1_xml(xml_path, old_xml_path)
+                        messages.success(request, 'Changes saved successfully in current source 1!')
+                    else:
+                        # Add success message to the Django messages framework
+                        messages.warning(request, 'Device not connected, changes saved only to XML!')
                 else:
-                    # Add success message to the Django messages framework
-                    messages.success(request, 'FAILED, changes saved only to XML!')
+                    messages.error(request,
+                                   f"Invalid current value {form.cleaned_data['curr1']} for Gain "
+                                   f"{GAIN_CHOICES.get(form.cleaned_data['gain1'])}. Valid range: "
+                                   f"{min_current} to {max_current}")
 
                 # Redirect to the cryostat page to reload the page with the updated values
                 return redirect('sx_page')
@@ -533,24 +561,32 @@ def sx_page_view(request):
         elif "update-link-2" in request.POST:
             form = SX199Form(request.POST)
             if form.is_valid():
-                sx_xml_dict["cs_gain_2"] = form.cleaned_data['gain2']
-                sx_xml_dict["cs_input_2"] = form.cleaned_data['input2']
-                sx_xml_dict["cs_speed_2"] = form.cleaned_data['speed2']
-                sx_xml_dict["cs_shield_2"] = form.cleaned_data['shield2']
-                sx_xml_dict["cs_isolation_2"] = form.cleaned_data['isolation2']
-                sx_xml_dict["cs_output_2"] = form.cleaned_data['output2']
-                sx_xml_dict["cs_curr_2"] = form.cleaned_data['curr2']
-                sx_xml_dict["cs_volt_2"] = form.cleaned_data['volt2']
-                dict_to_xml_file(sx_xml_dict, xml_path)
-
-                # print(f'c: {connected}, c2: {connected_link_2}')
-                if connected and connected_link_2:
-                    print("is connected. attempt to update_xml for 2")
-                    SX_instance.update_link_2_xml(xml_path, old_xml_path)
-                    messages.success(request, 'Changes saved successfully in current source 2!')
+                min_current, max_current = gain_to_current.get(form.cleaned_data['gain2'], (0, 0))
+                print(min_current <= form.cleaned_data['curr2'])
+                print(form.cleaned_data['curr2'] <= max_current)
+                print(min_current <= form.cleaned_data['curr2'] <= max_current)
+                if min_current <= form.cleaned_data['curr2'] <= max_current:
+                    sx_xml_dict["cs_gain_2"] = form.cleaned_data['gain2']
+                    sx_xml_dict["cs_input_2"] = form.cleaned_data['input2']
+                    sx_xml_dict["cs_speed_2"] = form.cleaned_data['speed2']
+                    sx_xml_dict["cs_shield_2"] = form.cleaned_data['shield2']
+                    sx_xml_dict["cs_isolation_2"] = form.cleaned_data['isolation2']
+                    sx_xml_dict["cs_output_2"] = form.cleaned_data['output2']
+                    sx_xml_dict["cs_curr_2"] = form.cleaned_data['curr2']
+                    sx_xml_dict["cs_volt_2"] = form.cleaned_data['volt2']
+                    dict_to_xml_file(sx_xml_dict, xml_path)
+                    if connected and connected_link_2:
+                        print("is connected. attempt to update_xml for 2")
+                        SX_instance.update_link_2_xml(xml_path, old_xml_path)
+                        messages.success(request, 'Changes saved successfully in current source 2!')
+                    else:
+                        # Add success message to the Django messages framework
+                        messages.warning(request, 'Device not connected, changes saved only to XML!')
                 else:
-                    # Add success message to the Django messages framework
-                    messages.success(request, 'FAILED, changes saved only to XML!')
+                    messages.error(request,
+                                   f"Invalid current value {form.cleaned_data['curr2']} for Gain "
+                                   f"{GAIN_CHOICES.get(form.cleaned_data['gain2'])}. Valid range: "
+                                   f"{min_current} to {max_current}")
 
                 # Redirect to the cryostat page to reload the page with the updated values
                 return redirect('sx_page')
@@ -580,8 +616,6 @@ def sx_page_view(request):
         })
 
     # Assign the variables with the initial values
-    # cryostat_host = sx_xml_dict.get("host", "")
-    # cryostat_port = sx_xml_dict.get("port", "")
     context['connected'] = connected
     context['connectedlink1'] = connected_link_1
     context['connectedlink2'] = connected_link_2
