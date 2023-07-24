@@ -75,8 +75,6 @@ class BasicStatistics(Device):
 
 class FilterStatistics(Device):
 
-    # TODO: How to not re-run the filter for each statistic,
-    #       by re-assigning _img below?
 
     components = {}
 
