@@ -63,52 +63,48 @@ class SX199Device():
         return False
 
     def update_link_1_xml(self, xml_update, xml_old_update):
-        # if not self.is_connected():
-        #     if not self.connect(self.name):
-        #         print("SX199 is not connected")
-        #         return
-        # Load the configurations from the XML files
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
-
-        # Compare the attributes and update only the ones that are different
+        self.update_link(1)
+        sleep(0.001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
-
             if actual_value != last_value:
                 if attribute == "cs_gain_1":
+                    print(f"setting gain to {actual_value}")
                     self.set_value_for(1, self.update_gain, str(actual_value))
                 elif attribute == "cs_input_1":
+                    print(f"setting input to {actual_value}")
                     self.set_value_for(1, self.update_input, str(actual_value))
                 elif attribute == "cs_speed_1":
+                    print(f"setting speed to {actual_value}")
                     self.set_value_for(1, self.update_speed, str(actual_value))
                 elif attribute == "cs_shield_1":
+                    print(f"setting shield to {actual_value}")
                     self.set_value_for(1, self.update_inner_shield, str(actual_value))
                 elif attribute == "cs_isolation_1":
+                    print(f"setting isolation to {actual_value}")
                     self.set_value_for(1, self.update_isolation, str(actual_value))
                 elif attribute == "cs_output_1":
+                    print(f"setting output to {actual_value}")
                     self.set_value_for(1, self.update_output, str(actual_value))
                 elif attribute == "cs_curr_1":
-                    self.set_value_for(1, self.update_curr, str(actual_value))
+                    print(f"setting curr to {actual_value}")
+                    self.set_value_for(1, self.update_curr, actual_value)
                 elif attribute == "cs_volt_1":
-                    self.set_value_for(1, self.update_volt, str(actual_value))
-        print("SX199 Updated")
+                    print(f"setting volt to {actual_value}")
+                    self.set_value_for(1, self.update_volt, actual_value)
+            sleep(0.000001)
+        self.escape()
+        print("CS580 1 Updated")
 
     def update_link_2_xml(self, xml_update, xml_old_update):
-        # if not self.is_connected():
-        #     if not self.connect(self.name):
-        #         print("SX199 is not connected")
-        #         return
-        # Load the configurations from the XML files
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
-
         self.update_link(2)
         sleep(0.001)
-        # Compare the attributes and update only the ones that are different
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
-
             if actual_value != last_value:
                 if attribute == "cs_gain_2":
                     print(f"setting gain to {actual_value}")
@@ -136,15 +132,15 @@ class SX199Device():
                     self.set_value_for(2, self.update_volt, actual_value)
             sleep(0.000001)
         self.escape()
-        print("SX199 Updated")
+        print("CS580 2 Updated")
 
+    from time import sleep
 
-    def report_link_2(self):
-        self.update_link(2)
+    def all_report_link(self, link):
+        self.update_link(link)
         sleep(0.001)
-        # Compare the attributes and update only the ones that are different
         gain = self.report_gain()
-        input = self.report_input()
+        input_val = self.report_input()
         speed = self.report_speed()
         shield = self.report_inner_shield()
         isolation = self.report_isolation()
@@ -153,9 +149,8 @@ class SX199Device():
         volt = self.report_volt()
         sleep(0.001)
         self.escape()
-        print("CS link 2 report")
-        return gain, input, speed, shield, isolation, output, curr, volt
-
+        print(f"CS link {link} report")
+        return gain, input_val, speed, shield, isolation, output, curr, volt
 
     def get_value_for(self, link, func):
         self.sx_o.link.set(link)

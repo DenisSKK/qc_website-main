@@ -45,10 +45,6 @@
             {% csrf_token %}
             <div class="col-12">
               <div class="row">
-                <div class="row ml-1">
-                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-1">Update Link 1</button>
-                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-2">Update Link 2</button>
-                </div>
                 <div class="col-6 text-right">
                   <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
                 </div>
@@ -59,6 +55,14 @@
 
             <h6 class="heading-small text-muted mb-4">SX199 & CS580 Configuration</h6>
             <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-1">Update Link 1</button>
+                </div>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-2">Update Link 2</button>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -196,13 +200,13 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-curr-1">CS580 1 DC Current</label>
+                    <label class="form-control-label" for="input-curr-1">CS580 1 DC Current [A]</label>
                     <input id="input-curr-1" class="form-control" name="curr1" placeholder="CS580 1 DC Current value" type="number" step="any" value="{{ form.curr1.value }}" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-curr-2">CS580 2 DC Current</label>
+                    <label class="form-control-label" for="input-curr-2">CS580 2 DC Current [A]</label>
                     <input id="input-curr-2" class="form-control" name="curr2" placeholder="CS580 2 DC Current value" type="number" step="any" value="{{ form.curr2.value }}" />
                   </div>
                 </div>
@@ -210,15 +214,23 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-volt-1">CS580 1 Voltage</label>
+                    <label class="form-control-label" for="input-volt-1">CS580 1 Voltage [V]</label>
                     <input id="input-volt-1" class="form-control" name="volt1" placeholder="CS580 1 Voltage value" type="number" step="any" value="{{ form.volt1.value }}" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-volt-2">CS580 2 Voltage</label>
+                    <label class="form-control-label" for="input-volt-2">CS580 2 Voltage [V]</label>
                     <input id="input-volt-2" class="form-control" name="volt2" placeholder="CS580 2 Voltage value" type="number" step="any" value="{{ form.volt2.value }}" />
                   </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-1">Update Link 1</button>
+                </div>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-2">Update Link 2</button>
                 </div>
               </div>
             </div>
@@ -231,13 +243,41 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-gain-1">CS580 1 Gain</label>
-                    {% if connectedlink1 %}<input id="input-gain-1" class="form-control" name="gain1" placeholder="N/A" type="text" step="any" value="{{gain1}}" disabled />{% else %} <input id="input-gain-1" class="form-control" name="gain1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink1 %}
+                    <select name="gain1" id="input-gain-1" class="form-control" disabled>
+                      <option value="0" {% if form.gain1.value == 0 %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if form.gain1.value == 1 %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if form.gain1.value == 2 %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if form.gain1.value == 3 %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if form.gain1.value == 4 %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if form.gain1.value == 5 %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if form.gain1.value == 6 %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if form.gain1.value == 7 %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if form.gain1.value == 8 %}selected{% endif %}>50mA</option>
+                    </select>
+                    {% else %}
+                    <input id="input-gain-1" class="form-control" name="gain1" placeholder="N/A" type="text" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-gain-2">CS580 2 Gain</label>
-                    {% if connectedlink2 %}<input id="input-gain-2" class="form-control" name="gain2" placeholder="N/A" type="text" step="any" value="{{gain2}}" disabled />{% else %} <input id="input-gain-2" class="form-control" name="gain2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink2 %}
+                    <select name="gain2" id="input-gain-2" class="form-control" disabled>
+                      <option value="0" {% if form.gain2.value == 0 %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if form.gain2.value == 1 %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if form.gain2.value == 2 %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if form.gain2.value == 3 %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if form.gain2.value == 4 %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if form.gain2.value == 5 %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if form.gain2.value == 6 %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if form.gain2.value == 7 %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if form.gain2.value == 8 %}selected{% endif %}>50mA</option>
+                    </select>
+                    {% else %}
+                    <input id="input-gain-2" class="form-control" name="gain2" placeholder="N/A" type="text" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -245,13 +285,21 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-input-1">CS580 1 Input</label>
-                    {% if connectedlink1 %}<input id="input-input-1" class="form-control" name="input1" placeholder="N/A" type="text" step="any" value="{{input1}}" disabled />{% else %} <input id="input-input-1" class="form-control" name="input1" placeholder="Disconnected" type="number" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink1 %}
+                    <input id="input-input-1" class="form-control" name="input1" placeholder="N/A" type="text" value="{% if input1 == '0' %}OFF{% else %}ON{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-input-1" class="form-control" name="input1" placeholder="Disconnected" type="text" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-input-2">CS580 2 Input</label>
-                    {% if connectedlink2 %}<input id="input-input-2" class="form-control" name="input2" placeholder="N/A" type="text" step="any" value="{{input2}}" disabled />{% else %} <input id="input-input-2" class="form-control" name="input2" placeholder="Disconnected" type="number" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink2 %}
+                    <input id="input-input-2" class="form-control" name="input2" placeholder="N/A" type="text" value="{% if input2 == '0' %}OFF{% else %}ON{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-input-2" class="form-control" name="input2" placeholder="Disconnected" type="text" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -259,27 +307,43 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-speed-1">CS580 1 Speed</label>
-                    {% if connectedlink1 %}<input id="input-speed-1" class="form-control" name="speed1" placeholder="N/A" type="text" step="any" value="{{speed1}}" disabled />{% else %} <input id="input-speed-1" class="form-control" name="speed1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink1 %}
+                    <input id="input-speed-1" class="form-control" name="speed1" placeholder="N/A" type="text" step="any" value="{% if speed1 == '0' %}FAST{% else %}SLOW{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-speed-1" class="form-control" name="speed1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-speed-2">CS580 2 Speed</label>
+                  {% if connectedlink2 %}
+                  <input id="input-speed-2" class="form-control" name="speed2" placeholder="N/A" type="text" step="any" value="{% if speed2 == '0' %}FAST{% else %}SLOW{% endif %}" disabled />
+                  {% else %}
+                  <input id="input-speed-2" class="form-control" name="speed2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                  {% endif %}
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-speed-2">CS580 2 Speed</label>
-                    {% if connectedlink2 %}<input id="input-speed-2" class="form-control" name="speed2" placeholder="N/A" type="text" step="any" value="{{speed2}}" disabled />{% else %} <input id="input-speed-2" class="form-control" name="speed2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
-                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-shield-1">CS580 1 Inner Shield</label>
-                    {% if connectedlink1 %}<input id="input-shield-1" class="form-control" name="shield1" placeholder="N/A" type="text" step="any" value="{{shield1}}" disabled />{% else %} <input id="input-shield-1" class="form-control" name="shield1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink1 %}
+                    <input id="input-shield-1" class="form-control" name="shield1" placeholder="N/A" type="text" step="any" value="{% if shield1 == '0' %}GUARD{% else %}RETURN{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-shield-1" class="form-control" name="shield1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-shield-2">CS580 2 Inner Shield</label>
-                    {% if connectedlink2 %}<input id="input-shield-2" class="form-control" name="shield2" placeholder="N/A" type="text" step="any" value="{{shield2}}" disabled />{% else %} <input id="input-shield-2" class="form-control" name="shield2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink2 %}
+                    <input id="input-shield-2" class="form-control" name="shield2" placeholder="N/A" type="text" step="any" value="{% if shield2 == '0' %}GUARD{% else %}RETURN{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-shield-2" class="form-control" name="shield2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -287,13 +351,21 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-isolation-1">CS580 1 Isolation</label>
-                    {% if connectedlink1 %}<input id="input-isolation-1" class="form-control" name="isolation1" placeholder="N/A" type="text" step="any" value="{{isolation1}}" disabled />{% else %} <input id="input-isolation-1" class="form-control" name="isolation1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink1 %}
+                    <input id="input-isolation-1" class="form-control" name="isolation1" placeholder="N/A" type="text" step="any" value="{% if isolation1 == '0' %}GROUND{% else %}FLOAT{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-isolation-1" class="form-control" name="isolation1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-isolation-2">CS580 2 Isolation</label>
-                    {% if connectedlink2 %}<input id="input-isolation-2" class="form-control" name="isolation2" placeholder="N/A" type="text" step="any" value="{{isolation2}}" disabled />{% else %} <input id="input-isolation-2" class="form-control" name="isolation2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink2 %}
+                    <input id="input-isolation-2" class="form-control" name="isolation2" placeholder="N/A" type="text" step="any" value="{% if isolation2 == '0' %}GROUND{% else %}FLOAT{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-isolation-2" class="form-control" name="isolation2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -301,26 +373,34 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-output-1">CS580 1 Output</label>
-                    {% if connectedlink1 %}<input id="input-output-1" class="form-control" name="output1" placeholder="N/A" type="text" step="any" value="{{output1}}" disabled />{% else %} <input id="input-output-1" class="form-control" name="output1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink1 %}
+                    <input id="input-output-1" class="form-control" name="output1" placeholder="N/A" type="text" step="any" value="{% if output1 == '0' %}OFF{% else %}ON{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-output-1" class="form-control" name="output1" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-output-2">CS580 2 Output</label>
-                    {% if connectedlink2 %}<input id="input-output-2" class="form-control" name="output2" placeholder="N/A" type="text" step="any" value="{{output2}}" disabled />{% else %} <input id="input-output-2" class="form-control" name="output2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled /> {% endif %}
+                    {% if connectedlink2 %}
+                    <input id="input-output-2" class="form-control" name="output2" placeholder="N/A" type="text" step="any" value="{% if output2 == '0' %}OFF{% else %}ON{% endif %}" disabled />
+                    {% else %}
+                    <input id="input-output-2" class="form-control" name="output2" placeholder="Disconnected" type="text" step="any" value="Disconnected" disabled />
+                    {% endif %}
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-curr-1">CS580 1 Current</label>
+                    <label class="form-control-label" for="input-curr-1">CS580 1 Current [A]</label>
                     {% if connectedlink1 %}<input id="input-curr-1" class="form-control" name="curr1" placeholder="N/A" type="number" step="any" value="{{curr1}}" disabled />{% else %} <input id="input-curr-1" class="form-control" name="curr1" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-curr-2">CS580 2 Current</label>
+                    <label class="form-control-label" for="input-curr-2">CS580 2 Current [A]</label>
                     {% if connectedlink2 %}<input id="input-curr-2" class="form-control" name="curr2" placeholder="N/A" type="number" step="any" value="{{curr2}}" disabled />{% else %} <input id="input-curr-2" class="form-control" name="curr2" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
                 </div>
@@ -328,25 +408,29 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-volt-1">CS580 1 Voltage</label>
+                    <label class="form-control-label" for="input-volt-1">CS580 1 Voltage [V]</label>
                     {% if connectedlink1 %}<input id="input-volt-1" class="form-control" name="volt1" placeholder="N/A" type="number" step="any" value="{{volt1}}" disabled />{% else %} <input id="input-volt-1" class="form-control" name="volt1" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-volt-2">CS580 2 Voltage</label>
+                    <label class="form-control-label" for="input-volt-2">CS580 2 Voltage [V]</label>
                     {% if connectedlink2 %}<input id="input-volt-2" class="form-control" name="volt2" placeholder="N/A" type="number" step="any" value="{{volt2}}" disabled />{% else %} <input id="input-volt-2" class="form-control" name="volt2" placeholder="Disconnected" type="number" step="any" value="NA" disabled /> {% endif %}
                   </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-1">Update Link 1</button>
+                </div>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-2">Update Link 2</button>
                 </div>
               </div>
             </div>
             <hr class="my-4" />
             <div class="col-12">
               <div class="row">
-                <div class="row ml-1">
-                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-1">Update Link 1</button>
-                  <button type="submit" class="btn btn-sm btn-primary" name="update-link-2">Update Link 2</button>
-                </div>
                 <div class="col-6 text-right">
                   <a href="{% url 'home' %}" class="btn btn-sm btn-secondary">Back</a>
                 </div>

@@ -441,19 +441,23 @@ def sx_page_view(request):
         SX_instance = construct_sx()
         connected = SX_instance.is_connected()
         if connected:
-            # connected_link_1 = SX_instance.is_cs_connected(1)
+            # connected_link_1 = SX_instance.is_cs_connected(1) # TODO add CS 1
             connected_link_2 = SX_instance.is_cs_connected(2)
     else:
         try:
-            SX_instance.escape()
+            # SX_instance.escape() # TODO find out what is this for
             connected = SX_instance.is_connected()
             if connected:
-                # connected_link_1 = SX_instance.is_cs_connected(1)
+                # connected_link_1 = SX_instance.is_cs_connected(1) # TODO add CS 1
                 connected_link_2 = SX_instance.is_cs_connected(2)
-            # print(f'constructed, checking connection conn: {connected}')
         except:
             # print(f'constructed, checking connection FAILED, connecting conn: {connected}')
-            connected = SX_instance.connect('sx199')
+            connected = SX_instance.connect('sx199') # TODO fix connection verification
+            # SX_instance = construct_sx() # TODO try this connection verification or ask ChatGPT to make a better one
+            # connected = SX_instance.is_connected()
+            # if connected:
+            #     connected_link_1 = SX_instance.is_cs_connected(1)
+            #     connected_link_2 = SX_instance.is_cs_connected(2)
             # print("sx is not connected. connecting....")
         # SX_instance.connect('sx199')
     # else:
@@ -461,15 +465,18 @@ def sx_page_view(request):
     #     connected = SX_instance.is_connected()
     sx_xml_dict = xml_config_to_dict(xml_path)
     if connected and connected_link_1:
-        # SX_instance.update_link_1_xml(xml_path, old_xml_path)
-        # context["gain1"] = SX_instance.get_value_for(1, SX_instance.report_gain)
-        # context["input1"] = SX_instance.get_value_for(1, SX_instance.report_input)
-        # context["speed1"] = SX_instance.get_value_for(1, SX_instance.report_speed)
-        # context["shield1"] = SX_instance.get_value_for(1, SX_instance.report_inner_shield)
-        # context["isolation1"] = SX_instance.get_value_for(1, SX_instance.report_isolation)
-        # context["output1"] = SX_instance.get_value_for(1, SX_instance.report_output)
-        # context["curr1"] = SX_instance.get_value_for(1, SX_instance.report_curr)
-        # context["volt1"] = SX_instance.get_value_for(1, SX_instance.report_volt)
+        # SX_instance.update_link_2_xml(xml_path, old_xml_path)
+        sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], \
+            sx_xml_dict["cs_isolation_1"], sx_xml_dict["cs_output_1"], sx_xml_dict["cs_curr_1"], sx_xml_dict[
+            "cs_volt_1"] = SX_instance.all_report_link(1)
+        context["gain1"] = sx_xml_dict["cs_gain_1"]
+        context["input1"] = sx_xml_dict["cs_input_1"]
+        context["speed1"] = sx_xml_dict["cs_speed_1"]
+        context["shield1"] = sx_xml_dict["cs_shield_1"]
+        context["isolation1"] = sx_xml_dict["cs_isolation_1"]
+        context["output1"] = sx_xml_dict["cs_output_1"]
+        context["curr1"] = sx_xml_dict["cs_curr_1"]
+        context["volt1"] = sx_xml_dict["cs_volt_1"]
         sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(sx_xml_dict, xml_path)
         sx_xml_dict = xml_config_to_dict(xml_path)
@@ -482,7 +489,7 @@ def sx_page_view(request):
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], \
             sx_xml_dict["cs_isolation_2"], sx_xml_dict["cs_output_2"], sx_xml_dict["cs_curr_2"], sx_xml_dict[
-            "cs_volt_2"] = SX_instance.report_link_2()
+            "cs_volt_2"] = SX_instance.all_report_link(2)
         context["gain2"] = sx_xml_dict["cs_gain_2"]
         context["input2"] = sx_xml_dict["cs_input_2"]
         context["speed2"] = sx_xml_dict["cs_speed_2"]
@@ -500,6 +507,7 @@ def sx_page_view(request):
         messages.info(request, info)
     if isinstance(sx_xml_dict, str):
         sx_xml_dict = {}
+
 
     if request.method == 'POST':
         # Save old XML before updating
@@ -528,7 +536,7 @@ def sx_page_view(request):
         }
         if "update-link-1" in request.POST:
             form = SX199Form(request.POST)
-            if form.is_valid():
+            if form.is_valid() and connected and connected_link_1:
                 min_current, max_current = gain_to_current.get(form.cleaned_data['gain1'], (0, 0))
                 if min_current <= form.cleaned_data['curr1'] <= max_current:
                     sx_xml_dict["cs_gain_1"] = form.cleaned_data['gain1']
@@ -540,31 +548,24 @@ def sx_page_view(request):
                     sx_xml_dict["cs_curr_1"] = form.cleaned_data['curr1']
                     sx_xml_dict["cs_volt_1"] = form.cleaned_data['volt1']
                     dict_to_xml_file(sx_xml_dict, xml_path)
-                    if connected and connected_link_1:
-                        print("is connected. attempt to update_xml for 1")
-                        SX_instance.update_link_1_xml(xml_path, old_xml_path)
-                        messages.success(request, 'Changes saved successfully in current source 1!')
-                    else:
-                        # Add success message to the Django messages framework
-                        messages.warning(request, 'Device not connected, changes saved only to XML!')
+                    # if connected and connected_link_1:
+                    #     print("is connected. attempt to update_xml for 1")
+                    SX_instance.update_link_1_xml(xml_path, old_xml_path)
+                    messages.success(request, 'Changes saved successfully in current source 1!')
+                    # else:
+                    # Add success message to the Django messages framework
+                    # messages.warning(request, 'Device not connected, changes saved only to XML!')
                 else:
                     messages.error(request,
                                    f"Invalid current value {form.cleaned_data['curr1']} for Gain "
                                    f"{GAIN_CHOICES.get(form.cleaned_data['gain1'])}. Valid range: "
                                    f"{min_current} to {max_current}")
-
-                # Redirect to the cryostat page to reload the page with the updated values
-                return redirect('sx_page')
             else:
                 messages.warning(request, 'Invalid current source 1 values! Cannot be updated!')
-                return redirect('sx_page')
         elif "update-link-2" in request.POST:
             form = SX199Form(request.POST)
-            if form.is_valid():
+            if form.is_valid() and connected and connected_link_2:
                 min_current, max_current = gain_to_current.get(form.cleaned_data['gain2'], (0, 0))
-                print(min_current <= form.cleaned_data['curr2'])
-                print(form.cleaned_data['curr2'] <= max_current)
-                print(min_current <= form.cleaned_data['curr2'] <= max_current)
                 if min_current <= form.cleaned_data['curr2'] <= max_current:
                     sx_xml_dict["cs_gain_2"] = form.cleaned_data['gain2']
                     sx_xml_dict["cs_input_2"] = form.cleaned_data['input2']
@@ -575,13 +576,13 @@ def sx_page_view(request):
                     sx_xml_dict["cs_curr_2"] = form.cleaned_data['curr2']
                     sx_xml_dict["cs_volt_2"] = form.cleaned_data['volt2']
                     dict_to_xml_file(sx_xml_dict, xml_path)
-                    if connected and connected_link_2:
-                        print("is connected. attempt to update_xml for 2")
-                        SX_instance.update_link_2_xml(xml_path, old_xml_path)
-                        messages.success(request, 'Changes saved successfully in current source 2!')
-                    else:
-                        # Add success message to the Django messages framework
-                        messages.warning(request, 'Device not connected, changes saved only to XML!')
+                    # if connected and connected_link_2:
+                    #     print("is connected. attempt to update_xml for 2")
+                    SX_instance.update_link_2_xml(xml_path, old_xml_path)
+                    messages.success(request, 'Changes saved successfully in current source 2!')
+                    # else:
+                    # Add success message to the Django messages framework
+                    # messages.warning(request, 'Device not connected, changes saved only to XML!')
                 else:
                     messages.error(request,
                                    f"Invalid current value {form.cleaned_data['curr2']} for Gain "
@@ -589,10 +590,9 @@ def sx_page_view(request):
                                    f"{min_current} to {max_current}")
 
                 # Redirect to the cryostat page to reload the page with the updated values
-                return redirect('sx_page')
             else:
                 messages.warning(request, 'Invalid current source 2 values! Cannot be updated!')
-                return redirect('sx_page')
+        return redirect('sx_page')
 
     else:
         # Initialize the form with the current cryostat information
