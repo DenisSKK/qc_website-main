@@ -21,7 +21,7 @@ class SX199Device():
         self.name = name
         if name == None:
             self.name = 'sx199'
-        self.connect(name=name)
+        self.connect()
 
     def connect(self):
         for _ in range(4):
