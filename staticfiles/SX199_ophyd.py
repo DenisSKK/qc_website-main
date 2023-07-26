@@ -34,7 +34,7 @@ class SX199Device():
             if self.is_connected():
                 print(f"{self.report_id()} connected")
                 return True
-            return False
+        return False
 
     def disconnect(self):
         self.sx_instr.comm_handle.close()
