@@ -23,13 +23,13 @@ class SX199Device():
             self.name = 'sx199'
         self.connect(name=name)
 
-    def connect(self, name):
+    def connect(self):
         for _ in range(4):
-            self.sx_instr = open_by_name(name=name)
-            self.sx_instr.name = name
+            self.sx_instr = open_by_name(name=self.name)
+            self.sx_instr.name = self.name
 
-            SX, component_dict = generate_ophyd_obj(name=name, scpi_obj=self.sx_instr)
-            self.sx_ophyd = SX(name=name)
+            SX, component_dict = generate_ophyd_obj(name=self.name, scpi_obj=self.sx_instr)
+            self.sx_ophyd = SX(name=self.name)
 
             if self.is_connected():
                 print(f"{self.report_id()} connected")
