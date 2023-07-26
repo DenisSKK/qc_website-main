@@ -436,33 +436,16 @@ def sx_page_view(request):
     connected_link_2 = False
     xml_path = os.path.join("staticfiles", "sx199.xml")
     old_xml_path = os.path.join("staticfiles", "sx199-old.xml")
-    if SX_instance == None:
-        print("constructing sx")
+    if SX_instance is None:
+        print("Constructing sx")
         SX_instance = construct_sx()
-        connected = SX_instance.is_connected()
-        if connected:
-            # connected_link_1 = SX_instance.is_cs_connected(1) # TODO add CS 1
-            connected_link_2 = SX_instance.is_cs_connected(2)
-    else:
-        try:
-            # SX_instance.escape() # TODO find out what is this for
-            connected = SX_instance.is_connected()
-            if connected:
-                # connected_link_1 = SX_instance.is_cs_connected(1) # TODO add CS 1
-                connected_link_2 = SX_instance.is_cs_connected(2)
-        except:
-            # print(f'constructed, checking connection FAILED, connecting conn: {connected}')
-            connected = SX_instance.connect('sx199') # TODO fix connection verification
-            # SX_instance = construct_sx() # TODO try this connection verification or ask ChatGPT to make a better one
-            # connected = SX_instance.is_connected()
-            # if connected:
-            #     connected_link_1 = SX_instance.is_cs_connected(1)
-            #     connected_link_2 = SX_instance.is_cs_connected(2)
-            # print("sx is not connected. connecting....")
-        # SX_instance.connect('sx199')
-    # else:
-    #     print("sx already constructed")
-    #     connected = SX_instance.is_connected()
+
+    SX_instance.connect()
+    connected = SX_instance.is_connected()
+    if connected:
+        connected_link_1 = SX_instance.is_cs_connected(1)
+        connected_link_2 = SX_instance.is_cs_connected(2)
+
     sx_xml_dict = xml_config_to_dict(xml_path)
     if connected and connected_link_1:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)

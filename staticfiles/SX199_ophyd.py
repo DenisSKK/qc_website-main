@@ -44,23 +44,17 @@ class SX199Device():
         return id_string.startswith("Stanford_Research_Systems,SX199")
 
     def is_cs_connected(self, link):
-        self.sx_ophyd.link.set(link)
+        self.escape()
+        self.update_link(link)
         sleep(0.001)
         try:
             id_string = self.sx_ophyd.id.get()
         except:
             return False
-        # sleep(0.1)
+        sleep(0.000001)
         self.escape()
         print(f'check: {id_string}')
         return id_string.startswith("Stanford_Research_Systems,CS580")
-
-    def is_linked(self):
-        if self.sx_ophyd.link.get() != 0:
-            return True
-        elif self.sx_ophyd.link.get() == 0:
-            return False
-        return False
 
     def update_link_1_xml(self, xml_update, xml_old_update):
         actual_config = xml_config_to_dict(xml_update)
@@ -137,6 +131,7 @@ class SX199Device():
     from time import sleep
 
     def all_report_link(self, link):
+        self.escape()
         self.update_link(link)
         sleep(0.001)
         gain = self.report_gain()
