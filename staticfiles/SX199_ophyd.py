@@ -24,17 +24,17 @@ class SX199Device():
         self.connect(name=name)
 
     def connect(self, name):
-        # for _ in range(4):
-        self.sx_instr = open_by_name(name=name)
-        self.sx_instr.name = name
+        for _ in range(4):
+            self.sx_instr = open_by_name(name=name)
+            self.sx_instr.name = name
 
-        SX, component_dict = generate_ophyd_obj(name=name, scpi_obj=self.sx_instr)
-        self.sx_ophyd = SX(name=name)
+            SX, component_dict = generate_ophyd_obj(name=name, scpi_obj=self.sx_instr)
+            self.sx_ophyd = SX(name=name)
 
-        if self.is_connected():
-            print(f"{self.report_id()} connected")
-            return True
-        return False
+            if self.is_connected():
+                print(f"{self.report_id()} connected")
+                return True
+            return False
 
     def disconnect(self):
         self.sx_instr.comm_handle.close()
