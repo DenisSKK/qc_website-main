@@ -21,6 +21,8 @@ class SX199Device():
         self.name = name
         if name == None:
             self.name = 'sx199'
+        self.sx_instr = None
+        self.sx_ophyd = None
         self.connect()
 
     def connect(self):
