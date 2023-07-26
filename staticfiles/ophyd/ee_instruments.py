@@ -11,7 +11,7 @@ import numpy as np
 import scipy.signal as signal
 
 from staticfiles.instrbuilder.config import data_save
-from ophyd.scpi_like import ScpiSignal, ScpiSignalBase, ScpiSignalFileSave, StatCalculator
+from staticfiles.ophyd.scpi_like import ScpiSignal, ScpiSignalBase, ScpiSignalFileSave, StatCalculator
 from ophyd import Device, Component, Signal
 from ophyd.device import Kind
 
