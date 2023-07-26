@@ -25,11 +25,11 @@ class SX199Device():
 
     def connect(self, name):
         # for _ in range(4):
-        self.sx = open_by_name(name=name)
-        self.sx.name = name
+        self.sx_instr = open_by_name(name=name)
+        self.sx_instr.name = name
 
-        SX, component_dict = generate_ophyd_obj(name=name, scpi_obj=self.sx)
-        self.sx_o = SX(name=name)
+        SX, component_dict = generate_ophyd_obj(name=name, scpi_obj=self.sx_instr)
+        self.sx_ophyd = SX(name=name)
 
         if self.is_connected():
             print(f"{self.report_id()} connected")
@@ -37,17 +37,17 @@ class SX199Device():
         return False
 
     def disconnect(self):
-        self.sx.close()
+        self.sx_instr.comm_handle.close()
 
     def is_connected(self):
-        id_string = self.sx_o.id.get()
+        id_string = self.sx_ophyd.id.get()
         return id_string.startswith("Stanford_Research_Systems,SX199")
 
     def is_cs_connected(self, link):
-        self.sx_o.link.set(link)
+        self.sx_ophyd.link.set(link)
         sleep(0.001)
         try:
-            id_string = self.sx_o.id.get()
+            id_string = self.sx_ophyd.id.get()
         except:
             return False
         # sleep(0.1)
@@ -56,9 +56,9 @@ class SX199Device():
         return id_string.startswith("Stanford_Research_Systems,CS580")
 
     def is_linked(self):
-        if self.sx_o.link.get() != 0:
+        if self.sx_ophyd.link.get() != 0:
             return True
-        elif self.sx_o.link.get() == 0:
+        elif self.sx_ophyd.link.get() == 0:
             return False
         return False
 
@@ -153,7 +153,8 @@ class SX199Device():
         return gain, input_val, speed, shield, isolation, output, curr, volt
 
     def get_value_for(self, link, func):
-        self.sx_o.link.set(link)
+        self.escape()
+        self.sx_ophyd.link.set(link)
         sleep(0.001)
         func_return_val = func()
         self.escape()
@@ -168,69 +169,69 @@ class SX199Device():
         #     print("Device is not connected.")
 
     def escape(self):
-        self.sx_o.escape.set('')
-        self.sx_o.clear_status.set('')
+        self.sx_ophyd.escape.set('')
+        self.sx_ophyd.clear_status.set('')
 
     def update_link(self, val):
-        self.sx_o.link.set(val)
+        self.sx_ophyd.link.set(val)
     def report_link(self):
-        link = self.sx_o.link.get()
+        link = self.sx_ophyd.link.get()
         return link
 
     def update_gain(self, val):
-        self.sx_o.cs_gain.set(val)
+        self.sx_ophyd.cs_gain.set(val)
 
     def report_gain(self):
-        return self.sx_o.cs_gain.get()
+        return self.sx_ophyd.cs_gain.get()
 
     def update_input(self, val):
-        self.sx_o.cs_analog_in.set(val)
+        self.sx_ophyd.cs_analog_in.set(val)
     def report_input(self):
-        return self.sx_o.cs_analog_in.get()
+        return self.sx_ophyd.cs_analog_in.get()
 
     def update_speed(self, val):
-        self.sx_o.cs_speed.set(val)
+        self.sx_ophyd.cs_speed.set(val)
     def report_speed(self):
-        return self.sx_o.cs_speed.get()
+        return self.sx_ophyd.cs_speed.get()
 
     def update_inner_shield(self, val):
-        self.sx_o.cs_inner_shield.set(val)
+        self.sx_ophyd.cs_inner_shield.set(val)
     def report_inner_shield(self):
-        return self.sx_o.cs_inner_shield.get()
+        return self.sx_ophyd.cs_inner_shield.get()
 
     def update_isolation(self, val):
-        self.sx_o.cs_isolation.set(val)
+        self.sx_ophyd.cs_isolation.set(val)
     def report_isolation(self):
-        return self.sx_o.cs_isolation.get()
+        return self.sx_ophyd.cs_isolation.get()
 
     def update_output(self, val):
-        self.sx_o.cs_output.set(val)
+        self.sx_ophyd.cs_output.set(val)
     def report_output(self):
-        return self.sx_o.cs_output.get()
+        return self.sx_ophyd.cs_output.get()
 
     def update_curr(self, val):
-        self.sx_o.cs_dc_curr.set(val)
+        self.sx_ophyd.cs_dc_curr.set(val)
     def report_curr(self):
-        return self.sx_o.cs_dc_curr.get()
+        return self.sx_ophyd.cs_dc_curr.get()
 
     def update_volt(self, val):
-        self.sx_o.cs_comp_volt.set(val)
+        self.sx_ophyd.cs_comp_volt.set(val)
     def report_volt(self):
-        volt = self.sx_o.cs_comp_volt.get()
+        volt = self.sx_ophyd.cs_comp_volt.get()
         return volt
 
     def update_alarm(self, val):
-        self.sx_o.cs_audible_alarm.set(val)
+        self.sx_ophyd.cs_audible_alarm.set(val)
     def report_alarm(self):
-        return self.sx_o.cs_audible_alarm.get()
+        return self.sx_ophyd.cs_audible_alarm.get()
 
     def update_overload(self, val):
-        self.sx_o.cs_overload.set(val)
+        self.sx_ophyd.cs_overload.set(val)
     def report_overload(self):
-        return self.sx_o.cs_overload.get()
+        return self.sx_ophyd.cs_overload.get()
 
     def report_id(self):
-        return self.sx_o.id.get()
+        return self.sx_ophyd.id.get()
 
     def stage(self) -> List[object]:
         return super().stage()
