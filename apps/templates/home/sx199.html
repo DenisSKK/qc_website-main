@@ -84,7 +84,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-gain-2">CS580 2 Gain</label>
-                    <select name="gain2" id="input-gain-2" class="form-control">
+                    <select name="gain2" id="input-gain-2" class="form-control"
+                    {% if not connectedlink2 %}disabled{% endif %}>
                       <option value="0" {% if form.gain2.value == 0 %}selected{% endif %}>1nA</option>
                       <option value="1" {% if form.gain2.value == 1 %}selected{% endif %}>10nA</option>
                       <option value="2" {% if form.gain2.value == 2 %}selected{% endif %}>100nA</option>
@@ -102,7 +103,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-input-1">CS580 1 Input</label>
-                    <select class="form-control" name="input1" id="input-input-1">
+                    <select class="form-control" name="input1" id="input-input-1"
+                    {% if not connectedlink1 %}disabled{% endif %}>
                       <option value="0" {% if form.input1.value == 0 %}selected{% endif %}>OFF</option>
                       <option value="1" {% if form.input1.value == 1 %}selected{% endif %}>ON</option>
                     </select>
@@ -111,7 +113,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-input-2">CS580 2 Input</label>
-                     <select class="form-control"name="input2" id="input-input-2">
+                     <select class="form-control"name="input2" id="input-input-2"
+                     {% if not connectedlink2 %}disabled{% endif %}>
                       <option value="0" {% if form.input2.value == 0 %}selected{% endif %}>OFF</option>
                       <option value="1" {% if form.input2.value == 1 %}selected{% endif %}>ON</option>
                     </select>
@@ -122,7 +125,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-speed-1">CS580 1 Speed</label>
-                     <select class="form-control"name="speed1" id="input-speed-1">
+                     <select class="form-control"name="speed1" id="input-speed-1"
+                     {% if not connectedlink1 %}disabled{% endif %}>
                       <option value="0" {% if form.speed1.value == 0 %}selected{% endif %}>FAST</option>
                       <option value="1" {% if form.speed1.value == 1 %}selected{% endif %}>SLOW</option>
                     </select>
@@ -131,7 +135,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-speed-2">CS580 2 Speed</label>
-                     <select class="form-control"name="speed2" id="input-speed-2">
+                     <select class="form-control"name="speed2" id="input-speed-2"
+                     {% if not connectedlink2 %}disabled{% endif %}>
                       <option value="0" {% if form.speed2.value == 0 %}selected{% endif %}>FAST</option>
                       <option value="1" {% if form.speed2.value == 1 %}selected{% endif %}>SLOW</option>
                     </select>
@@ -142,7 +147,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-shield-1">CS580 1 Inner Shield</label>
-                     <select class="form-control"name="shield1" id="input-shield-1">
+                     <select class="form-control"name="shield1" id="input-shield-1"
+                     {% if not connectedlink1 %}disabled{% endif %}>
                       <option value="0" {% if form.shield1.value == 0 %}selected{% endif %}>GUARD</option>
                       <option value="1" {% if form.shield1.value == 1 %}selected{% endif %}>RETURN</option>
                     </select>
@@ -151,7 +157,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-shield-2">CS580 2 Inner Shield</label>
-                     <select class="form-control"name="shield2" id="input-shield-2">
+                     <select class="form-control"name="shield2" id="input-shield-2"
+                     {% if not connectedlink2 %}disabled{% endif %}>
                       <option value="0" {% if form.shield2.value == 0 %}selected{% endif %}>GUARD</option>
                       <option value="1" {% if form.shield2.value == 1 %}selected{% endif %}>RETURN</option>
                     </select>
@@ -162,7 +169,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-isolation-1">CS580 1 Isolation</label>
-                     <select class="form-control"name="isolation1" id="input-isolation-1">
+                     <select class="form-control"name="isolation1" id="input-isolation-1"
+                     {% if not connectedlink1 %}disabled{% endif %}>
                       <option value="0" {% if form.isolation1.value == 0 %}selected{% endif %}>GROUND</option>
                       <option value="1" {% if form.isolation1.value == 1 %}selected{% endif %}>FLOAT</option>
                     </select>
@@ -171,7 +179,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-isolation-2">CS580 2 Isolation</label>
-                     <select class="form-control"name="isolation2" id="input-isolation-2">
+                     <select class="form-control"name="isolation2" id="input-isolation-2"
+                     {% if not connectedlink2 %}disabled{% endif %}>
                       <option value="0" {% if form.isolation2.value == 0 %}selected{% endif %}>GROUND</option>
                       <option value="1" {% if form.isolation2.value == 1 %}selected{% endif %}>FLOAT</option>
                     </select>
@@ -182,7 +191,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-output-1">CS580 1 Output</label>
-                     <select class="form-control"name="output1" id="input-output-1">
+                     <select class="form-control"name="output1" id="input-output-1"
+                     {% if not connectedlink1 %}disabled{% endif %}>
                       <option value="0" {% if form.output1.value == 0 %}selected{% endif %}>OFF</option>
                       <option value="1" {% if form.output1.value == 1 %}selected{% endif %}>ON</option>
                     </select>
@@ -191,7 +201,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-output-2">CS580 2 Output</label>
-                     <select class="form-control"name="output2" id="input-output-2">
+                     <select class="form-control"name="output2" id="input-output-2"
+                     {% if not connectedlink2 %}disabled{% endif %}>
                       <option value="0" {% if form.output2.value == 0 %}selected{% endif %}>OFF</option>
                       <option value="1" {% if form.output2.value == 1 %}selected{% endif %}>ON</option>
                     </select>
@@ -202,13 +213,15 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-curr-1">CS580 1 DC Current [A]</label>
-                    <input id="input-curr-1" class="form-control" name="curr1" placeholder="CS580 1 DC Current value" type="number" step="any" value="{{ form.curr1.value }}" />
+                    <input id="input-curr-1" class="form-control" name="curr1" placeholder="CS580 1 DC Current value" type="number" step="any" value="{{ form.curr1.value }}"
+                    {% if not connectedlink1 %}disabled{% endif %}/>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-curr-2">CS580 2 DC Current [A]</label>
-                    <input id="input-curr-2" class="form-control" name="curr2" placeholder="CS580 2 DC Current value" type="number" step="any" value="{{ form.curr2.value }}" />
+                    <input id="input-curr-2" class="form-control" name="curr2" placeholder="CS580 2 DC Current value" type="number" step="any" value="{{ form.curr2.value }}"
+                    {% if not connectedlink2 %}disabled{% endif %}/>
                   </div>
                 </div>
               </div>
@@ -216,13 +229,15 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-volt-1">CS580 1 Voltage [V]</label>
-                    <input id="input-volt-1" class="form-control" name="volt1" placeholder="CS580 1 Voltage value" type="number" step="any" value="{{ form.volt1.value }}" />
+                    <input id="input-volt-1" class="form-control" name="volt1" placeholder="CS580 1 Voltage value" type="number" step="any" value="{{ form.volt1.value }}"
+                    {% if not connectedlink1 %}disabled{% endif %}/>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-volt-2">CS580 2 Voltage [V]</label>
-                    <input id="input-volt-2" class="form-control" name="volt2" placeholder="CS580 2 Voltage value" type="number" step="any" value="{{ form.volt2.value }}" />
+                    <input id="input-volt-2" class="form-control" name="volt2" placeholder="CS580 2 Voltage value" type="number" step="any" value="{{ form.volt2.value }}"
+                    {% if not connectedlink2 %}disabled{% endif %}/>
                   </div>
                 </div>
               </div>
