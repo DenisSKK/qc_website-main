@@ -10,9 +10,9 @@ import itertools
 import numpy as np
 import wrapt
 
-from .status import Status
-from .signal import Signal
-from .sim import SynSignal, NullStatus, new_uid
+from ophyd.status import Status
+from ophyd.signal import Signal
+from ophyd.sim import SynSignal, NullStatus, new_uid
 
 logger = logging.getLogger(__name__)
 
