@@ -1,10 +1,11 @@
-from .XMLGenerator import xml_config_to_dict, dict_to_xml
 import os
+
 import ruamel.yaml
-import xml.etree.ElementTree as Et
+
+from .XMLGenerator import xml_config_to_dict, dict_to_xml_file
 
 config_file_src = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
-config_file_dest = os.path.expanduser("~/.instrbuilder/config.yaml")
+config_file_dest = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".instrbuilder\config.yaml")
 # Read data from staticfiles/config.yaml
 yaml_src = ruamel.yaml.YAML()
 with open(config_file_src, "r") as f:
@@ -51,7 +52,7 @@ def update_itc_config():
     itc_config_dict = xml_config_to_dict(itc_config_path)
     itc_config_dict['host'] = itc_host
     itc_config_dict['port'] = itc_port
-    dict_to_xml(itc_config_dict, itc_config_path)
+    dict_to_xml_file(itc_config_dict, itc_config_path)
 
 
 def update_rfsoc_config():
@@ -73,7 +74,7 @@ def update_rfsoc_config():
     rfsoc_config_dict['host'] = rfsoc_host
     rfsoc_config_dict['username'] = rfsoc_username
     rfsoc_config_dict['password'] = rfsoc_password
-    dict_to_xml(rfsoc_config_dict, rfsoc_config_path)
+    dict_to_xml_file(rfsoc_config_dict, rfsoc_config_path)
 
 
 def update_toptica_config():
@@ -89,7 +90,7 @@ def update_toptica_config():
     toptica_config_dict = xml_config_to_dict(toptica_config_path)
     toptica_config_dict['host'] = toptica_host
     toptica_config_dict['port'] = toptica_port
-    dict_to_xml(toptica_config_dict, toptica_config_path)
+    dict_to_xml_file(toptica_config_dict, toptica_config_path)
 
 
 def update_caylar_config():
@@ -104,4 +105,4 @@ def update_caylar_config():
     caylar_config_dict = xml_config_to_dict(caylar_config_path)
     caylar_config_dict['host'] = caylar_host
     caylar_config_dict['port'] = caylar_port
-    dict_to_xml(caylar_config_dict, caylar_config_path)
+    dict_to_xml_file(caylar_config_dict, caylar_config_path)
