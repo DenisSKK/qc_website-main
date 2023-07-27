@@ -6,7 +6,8 @@
 Create a directory for Bluesky data; only need if using Bluesky
 """
 import os
-home = os.path.expanduser("~")
+# home = os.path.expanduser("~")
+home = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 save_path = os.path.join(home, '.instrbuilder', 'data')
 
 if not os.path.exists(save_path):

@@ -12,7 +12,8 @@ import inspect
 from staticfiles.instrbuilder.scpi import init_instrument
 from staticfiles.instrbuilder import instruments
 
-home = os.path.join(os.path.expanduser("~"), '.instrbuilder')
+staticfiles_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+home = os.path.join(staticfiles_path, '.instrbuilder')
 
 INSTR_PREFIXES = ["GPIB", "PXI", "TCPIP", "USB", "VXI"]
 
