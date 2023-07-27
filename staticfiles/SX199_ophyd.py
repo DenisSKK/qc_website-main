@@ -28,7 +28,7 @@ class SX199Device():
     def connect(self):
         if self.sx_instr is not None and self.sx_ophyd is not None and self.is_connected():
             return True
-        for _ in range(4):
+        for _ in range(3):
             self.sx_instr = open_by_name(name=self.name)
             self.sx_instr.name = self.name
 

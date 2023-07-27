@@ -16,7 +16,7 @@ class StandfordITC(SCPI):
     def __init__(self,
                  cmd_list,
                  comm_handle,
-                 name='curr',
+                 name='itc',
                  unconnected=False):
         comm_handle.read_termination = '\r\n'
         comm_handle.write_termination = '\r\n'
