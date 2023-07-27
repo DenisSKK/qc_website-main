@@ -15,13 +15,3 @@ instruments:
 #      pyvisa: USB0::0x2A8D::0x0101::MY57503303::INSTR
     csv_folder: standford/sx199
     python_class: StandfordSX199
-  itc:
-    address:
-      pyvisa: TCPIP::itc-optistat.psi.ch::INSTR
-    csv_folder: standford/itc
-    python_class: StandfordITC
-  cs580:
-    address:
-      pyvisa: TCPIP::dev.company.com::INSTR
-    csv_folder: standford/cs580
-    python_class: StandfordCS580

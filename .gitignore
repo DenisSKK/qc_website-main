@@ -29,3 +29,8 @@ apps/static/assets/node_modules
 apps/static/assets/yarn.lock
 apps/static/assets/.temp
 
+/staticfiles/.instrbuilder/config – kópia.yaml
+/ITC_log.txt
+/laser_log.txt
+/apps/templates/home/sx199-copy.html
+/staticfiles/sx199-old.xml

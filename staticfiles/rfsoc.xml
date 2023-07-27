@@ -1,1 +1,33 @@
-<data><adc_trig_offset>100.0</adc_trig_offset><soft_avgs>1.0</soft_avgs><relax_delay>1.0</relax_delay><readout_length>2000.0</readout_length><pulse_freq>999.9999984741211</pulse_freq><reps>1.0</reps><EOM><out_ch>[0, 1]</out_ch><freqA><res_phase>90.0</res_phase><pulse_gain>2000.0</pulse_gain><pulse_freq>999.9999984741211</pulse_freq></freqA><freqB><res_phase>90.0</res_phase><pulse_gain>2000.0</pulse_gain><pulse_freq>999.9999984741211</pulse_freq></freqB><freq_seq>['freqA', 'freqB', 'freqA', 'freqB']</freq_seq><time_seq>[50, 190, 370, 700]</time_seq><length>100.0</length><pulse_freq>999.9999984741211</pulse_freq><zone>1.0</zone><mode>periodic</mode></EOM><AOM><pins>[1, 3]</pins><time>[[], [21, 52, 212], [], [52, 63]]</time><length>212</length></AOM><time_update>27/06/2023 12:19:15</time_update></data>
+<data>
+    <adc_trig_offset>100.0</adc_trig_offset>
+    <soft_avgs>1.0</soft_avgs>
+    <relax_delay>1.0</relax_delay>
+    <readout_length>2000.0</readout_length>
+    <pulse_freq>999.9999984741211</pulse_freq>
+    <reps>1.0</reps>
+    <EOM>
+        <out_ch>[0, 1]</out_ch>
+        <freqA>
+            <res_phase>90.0</res_phase>
+            <pulse_gain>2000.0</pulse_gain>
+            <pulse_freq>999.9999984741211</pulse_freq>
+        </freqA>
+        <freqB>
+            <res_phase>90.0</res_phase>
+            <pulse_gain>2000.0</pulse_gain>
+            <pulse_freq>999.9999984741211</pulse_freq>
+        </freqB>
+        <freq_seq>['freqA', 'freqB', 'freqA', 'freqB']</freq_seq>
+        <time_seq>[50, 190, 370, 700]</time_seq>
+        <length>100.0</length>
+        <pulse_freq>999.9999984741211</pulse_freq>
+        <zone>1.0</zone>
+        <mode>periodic</mode>
+    </EOM>
+    <AOM>
+        <pins>[1, 3]</pins>
+        <time>[[], [21, 52, 212], [], [52, 63]]</time>
+        <length>212</length>
+    </AOM>
+    <time_update>27/06/2023 12:19:15</time_update>
+</data>

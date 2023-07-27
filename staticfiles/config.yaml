@@ -1,0 +1,17 @@
+instruments:
+  sx199:
+    host: SX199
+    port: 8888
+  itc:
+    host: itc-optistat.psi.ch
+    port: None
+  caylar:
+    host: 129.129.131.154
+    port: 1234
+  toptica:
+    host: 129.129.131.136
+    port: 1234
+  rfsoc:
+    host: 129.129.131.103
+    username: xilinx
+    password: xilinx

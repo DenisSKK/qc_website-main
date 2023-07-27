@@ -24,27 +24,6 @@ def construct_object():
 
 
 def construct_sx():
-    # Read host and port from sx199.xml
-    sx_xml_dict = xml_config_to_dict("staticfiles/sx199.xml")
-    sx_host = sx_xml_dict['host']
-    sx_port = sx_xml_dict['port']
-
-    # Create path for config.yaml and yaml object
-    config_file = os.path.expanduser("~/.instrbuilder/config.yaml")
-    yaml = ruamel.yaml.YAML()
-
-    # Read the config.yaml file
-    with open(config_file, "r") as f:
-        config_data = yaml.load(f)
-
-    # Update the sx199 instrument address with sx_host and sx_port
-    config_data["instruments"]["sx199"]["address"]["pyvisa"] = f"TCPIP::{sx_host}::{sx_port}::SOCKET"
-
-    # Write the updated config_data back to the config.yaml file
-    with open(config_file, "w") as f:
-        yaml.dump(config_data, f)
-
-    # Now, construct and return the SX199Device instance
     SX = SX199Device(name='sx199')
     return SX
 
