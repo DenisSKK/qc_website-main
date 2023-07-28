@@ -8,8 +8,8 @@ config_file_src = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conf
 config_file_dest = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".instrbuilder\config.yaml")
 # Read data from staticfiles/config.yaml
 yaml_src = ruamel.yaml.YAML()
-with open(config_file_src, "r") as f:
-    config_data_src = yaml_src.load(f)
+with open(config_file_src, "r") as config_yaml:
+    config_data_src = yaml_src.load(config_yaml)
 
 
 def update_configs():
@@ -18,6 +18,7 @@ def update_configs():
     update_rfsoc_config()
     update_toptica_config()
     update_caylar_config()
+    update_instrbuilder_config()
 
 
 def update_sx_config():
@@ -29,15 +30,15 @@ def update_sx_config():
     yaml_dest = ruamel.yaml.YAML()
 
     # Read the .instrbuilder/config.yaml file
-    with open(config_file_dest, "r") as f:
-        config_data_dest = yaml_dest.load(f)
+    with open(config_file_dest, "r") as instr_yaml_file:
+        config_data_dest = yaml_dest.load(instr_yaml_file)
 
     # Update the pyvisa section for sx199 in .instrbuilder/config.yaml
     config_data_dest["instruments"]["sx199"]["address"]["pyvisa"] = f"TCPIP::{sx199_host}::{sx199_port}::SOCKET"
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
-    with open(config_file_dest, "w") as f:
-        yaml_dest.dump(config_data_dest, f)
+    with open(config_file_dest, "w") as instr_yaml_file:
+        yaml_dest.dump(config_data_dest, instr_yaml_file)
 
 
 def update_itc_config():
@@ -78,7 +79,6 @@ def update_rfsoc_config():
 
 
 def update_toptica_config():
-
     # Extract itc host and port
     toptica_host = config_data_src["instruments"]["toptica"]["host"]
     toptica_port = config_data_src["instruments"]["toptica"]["port"]
@@ -106,3 +106,19 @@ def update_caylar_config():
     caylar_config_dict['host'] = caylar_host
     caylar_config_dict['port'] = caylar_port
     dict_to_xml_file(caylar_config_dict, caylar_config_path)
+
+
+def update_instrbuilder_config():
+    # Create path for .instrbuilder/config.yaml and yaml object
+    yaml_dest = ruamel.yaml.YAML()
+
+    # Read the .instrbuilder/config.yaml file
+    with open(config_file_dest, "r") as instr_yaml_file:
+        config_data_dest = yaml_dest.load(instr_yaml_file)
+
+    # Update the pyvisa section for sx199 in .instrbuilder/config.yaml
+    config_data_dest["csv_directory"] = os.path.join(os.path.dirname(os.path.abspath(__file__)), "instruments")
+
+    # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
+    with open(config_file_dest, "w") as instr_yaml_file:
+        yaml_dest.dump(config_data_dest, instr_yaml_file)

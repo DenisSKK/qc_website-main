@@ -12,25 +12,19 @@ import time
 from staticfiles.instrbuilder.scpi import SCPI
 
 
-class StandfordITC(SCPI):
-    def __init__(self,
-                 cmd_list,
-                 comm_handle,
-                 name='itc',
-                 unconnected=False):
-        comm_handle.read_termination = '\r\n'
-        comm_handle.write_termination = '\r\n'
-        super().__init__(cmd_list, comm_handle, name=name, unconnected=unconnected)
-
-
+# Creating SX199 class for Instrbuilder to use.
 class StandfordSX199(SCPI):
     def __init__(self,
                  cmd_list,
                  comm_handle,
                  name='curr',
                  unconnected=False):
+        # After problem with controlling, setting read and write termination solved the problem.
         comm_handle.read_termination = '\r\n'
         comm_handle.write_termination = '\r\n'
+
+        # Calling basic commands like ! to unlink, *CLS to clear status with errors, ULOC 1 to unlock ethernet port,
+        # and TOKN 1 to switch output to return tokens and not integers
         comm_handle.write('!\n')
         comm_handle.write('*CLS\n')
         comm_handle.write('ULOC 1\n')

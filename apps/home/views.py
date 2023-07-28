@@ -2,10 +2,9 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-
+# TODO comment code
 from django import template
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.urls import reverse
@@ -19,26 +18,13 @@ from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, SX
 from staticfiles.XMLGenerator import xml_config_to_dict, dict_to_xml_file
 
 from django.contrib import messages
-from datetime import datetime
-import subprocess
 import os
 import shutil
-# def restart_server(request):
-#     # Stop the current runserver process
-#     subprocess.call(["pkill", "-f", "runserver"])
-
-#     # Start a new runserver process
-#     subprocess.Popen(["python", "manage.py", "runserver"])
-
-#     # Redirect to a new URL or template
-#     return redirect('home')  # Replace 'home' with the appropriate URL pattern name or URL path
-from staticfiles.SX199_ophyd import SX199Device
-
-from time import sleep
 
 SX_instance = None
 
 
+@login_required(login_url="/login/")
 def laser_page_view(request):
     # Load the data from the laser XML file
 
@@ -148,7 +134,7 @@ def laser_page_view(request):
     return render(request, 'home/laser.html', context)
 
 
-# views.py
+@login_required(login_url="/login/")
 def caylar_page_view(request):
     # Load the data from the magnet XML file
     context = {}
@@ -245,6 +231,7 @@ def caylar_page_view(request):
     return render(request, 'home/caylar.html', context)
 
 
+@login_required(login_url="/login/")
 def rfsoc_page_view(request):
     # Load the data from the rfsoc XML file
     Update_rfsoc = construct_rfsoc()
@@ -427,6 +414,7 @@ def rfsoc_page_view(request):
     return render(request, 'home/rfsoc.html', context)
 
 
+@login_required(login_url="/login/")
 def sx_page_view(request):
     # Load the data from the cryostat XML file
     global SX_instance
@@ -445,9 +433,13 @@ def sx_page_view(request):
     if connected:
         connected_link_1 = SX_instance.is_cs_connected(1)
         connected_link_2 = SX_instance.is_cs_connected(2)
+    else:
+        info = f'SX199 is not connected!'
+        messages.error(request, info)
 
     sx_xml_dict = xml_config_to_dict(xml_path)
-    if connected and connected_link_1:
+    # if connected and connected_link_1:
+    if connected_link_1:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], \
             sx_xml_dict["cs_isolation_1"], sx_xml_dict["cs_output_1"], sx_xml_dict["cs_curr_1"], sx_xml_dict[
@@ -466,9 +458,10 @@ def sx_page_view(request):
     else:
         info = "Parameter current source 1 has not updated since " + sx_xml_dict[
             "time_update"] + " because not connected with the device!"
-        messages.info(request, info)
+        messages.warning(request, info)
 
-    if connected and connected_link_2:
+    # if connected and connected_link_2:
+    if connected_link_2:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], \
             sx_xml_dict["cs_isolation_2"], sx_xml_dict["cs_output_2"], sx_xml_dict["cs_curr_2"], sx_xml_dict[
@@ -487,10 +480,9 @@ def sx_page_view(request):
     else:
         info = "Parameter current source 2 has not updated since " + sx_xml_dict[
             "time_update"] + " because not connected with the device!"
-        messages.info(request, info)
+        messages.warning(request, info)
     if isinstance(sx_xml_dict, str):
         sx_xml_dict = {}
-
 
     if request.method == 'POST':
         # Save old XML before updating
@@ -606,6 +598,7 @@ def sx_page_view(request):
     return render(request, 'home/sx199.html', context)
 
 
+@login_required(login_url="/login/")
 def mercury_page_view(request):
     # Load the data from the cryostat XML file
     context = {}
