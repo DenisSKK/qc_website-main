@@ -24,8 +24,8 @@ from staticfiles.XMLGenerator import xml_config_to_dict, dict_to_xml_file
 from .construct_object import construct_object, construct_caylar, construct_itc, construct_rfsoc, construct_toptica, \
     construct_sx
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
-    LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, CaylarFormConfig, \
-    MercuryFormConfig, MercuryFormIP
+    LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
+    MercuryFormIP
 
 import threading
 import shutil
