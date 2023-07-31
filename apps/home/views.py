@@ -93,10 +93,6 @@ def format_timestamps(timestamps):
     return formatted_timestamps
 
 
-import io
-import urllib, base64
-
-
 @csrf_exempt
 def plot_view(request):
     if request.method == "POST" and request.FILES.get("file"):
@@ -573,9 +569,9 @@ def sx_page_view(request):
     # if connected and connected_link_1:
     if connected_link_1:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
-        sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], \
-            sx_xml_dict["cs_isolation_1"], sx_xml_dict["cs_output_1"], sx_xml_dict["cs_curr_1"], sx_xml_dict[
-            "cs_volt_1"] = SX_instance.all_report_link(1)
+        sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
+            sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
+            sx_xml_dict["cs_output_1"] = SX_instance.all_report_link(1)
         context["gain1"] = sx_xml_dict["cs_gain_1"]
         context["input1"] = sx_xml_dict["cs_input_1"]
         context["speed1"] = sx_xml_dict["cs_speed_1"]
@@ -595,9 +591,9 @@ def sx_page_view(request):
     # if connected and connected_link_2:
     if connected_link_2:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
-        sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], \
-            sx_xml_dict["cs_isolation_2"], sx_xml_dict["cs_output_2"], sx_xml_dict["cs_curr_2"], sx_xml_dict[
-            "cs_volt_2"] = SX_instance.all_report_link(2)
+        sx_xml_dict["cs_curr_2"], sx_xml_dict["cs_volt_2"], sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], \
+            sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], sx_xml_dict["cs_isolation_2"], \
+            sx_xml_dict["cs_output_2"] = SX_instance.all_report_link(2)
         context["gain2"] = sx_xml_dict["cs_gain_2"]
         context["input2"] = sx_xml_dict["cs_input_2"]
         context["speed2"] = sx_xml_dict["cs_speed_2"]
@@ -1153,8 +1149,17 @@ def update_live_plot(request):
         data['mercury_status'] = "ON"
         itc_heater_power = UmercuryITC.report_heater_power()
         itc_temperature = two_decimal(UmercuryITC.report_temperature())
-        itc_data_row = [timestamp, itc_heater_power, itc_temperature]
-        itc_column_headers = ['timestamp', 'Heater Power', 'temperature (K)']
+        itc_flow_percentage = UmercuryITC.report_flow_percentage()
+        itc_temperature_set_point = UmercuryITC.report_temperature_set_point()
+        itc_voltage = UmercuryITC.report_voltage()
+        itc_automatic_heater = UmercuryITC.report_automatic_heating()
+        itc_automatic_pid = UmercuryITC.report_automatic_pid()
+        itc_valve_open_percentage = UmercuryITC.report_valve_open_percentage()
+        itc_data_row = [timestamp, itc_heater_power, itc_temperature, itc_flow_percentage, itc_temperature_set_point,
+                        itc_voltage, itc_automatic_heater, itc_automatic_pid, itc_valve_open_percentage]
+        itc_column_headers = ['timestamp', 'heater power (W)', 'temperature (K)', 'flow percentage (%)',
+                              'set temperature (K)', 'voltage (V)', 'auto heater', 'auto PID',
+                              'valve open percentage (%)']
         itc_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'itc.csv'
         append_to_csv(itc_csv_file_path, itc_data_row, itc_column_headers)
         if not (request.POST['changePage'] == "true"):
@@ -1169,6 +1174,25 @@ def update_live_plot(request):
             data['itc_heater_power1'] = itc_heater_power,
             data['itc_temperature1'] = itc_temperature,
             data['timestampM'] = find_csv(itc_csv_file_path, 'timestamp'),
+    if SX_instance != None:
+        if SX_instance.is_cs_connected(1):
+            sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
+                SX_instance.all_report_link(1)
+            sx_data_row1 = [sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1, sx_current_1,
+                            sx_voltage_1]
+            sx_column_headers1 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
+                                  'output']
+            sx_csv_file_path1 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
+            append_to_csv(sx_csv_file_path1, sx_data_row1, sx_column_headers1)
+        elif SX_instance.is_cs_connected(2):
+            sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2 = \
+                SX_instance.all_report_link(2)
+            sx_data_row2 = [sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2, sx_current_2,
+                            sx_voltage_2]
+            sx_column_headers2 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
+                                  'output']
+            sx_csv_file_path2 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'second_cs580.csv'
+            append_to_csv(sx_csv_file_path2, sx_data_row2, sx_column_headers2)
 
     return JsonResponse(data)
 

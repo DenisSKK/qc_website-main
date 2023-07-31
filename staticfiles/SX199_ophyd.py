@@ -172,7 +172,7 @@ class SX199Device():
         sleep(0.001)
         self.escape()
         print(f"CS link {link} report")
-        return gain, input_val, speed, shield, isolation, output, curr, volt
+        return curr, volt, gain, input_val, speed, shield, isolation, output
 
     # Unused but may be useful function.
     # It sets link {link} port, calls function from parameter {func}, unlinks, and returns the value of {func} back.
