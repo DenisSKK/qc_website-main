@@ -1045,6 +1045,7 @@ def update_live_plot(request):
     global UmercuryITC
     global done_event
     global running_rfsoc
+    global SX_instance
     data = {'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     if done_event.is_set() and running_rfsoc:

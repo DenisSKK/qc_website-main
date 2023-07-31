@@ -76,7 +76,7 @@ class SX199Device():
         sleep(0.000001)
         # escape() after dealing with desired CS is necessary to un-link already linked port.
         self.escape()
-        print(f'check: {id_string}')
+        # print(f'check: {id_string}')
         return id_string.startswith("Stanford_Research_Systems,CS580")
 
     # Updating parameters could be expensive operation if there is 8 of them. That's why I compare 2 xml files with
@@ -171,7 +171,7 @@ class SX199Device():
         volt = self.report_volt()
         sleep(0.001)
         self.escape()
-        print(f"CS link {link} report")
+        # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output
 
     # Unused but may be useful function.
