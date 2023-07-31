@@ -25,7 +25,7 @@ from .construct_object import construct_object, construct_caylar, construct_itc,
     construct_sx
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
-    MercuryFormIP
+    MercuryFormIP, SX199Form
 
 import threading
 import shutil
