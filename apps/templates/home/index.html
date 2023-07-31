@@ -118,16 +118,6 @@
             <div class="card-body">ITC Temperature (K): <span id="itc_temperature_number">-</span></div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <button type="submit" class="btn btn-secondary my-4" id="update_button">Update Status</button>
-        <!-- Add this label and input element below the JavaScript block -->
-        <div class="card card-stats">
-          <div class="card-body">
-            Logging Frequency (s):
-            <input type="number" id="freqUpdateInput" value="2" />
-          </div>
-        </div>
         <div class="col-xl-3 col-md-6">
           <div class="card card-stats">
             <!-- Card body -->
@@ -146,6 +136,16 @@
                 </div>
               </a>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" class="btn btn-secondary my-4" id="update_button">Update Status</button>
+        <!-- Add this label and input element below the JavaScript block -->
+        <div class="card card-stats">
+          <div class="card-body">
+            Logging Frequency (s):
+            <input type="number" id="freqUpdateInput" value="2" />
           </div>
         </div>
       </div>
@@ -788,10 +788,12 @@
     document.getElementById("rfsoc_status").innerHTML = "Connecting";
     document.getElementById("mercury_status").innerHTML = "Connecting";
     document.getElementById("caylar_status").innerHTML = "Connecting";
+    document.getElementById("sx_status").innerHTML = "Connecting";
     updateStatusColor(statusLaserElement);
     updateStatusColor(statusRFSoCElement);
     updateStatusColor(statusMercuryElement);
     updateStatusColor(statusCaylarElement);
+    updateStatusColor(statusSXElement);
     $("#messageUpdateExpContainer").html('<div class="alert alert-info" role="alert">Please Wait Until The Status Loading Finished Before Starting the Experiment</div>');
     $.ajax({
       url: "{% url 'statuslaser' %}", // URL mapped to the status view
