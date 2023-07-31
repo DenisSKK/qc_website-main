@@ -11,5 +11,7 @@ from staticfiles.update_configs import update_configs
 update_configs()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+import matplotlib
+matplotlib.use('Agg')
 
 application = get_wsgi_application()

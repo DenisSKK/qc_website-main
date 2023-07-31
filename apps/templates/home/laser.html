@@ -32,8 +32,13 @@
             </button>
           </div>
           {% endif %} {% endfor %} {% endif %}
-
-          <form method="post" action="{% url 'laser_page' %}">
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Laser standby status: {{standby}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" id="toptica_form" action="{% url 'laser_page' %}">
             {% csrf_token %}
             <div class="col-12">
               <div class="row">
@@ -60,14 +65,6 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-port">Port</label>
-                    <input type="number" id="input-port" class="form-control" name="laser_port" placeholder="Port" value="{{ form.laser_port.value }}" />
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="container-fluid">
               <hr class="my-4" />
@@ -83,28 +80,33 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="form-control-label" for="input-scan-end">Scan End</label>
+                      <label class="form-control-label" for="input-current">Current (mA)</label>
+                      <input type="number" step="any" id="input-current" class="form-control" name="current_act" placeholder="current" value="{{form.current_act.value}}" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-voltage">Voltage (V)</label>
+                      <input type="number" step="any" id="input-voltage" class="form-control" name="voltage_act" placeholder="voltage" value="{{form.voltage_act.value}}" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-scan-start">Scan Start (V)</label>
+                      <input type="number" step="any" id="input-scan-start" class="form-control" name="scan_start" placeholder="Scan Start" value="{{ form.scan_start.value }}" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-scan-end">Scan End (V)</label>
                       <input type="number" step="any" id="input-scan-end" class="form-control" name="scan_end" placeholder="Scan End" value="{{ form.scan_end.value }}" />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="form-control-label" for="input-scan-start">Scan Start</label>
-                      <input type="number" step="any" id="input-scan-start" class="form-control" name="scan_start" placeholder="Scan Start" value="{{ form.scan_start.value }}" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-scan-freq">Scan Frequency</label>
+                      <label class="form-control-label" for="input-scan-freq">Scan Frequency (Hz)</label>
                       <input type="number" step="any" id="input-scan-freq" class="form-control" name="scan_freq" placeholder="Scan Frequency" value="{{ form.scan_freq.value }}" />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-scan-offset">Scan Offset</label>
-                      <input type="number" step="any" id="input-scan-offset" class="form-control" name="scan_offset" placeholder="Scan Offset" value="{{ form.scan_offset.value }}" />
                     </div>
                   </div>
                 </div>
@@ -155,18 +157,13 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group"><label class="form-control-label" for="input-scan-end">Scan End</label>{% if connected %} <input type="number" step="any" id="input-scan-end" class="form-control" name="scan_end" placeholder="Scan End" value="{{scan_end}}" disabled />{% else %} <input type="number" step="any" id="input-scan-end" class="form-control" name="scan_end" placeholder="Scan End" value="NA" disabled />{% endif %}</div>
+                  <div class="form-group"><label class="form-control-label" for="input-scan-start">Scan Start (V)</label>{% if connected %} <input type="number" step="any" id="input-scan-start" class="form-control" name="scan_start" placeholder="Scan Start" value="{{scan_start}}" disabled />{% else %} <input type="number" step="any" id="input-scan-start" class="form-control" name="scan_start" placeholder="Scan Start" value="None" disabled />{% endif %}</div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group"><label class="form-control-label" for="input-scan-start">Scan Start</label>{% if connected %} <input type="number" step="any" id="input-scan-start" class="form-control" name="scan_start" placeholder="Scan Start" value="{{scan_start}}" disabled />{% else %} <input type="number" step="any" id="input-scan-start" class="form-control" name="scan_start" placeholder="Scan Start" value="None" disabled />{% endif %}</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group"><label class="form-control-label" for="input-scan-freq">Scan Frequency</label>{% if connected %} <input type="number" step="any" id="input-scan-freq" class="form-control" name="scan_freq" placeholder="Scan Frequency" value="{{scan_freq}}" disabled />{% else %}<input type="number" step="any" id="input-scan-freq" class="form-control" name="scan_freq" placeholder="Scan Frequency" value="NA" disabled />{% endif %}</div>
+                  <div class="form-group"><label class="form-control-label" for="input-scan-end">Scan End (V)</label>{% if connected %} <input type="number" step="any" id="input-scan-end" class="form-control" name="scan_end" placeholder="Scan End" value="{{scan_end}}" disabled />{% else %} <input type="number" step="any" id="input-scan-end" class="form-control" name="scan_end" placeholder="Scan End" value="NA" disabled />{% endif %}</div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group"><label class="form-control-label" for="input-scan-offset">Scan Offset</label>{% if connected %} <input type="number" step="any" id="input-scan-offset" class="form-control" name="scan_offset" placeholder="Scan Offset" value="{{scan_offset}}" disabled />{% else %}<input type="number" step="any" id="input-scan-offset" class="form-control" name="scan_offset" placeholder="Scan Offset" value="NA" disabled />{% endif %}</div>
+                  <div class="form-group"><label class="form-control-label" for="input-scan-freq">Scan Frequency (Hz)</label>{% if connected %} <input type="number" step="any" id="input-scan-freq" class="form-control" name="scan_freq" placeholder="Scan Frequency" value="{{scan_freq}}" disabled />{% else %}<input type="number" step="any" id="input-scan-freq" class="form-control" name="scan_freq" placeholder="Scan Frequency" value="NA" disabled />{% endif %}</div>
                 </div>
               </div>
             </div>
@@ -177,4 +174,47 @@
     </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock content %} {% block javascripts %}
+<script>
+  // Get the form element
+  const form = document.getElementById("toptica_form");
+
+  // Add an event listener to the form
+  form.addEventListener("keydown", function (event) {
+    // Check if the pressed key is "Enter" (keyCode for Enter is 13)
+    if (event.keyCode === 13 || event.key === "Enter") {
+      // Prevent the default form submission
+      event.preventDefault();
+    }
+  });
+
+  function LoggingFile(interval) {
+    const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+    // Include the CSRF token in the AJAX request headers
+    $.ajaxSetup({
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
+    });
+    $.ajax({
+      url: "{% url 'plot' %}", // URL mapped to the status view
+      type: "POST",
+      data: { changePage: false },
+      dataType: "json",
+      success: function (response) {},
+      error: function (xhr, status, error) {
+        console.log(xhr.responseText);
+      },
+      complete: function () {
+        // Call the updatePlot function again after the specified interval
+        setTimeout(function () {
+          LoggingFile(interval);
+        }, interval);
+      },
+    });
+  }
+
+  LoggingFile(1000);
+</script>
+{% endblock javascripts %}

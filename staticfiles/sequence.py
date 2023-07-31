@@ -7,6 +7,20 @@
 # # length=[[2,1,5,5],[2,1,5,5]]
 
 def sequence_TTL(list_a, length,pins):
+    """
+    The function `sequence_TTL` takes in a list of lists, a list of lengths, and a list of pins, and
+    returns a tuple containing a new list of values, a new list of lengths, and a list of pins.
+    @param list_a - The parameter `list_a` is a list of lists. Each inner list represents a sequence of
+    values.
+    @param length - The "length" parameter is a list of lists. Each inner list represents the lengths of
+    the sublists in "list_a". The lengths in each inner list correspond to the elements in the same
+    position in "list_a".
+    @param pins - The `pins` parameter is a list that contains the pin numbers associated with each
+    sublist in `list_a`. Each sublist represents a sequence of values. The `pins` list should have the
+    same length as `list_a`, and each element in `pins` corresponds to the pin number for the
+    corresponding
+    @returns a tuple containing three lists: `new_list_a`, `new_length`, and `pins_seq`.
+    """
 
     end_list = []
 

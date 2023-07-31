@@ -45,7 +45,15 @@
     {% include "includes/scripts.html" %}
 
     <!-- Specific JS goes HERE -->
-    {% block javascripts %}{% endblock javascripts %}
+    {% block javascripts %}
+    <script>
+      // JavaScript code to refresh the page every one hour (in milliseconds)
+      const oneHourInMilliseconds = 3600000;
+      setTimeout(() => {
+        location.reload();
+      }, oneHourInMilliseconds);
+    </script>
+    {% endblock javascripts %}
 
     <script src="/static/assets/js/argon.js?v=1.2.0"></script>
   </body>

@@ -7,6 +7,13 @@ from .sockets import SocketIO
 
 
 def threadlocked(fcn):
+    """
+    The `threadlocked` decorator ensures that the thread acquires and releases a lock before and after
+    executing the decorated function.
+    @param fcn - The parameter `fcn` is a function that will be wrapped by the `threadlocked` decorator.
+    @returns The function being returned is a wrapper function that ensures that the thread acquires and
+    releases a lock before and after executing the original function.
+    """
     """Ensure that the thread acquires and releases the lock."""
 
     @functools.wraps(fcn)
@@ -71,22 +78,29 @@ class Controller(OphydObject):
 
     @property
     def connected(self):
+        """
+        The function returns the value of the "_connected" attribute.
+        @returns The method is returning the value of the variable `_connected`.
+        """
         return self._connected
 
     @connected.setter
     def connected(self, value):
+        """
+        The function sets the value of the "_connected" attribute and runs any subscribed functions for
+        connection change events.
+        @param value - The "value" parameter is a boolean value that represents the connection status.
+        It is used to set the "_connected" attribute of the object to either True or False.
+        """
         self._connected = value
         self._run_subs(sub_type=self.SUB_CONNECTION_CHANGE)
 
-    # def set_motor(self, motor, axis):
-    #     """Set the motor instance for a specified controller axis."""
-    #     self._motors[axis] = motor
-
-    # def get_motor(self, axis):
-    #     """Get motor instance for a specified controller axis."""
-    #     return self._motors[axis]
-
     def on(self, controller_num=0):
+        """
+        The function opens a new socket connection to the controller.
+        @param [controller_num=0] - The parameter `controller_num` is an optional parameter that
+        specifies the number of the controller to connect to. If no value is provided, it defaults to 0.
+        """
         """Open a new socket connection to the controller"""
         if not self.connected:
             self.connected = True

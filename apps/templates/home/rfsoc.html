@@ -33,7 +33,7 @@
           </div>
           {% endif %} {% endfor %} {% endif %}
 
-          <form method="post" action="{% url 'rfsoc_page' %}">
+          <form method="post" id="rfsoc_form" action="{% url 'rfsoc_page' %}">
             {% csrf_token %}
             <!-- RFSoC information -->
             <div class="col-12">
@@ -108,7 +108,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-relax-delay">Relax Delay</label>
+                    <label class="form-control-label" for="input-relax-delay">Relax Delay (Clock Ticks)</label>
                     <input type="number" step="any" id="input-relax-delay" class="form-control" name="relax_delay" placeholder="Relax Delay" value="{{ form.relax_delay.value }}" />
                   </div>
                 </div>
@@ -122,7 +122,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-pulse-freq">Pulse Frequency</label>
+                    <label class="form-control-label" for="input-pulse-freq">Readout Pulse Frequency (MHz)</label>
                     <input type="number" step="any" id="input-pulse-freq" class="form-control" name="pulse_freq" placeholder="Pulse Frequency" value="{{ form.pulse_freq.value|floatformat }}" />
                   </div>
                 </div>
@@ -138,29 +138,8 @@
             <hr class="my-4" />
 
             <!-- Configuration - EOM -->
-            <h5 class="heading-small text-muted mb-4">Configuration - EOM - Channel</h6>
-            <h6 class="heading-small text-muted mb-4">Configuration - EOM - Channel 1</h6>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="input-eom-zone1">Nyquist Zone</label>
-                  <input type="number" step="any" id="input-eom-zone1" class="form-control" name="eom_zone1" placeholder="Nyquist Zone 1" value="{{ form.eom_zone1.value }}" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="input-eom-mode1">Mode</label>
-                  <input type="text" id="input-eom-mode1" class="form-control" name="eom_mode1" placeholder="Mode 1" value="{{ form.eom_mode1.value }}" />
-                </div>
-              </div>
-              <!-- Add more fields for EOM configuration if needed -->
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-eom-length1">Pulse Length</label>
-                <input type="number" step="any" id="input-eom-length1" class="form-control" name="eom_length1" placeholder="Pulse Length 1" value="{{ form.eom_length1.value }}" />
-              </div>
-            </div>
+            <h5 class="heading-small text-muted mb-4">Configuration - EOM</h5>
+
             <!-- Configuration - Frequency A -->
             <h6 class="heading-small text-muted mb-4">Configuration - EOM - Channel 0</h6>
 
@@ -179,117 +158,106 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-eom-length0">Pulse Length</label>
+                  <label class="form-control-label" for="input-eom-length0">Pulse Length (clock ticks)</label>
                   <input type="number" step="any" id="input-eom-length0" class="form-control" name="eom_length0" placeholder="Pulse Length 0" value="{{ form.eom_length0.value }}" />
                 </div>
               </div>
               <hr class="my-4" />
               <!-- Add more fields for EOM configuration if needed -->
-              <div class="col">
+            </div>
+            <h6 class="heading-small text-muted mb-4">Configuration - EOM - Channel 1</h6>
+            <div class="row">
+              <div class="col-md-6">
                 <div class="form-group">
-                  {% if formset0 %}
-                  <h6 class="heading-small text-muted mb-4">Sequence</h6>
-                  {{formset0.management_form}}
-                  <table id="form0-list">
-                    <thead>
-                      <tr>
-                        <th>Channel</th>
-                        <th>Frequency</th>
-                        <th>Phase</th>
-                        <th>Gain</th>
-                        <th>Time Start</th>
-                        <th>Length</th>
-                      </tr>
-                    </thead>
-                    <tbody id="empty-form0" class="hidden">
-                      <tr>
-                        <td>
-                          <select name="channel0">
-                            <option>--Select--</option>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="01">0 & 1</option>
-                          </select>
-                        </td>
-                        <td>
-                          <input style="width: 100%" type="number" step="any" name="frequency0"/>
-                        </td>
-                        <td>
-                          <input style="width: 100%" type="number" step="any" name="phase0"/>
-                        </td>
-                        <td>
-                          <input style="width: 100%" type="number" step="any" name="gain0"/>
-                        </td>
-                        <td>
-                          <input style="width: 100%" type="number" step="any" name="time0"/>
-                        </td>
-                        <td>
-                          <input style="width: 100%" type="number" step="any" name="length0"/>
-                        </td>
-                        <td>
-                          <button style="width: 100%" type="button" class="btn btn-sm btn-danger delete-btn0">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                    {% for form0 in formset0 %}
-                    <tbody id="formset0-{{ forloop.counter|add:'-1' }}" class="channel0-form">
-                      <tr>
-                        <td>
-                          <select name="formset0-{{ forloop.counter|add:'-1' }}-channel0">
-                            {% if form0.channel0.value == '0' %}
-                            <option>--Select--</option>
-                            <option value="0" selected>0</option>
-                            <option value="1">1</option>
-                            <option value="01">0 & 1</option>
-                            {% elif form0.channel0.value == '1' %}
-                            <option>--Select--</option>
-                            <option value="0">0</option>
-                            <option value="1" selected>1</option>
-                            <option value="01">0 & 1</option>
-                            {% elif form0.channel0.value == '01' %}
-                            <option>--Select--</option>
-                            <option value="0">0</option>
-                            <option value="1" >1</option>
-                            <option value="01" selected>0 & 1</option>
-                            {% else %}
-                            <option>--Select--</option>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="01">0 & 1</option>
-                            {% endif %}
-                          </select>
-                        </td>
-                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-frequency0" name="formset0-{{ forloop.counter|add:'-1' }}-frequency0" value="{{ form0.frequency0.value }}"/></td>
-                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-phase0" name="formset0-{{ forloop.counter|add:'-1' }}-phase0" value="{{ form0.phase0.value }}"/></td>
-                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-gain0" name="formset0-{{ forloop.counter|add:'-1' }}-gain0" value="{{ form0.gain0.value }}"/></td>
-                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-time0" name="formset0-{{ forloop.counter|add:'-1' }}-time0" value="{{ form0.time0.value }}"/></td>
-                        <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-length0" name="formset0-{{ forloop.counter|add:'-1' }}-length0" value="{{ form0.length0.value }}"/></td>
-                        <td>
-                          <button type="button" class="btn btn-sm btn-danger delete-btn0">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                    {% endfor %}
-                  </table>
-                  <button id="add-more0" type="button" class="btn btn-sm btn-primary">Add More</button>
-                  {% endif %}
+                  <label class="form-control-label" for="input-eom-zone1">Nyquist Zone</label>
+                  <input type="number" step="any" id="input-eom-zone1" class="form-control" name="eom_zone1" placeholder="Nyquist Zone 1" value="{{ form.eom_zone1.value }}" />
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-eom-mode1">Mode</label>
+                  <input type="text" id="input-eom-mode1" class="form-control" name="eom_mode1" placeholder="Mode 1" value="{{ form.eom_mode1.value }}" />
+                </div>
+              </div>
+              <!-- Add more fields for EOM configuration if needed -->
             </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" for="input-eom-length1">Pulse Length (clock ticks)</label>
+                <input type="number" step="any" id="input-eom-length1" class="form-control" name="eom_length1" placeholder="Pulse Length 1" value="{{ form.eom_length1.value }}" />
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                {% if formset0 %}
+                <h6 class="heading-small text-muted mb-4">EOM Sequence</h6>
+                {{formset0.management_form}}
+                <table id="form0-list">
+                  <thead>
+                    <tr>
+                      <th>Pulse Start (clock ticks)</th>
+                      <th>Actual Time (ns)</th>
+                      <th>Pulse Frequency (MHz)</th>
+                      <th>Pulse Gain</th>
+                    </tr>
+                  </thead>
+                  <tbody id="empty-form0" class="hidden">
+                    <tr>
+                      <td>
+                        <input style="width: 100%" type="number" step="any" name="time0" />
+                      </td>
+                      <td class="actual-time-cell"><input style="width: 100%" type="number" step="any" name="acttime0" disabled /></td>
+                      <td>
+                        <input style="width: 100%" type="number" step="any" name="frequency0" />
+                      </td>
+                      <td>
+                        <input style="width: 100%" type="number" step="1" min="-32768" max="32768" name="gain0" />
+                      </td>
+
+                      <td>
+                        <button style="width: 100%" type="button" class="btn btn-sm btn-danger delete-btn0">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  {% for form0 in formset0 %}
+                  <tbody id="formset0-{{ forloop.counter|add:'-1' }}" class="channel0-form">
+                    <tr>
+                      <td><input style="width: 100%" type="number" step="any" id="id_formset0-{{ forloop.counter|add:'-1' }}-time0" name="formset0-{{ forloop.counter|add:'-1' }}-time0" value="{{ form0.time0.value }}" /></td>
+                      <td class="actual-time-cell"><input style="width: 100%" type="number" step="any" name="acttime0" disabled /></td>
+                      <td><input style="width: 100%" type="number" step="1" id="id_formset0-{{ forloop.counter|add:'-1' }}-frequency0" name="formset0-{{ forloop.counter|add:'-1' }}-frequency0" value="{{ form0.frequency0.value }}" /></td>
+                      <td><input style="width: 100%" type="number" step="any" min="-32786" max="32768" id="id_formset0-{{ forloop.counter|add:'-1' }}-gain0" name="formset0-{{ forloop.counter|add:'-1' }}-gain0" value="{{ form0.gain0.value }}" /></td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-danger delete-btn0">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  {% endfor %}
+                </table>
+                <button id="add-more0" type="button" class="btn btn-sm btn-primary">Add More</button>
+                {% endif %}
+              </div>
+            </div>
+
             <hr class="my-4" />
 
             <hr class="my-4" />
 
             <!-- Add more configuration fields as necessary -->
             {% if formset1 %}
-            <h6 class="heading-small text-muted mb-4">Sequence</h6>
+            <h6 class="heading-small text-muted mb-4">TTL Sequence</h6>
+
+            <h6>Pin 1: AOM</h6>
+            <h6>Pin 2: RF Switch</h6>
+            <h6>Pin 3: RF Switch</h6>
+            <h6>Pin 4: DAQ</h6>
             {{formset1.management_form}}
             <table id="form1-list">
               <thead>
                 <tr>
-                  <th>AOM Pins</th>
-                  <th>Time Start</th>
-                  <th>Length</th>
+                  <th>TTL Pins</th>
+                  <th>TTL Start (clock ticks)</th>
+                  <th>Actual Time (ns)</th>
+                  <th>TTL Length (clock ticks)</th>
                 </tr>
               </thead>
               <tbody id="empty-form1" class="hidden">
@@ -316,10 +284,11 @@
                   </td>
 
                   <td>
-                    <input type="number" step="any" name="time1"/>
+                    <input type="number" step="any" name="time1" />
                   </td>
+                  <td class="actual-time-cell"><input style="width: 100%" type="number" step="any" name="acttime1" disabled /></td>
                   <td>
-                    <input type="number" step="any" name="length1"/>
+                    <input type="number" step="any" name="length1" />
                   </td>
                   <td>
                     <button type="button" class="btn btn-sm btn-danger delete-btn1">Delete</button>
@@ -332,24 +301,25 @@
                   <td>
                     <div class="form-check">
                       <div class="form-check-inline">
-                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_0" type="checkbox" value="0" {% if 0 in form1.aom_pins.value %}checked{% endif %}/>
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_0" type="checkbox" value="0" {% if 0 in form1.aom_pins.value %}checked{% endif %} />
                         <label class="form-check-label">0</label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_1" type="checkbox" value="1" {% if 1 in form1.aom_pins.value %}checked{% endif %}/>
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_1" type="checkbox" value="1" {% if 1 in form1.aom_pins.value %}checked{% endif %} />
                         <label class="form-check-label">1</label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_2" type="checkbox" value="2" {% if 2 in form1.aom_pins.value %}checked{% endif %}/>
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_2" type="checkbox" value="2" {% if 2 in form1.aom_pins.value %}checked{% endif %} />
                         <label class="form-check-label">2</label>
                       </div>
                       <div class="form-check-inline">
-                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_3" type="checkbox" value="3" {% if 3 in form1.aom_pins.value %}checked{% endif %}/>
+                        <input class="form-check-input" name="formset1-{{ forloop.counter|add:'-1' }}-aom_pins" id="id_formset1-{{ forloop.counter|add:'-1' }}-aom_pins_3" type="checkbox" value="3" {% if 3 in form1.aom_pins.value %}checked{% endif %} />
                         <label class="form-check-label">3</label>
                       </div>
                     </div>
                   </td>
                   <td>{{ form1.time1 }}</td>
+                  <td class="actual-time-cell"><input style="width: 100%" type="number" step="any" name="acttime1" disabled /></td>
                   <td>{{ form1.length1 }}</td>
                   <td>
                     <button type="button" class="btn btn-sm btn-danger delete-btn1">Delete</button>
@@ -385,6 +355,37 @@
 </div>
 {% endblock content %} {% block javascripts %}
 <script>
+  // Function to calculate and update the Actual Time column
+  // Function to calculate and update the Actual Time column
+  function updateActualTime() {
+    $("#form0-list tbody").each(function (index, element) {
+      const timeStart = parseFloat($(element).find('input[name$="time0"]').val());
+      if (!isNaN(timeStart)) {
+        const actualTime = (2.6 * timeStart).toFixed(2); // Calculate Actual Time with 2 decimal places
+        $(element).find('input[name$="acttime0"]').val(actualTime); // Update the input field with the calculated value
+      }
+    });
+  }
+  function updateActualTime1() {
+    $("#form1-list tbody").each(function (index, element) {
+      const timeStart = parseFloat($(element).find('input[name$="time1"]').val());
+      if (!isNaN(timeStart)) {
+        const actualTime = (2.6 * timeStart).toFixed(2); // Calculate Actual Time with 2 decimal places
+        $(element).find('input[name$="acttime1"]').val(actualTime); // Update the input field with the calculated value
+      }
+    });
+  }
+  // Attach event listener to input fields to trigger the update on change
+  $(document).on("input", 'input[name$="time0"]', function () {
+    updateActualTime();
+  });
+  $(document).on("input", 'input[name$="time1"]', function () {
+    updateActualTime1();
+  });
+
+  // Initial calculation on page load (in case the input fields have initial values)
+  updateActualTime();
+  updateActualTime1();
   const addMoreBtn0 = document.getElementById("add-more0");
   const addMoreBtn1 = document.getElementById("add-more1");
   const totalNewForms0 = document.getElementById("id_formset0-TOTAL_FORMS");
@@ -408,12 +409,22 @@
       delete_form1(event.target);
     }
   });
+  function clearForm(clearButton) {
+    const formRow = clearButton.closest("tbody");
+    const inputFields = formRow.querySelectorAll("input");
+
+    inputFields.forEach((input) => {
+      input.value = ""; // Clear the value of each input field
+    });
+  }
+
   function delete_form0(deleteButton, ch) {
     const formRow = deleteButton.closest("tbody");
     const formTableBody = formRow.parentNode;
     let currentForm0Count = currentChannel0Forms.length;
     console.log(currentForm0Count);
     if (currentForm0Count === 1) {
+      clearForm(deleteButton);
       return;
     }
     formTableBody.removeChild(formRow);
@@ -425,6 +436,7 @@
     let currentForm1Count = currentChannel1Forms.length;
     console.log(currentForm1Count);
     if (currentForm1Count === 1) {
+      clearForm(deleteButton);
       return;
     }
     formTableBody.removeChild(formRow);
@@ -444,18 +456,13 @@
     copyEmptyFormEl0.innerHTML = copyEmptyFormEl0.innerHTML.replace(regex, currentForm0Count);
     const tr = copyEmptyFormEl0.firstElementChild;
     const trParentElement = tr.parentElement;
-    trParentElement.children[0].children[0].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-channel0`);
-    trParentElement.children[0].children[0].children[0].setAttribute("name", `formset0-${currentForm0Count}-channel0`);
+    trParentElement.children[0].children[0].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-time0`);
+    trParentElement.children[0].children[0].children[0].setAttribute("name", `formset0-${currentForm0Count}-time0`);
     trParentElement.children[0].children[1].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-frequency0`);
     trParentElement.children[0].children[1].children[0].setAttribute("name", `formset0-${currentForm0Count}-frequency0`);
-    trParentElement.children[0].children[2].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-phase0`);
-    trParentElement.children[0].children[2].children[0].setAttribute("name", `formset0-${currentForm0Count}-phase0`);
-    trParentElement.children[0].children[3].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-gain0`);
-    trParentElement.children[0].children[3].children[0].setAttribute("name", `formset0-${currentForm0Count}-gain0`);
-    trParentElement.children[0].children[4].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-time0`);
-    trParentElement.children[0].children[4].children[0].setAttribute("name", `formset0-${currentForm0Count}-time0`);
-    trParentElement.children[0].children[5].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-length0`);
-    trParentElement.children[0].children[5].children[0].setAttribute("name", `formset0-${currentForm0Count}-length0`);
+    trParentElement.children[0].children[2].children[0].setAttribute("id", `id_formset0-${currentForm0Count}-gain0`);
+    trParentElement.children[0].children[2].children[0].setAttribute("name", `formset0-${currentForm0Count}-gain0`);
+
     // tdElement.setAttribute("id", `form-${currentForm0Count}-frequency0`);
     console.log(currentForm0Count);
     totalNewForms0.setAttribute("value", currentForm0Count + 1);
@@ -530,6 +537,46 @@
     // Trigger the change event to show or hide the time and length inputs and their labels initially based on the checkbox's checked state
     checkbox.dispatchEvent(new Event("change"));
   });
+  // Get the form element
+  const form = document.getElementById("rfsoc_form");
+
+  // Add an event listener to the form
+  form.addEventListener("keydown", function (event) {
+    // Check if the pressed key is "Enter" (keyCode for Enter is 13)
+    if (event.keyCode === 13 || event.key === "Enter") {
+      // Prevent the default form submission
+      event.preventDefault();
+    }
+  });
+
+  function LoggingFile(interval) {
+    const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+    // Include the CSRF token in the AJAX request headers
+    $.ajaxSetup({
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
+    });
+    $.ajax({
+      url: "{% url 'plot' %}", // URL mapped to the status view
+      type: "POST",
+      data: { changePage: false },
+      dataType: "json",
+      success: function (response) {},
+      error: function (xhr, status, error) {
+        console.log(xhr.responseText);
+      },
+      complete: function () {
+        // Call the updatePlot function again after the specified interval
+        setTimeout(function () {
+          LoggingFile(interval);
+        }, interval);
+      },
+    });
+  }
+
+  LoggingFile(1000);
 </script>
 
 {% endblock javascripts %}

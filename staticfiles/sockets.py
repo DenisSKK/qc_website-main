@@ -13,6 +13,12 @@ from ophyd.utils.errors import DisconnectedError
 
 logger = log_ophyd("sockets_log.txt",__name__)
 def raise_if_disconnected(fcn):
+    """
+    The `raise_if_disconnected` function is a decorator that checks if a Galil channel is connected
+    before allowing access to it, raising a `DisconnectedError` if it is not.
+    @param fcn - fcn is a function that will be decorated with the raise_if_disconnected decorator.
+    @returns The decorator function `raise_if_disconnected` returns the inner function `wrapper`.
+    """
     """Decorator to catch attempted access to disconnected Galil channels."""
 
     @functools.wraps(fcn)

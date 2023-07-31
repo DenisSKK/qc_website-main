@@ -18,9 +18,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'history' in segment %} active {% endif %}" href="/history.html">
+            <a class="nav-link {% if 'plotresult' in segment %} active {% endif %}" href="/plotresult.html">
               <i class="ni ni-planet text-orange"></i>
-              <span class="nav-link-text">History</span>
+              <span class="nav-link-text">Plot Result</span>
             </a>
           </li>
           <li class="nav-item">
@@ -44,13 +44,19 @@
           <li class="nav-item">
             <a class="nav-link {% if 'caylar_page' in segment %} active {% endif %}" href="{% url 'caylar_page' %}">
               <i class="ni ni-pin-3 text-primary"></i>
-              <span class="nav-link-text">Caylar Magnetic</span>
+              <span class="nav-link-text">Caylar Magnet</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if 'rfsoc_page' in segment %} active {% endif %}" href="{% url 'rfsoc_page' %}">
               <i class="ni ni-bullet-list-67 text-default"></i>
               <span class="nav-link-text">RFSoC</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/manual.html">
+              <i class="ni ni-books text-default"></i>
+              <span class="nav-link-text">Manual</span>
             </a>
           </li>
 

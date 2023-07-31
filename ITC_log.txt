@@ -1,0 +1,114 @@
+2023-06-20 16:05:36,706 - INFO - The connection has already been established.
+2023-06-20 16:06:40,279 - INFO - The connection has already been established.
+2023-06-20 16:08:57,101 - INFO - The connection has already been established.
+2023-06-20 16:14:37,777 - INFO - The connection has already been established.
+2023-06-20 16:15:41,864 - INFO - The connection has already been established.
+2023-06-20 16:17:03,107 - INFO - The connection has already been established.
+2023-06-20 16:23:18,566 - INFO - The connection has already been established.
+2023-06-20 16:23:19,676 - INFO - The connection has already been established.
+2023-06-20 16:23:20,350 - INFO - The connection has already been established.
+2023-06-20 16:23:54,838 - INFO - The connection has already been established.
+2023-06-20 17:05:54,344 - INFO - The connection has already been established.
+2023-06-21 09:56:18,530 - INFO - The connection has already been established.
+2023-06-21 09:57:32,977 - INFO - The connection has already been established.
+2023-06-21 10:18:06,432 - INFO - The connection has already been established.
+2023-06-21 10:23:25,226 - INFO - The connection has already been established.
+2023-06-21 10:24:31,098 - INFO - The connection has already been established.
+2023-06-21 10:28:11,337 - INFO - The connection has already been established.
+2023-06-21 10:33:47,078 - INFO - The connection has already been established.
+2023-06-21 10:56:43,257 - INFO - The connection has already been established.
+2023-06-21 11:09:50,162 - INFO - The connection has already been established.
+2023-06-21 11:22:46,333 - INFO - The connection has already been established.
+2023-06-21 11:45:24,798 - INFO - The connection has already been established.
+2023-06-21 11:46:46,771 - INFO - The connection has already been established.
+2023-06-21 14:17:42,326 - INFO - The connection has already been established.
+2023-06-21 14:18:45,003 - INFO - The connection has already been established.
+2023-06-21 14:19:14,869 - INFO - The connection has already been established.
+2023-06-21 14:19:40,768 - INFO - The connection has already been established.
+2023-06-21 14:38:49,438 - INFO - The connection has already been established.
+2023-06-21 14:39:39,290 - INFO - The connection has already been established.
+2023-06-21 14:40:47,467 - INFO - The connection has already been established.
+2023-06-21 14:41:01,264 - INFO - The connection has already been established.
+2023-06-21 15:43:02,113 - INFO - The connection has already been established.
+2023-06-21 15:46:32,399 - INFO - The connection has already been established.
+2023-06-21 15:50:27,366 - INFO - The connection has already been established.
+2023-06-21 15:51:37,660 - INFO - The connection has already been established.
+2023-06-21 16:58:03,334 - INFO - The connection has already been established.
+2023-06-22 10:35:50,492 - INFO - The connection has already been established.
+2023-06-22 10:47:40,754 - INFO - The connection has already been established.
+2023-06-22 11:01:54,073 - INFO - The connection has already been established.
+2023-06-22 13:26:54,709 - INFO - The connection has already been established.
+2023-06-22 14:28:29,277 - INFO - The connection has already been established.
+2023-06-22 14:29:49,173 - INFO - The connection has already been established.
+2023-06-22 14:40:48,786 - INFO - The connection has already been established.
+2023-06-22 15:18:58,181 - INFO - The connection has already been established.
+2023-06-22 15:19:33,109 - INFO - The connection has already been established.
+2023-06-22 15:20:33,218 - INFO - The connection has already been established.
+2023-06-22 15:21:33,230 - INFO - The connection has already been established.
+2023-06-22 15:23:30,460 - INFO - The connection has already been established.
+2023-06-22 15:24:13,269 - INFO - The connection has already been established.
+2023-06-22 15:27:16,276 - INFO - The connection has already been established.
+2023-06-22 15:28:39,898 - INFO - The connection has already been established.
+2023-06-22 15:29:59,896 - INFO - The connection has already been established.
+2023-06-22 15:34:39,580 - INFO - The connection has already been established.
+2023-06-22 15:35:36,193 - INFO - The connection has already been established.
+2023-06-22 15:36:21,713 - INFO - The connection has already been established.
+2023-06-22 15:36:59,905 - INFO - The connection has already been established.
+2023-06-22 15:38:38,396 - INFO - The connection has already been established.
+2023-06-22 15:43:39,848 - INFO - The connection has already been established.
+2023-06-22 15:47:18,477 - INFO - The connection has already been established.
+2023-06-22 15:49:40,673 - INFO - The connection has already been established.
+2023-06-22 15:53:04,680 - INFO - The connection has already been established.
+2023-06-22 15:56:15,773 - INFO - The connection has already been established.
+2023-06-22 15:59:24,503 - INFO - The connection has already been established.
+2023-06-22 16:03:52,144 - INFO - The connection has already been established.
+2023-06-22 16:12:20,959 - INFO - The connection has already been established.
+2023-06-22 16:15:30,577 - INFO - The connection has already been established.
+2023-06-22 16:16:22,642 - INFO - The connection has already been established.
+2023-06-22 16:24:22,100 - INFO - The connection has already been established.
+2023-06-22 16:26:34,551 - INFO - The connection has already been established.
+2023-06-22 16:28:21,671 - INFO - The connection has already been established.
+2023-06-22 16:29:34,163 - INFO - The connection has already been established.
+2023-06-22 16:30:18,104 - INFO - The connection has already been established.
+2023-07-26 18:08:44,292 - DEBUG - recv heater power
+2023-07-26 18:08:44,404 - DEBUG - recv temperature
+2023-07-26 18:08:46,855 - DEBUG - recv heater power
+2023-07-26 18:08:46,979 - DEBUG - recv temperature
+2023-07-26 18:08:49,323 - DEBUG - recv heater power
+2023-07-26 18:08:49,452 - DEBUG - recv temperature
+2023-07-26 18:08:51,858 - DEBUG - recv heater power
+2023-07-26 18:08:51,969 - DEBUG - recv temperature
+2023-07-26 18:08:54,360 - DEBUG - recv heater power
+2023-07-26 18:08:54,476 - DEBUG - recv temperature
+2023-07-26 18:08:56,828 - DEBUG - recv heater power
+2023-07-26 18:08:56,951 - DEBUG - recv temperature
+2023-07-26 18:08:59,280 - DEBUG - recv heater power
+2023-07-26 18:08:59,391 - DEBUG - recv temperature
+2023-07-26 18:09:01,694 - DEBUG - recv heater power
+2023-07-26 18:09:01,802 - DEBUG - recv temperature
+2023-07-26 18:09:04,105 - DEBUG - recv heater power
+2023-07-26 18:09:04,212 - DEBUG - recv temperature
+2023-07-26 18:09:06,568 - DEBUG - recv heater power
+2023-07-26 18:09:06,705 - DEBUG - recv temperature
+2023-07-26 18:09:09,075 - DEBUG - recv heater power
+2023-07-26 18:09:09,211 - DEBUG - recv temperature
+2023-07-26 18:09:11,571 - DEBUG - recv heater power
+2023-07-26 18:09:11,701 - DEBUG - recv temperature
+2023-07-26 18:09:14,057 - DEBUG - recv heater power
+2023-07-26 18:09:14,171 - DEBUG - recv temperature
+2023-07-26 18:09:16,466 - DEBUG - recv heater power
+2023-07-26 18:09:16,569 - DEBUG - recv temperature
+2023-07-26 18:09:18,914 - DEBUG - recv heater power
+2023-07-26 18:09:19,019 - DEBUG - recv temperature
+2023-07-26 18:09:21,348 - DEBUG - recv heater power
+2023-07-26 18:09:21,452 - DEBUG - recv temperature
+2023-07-26 18:09:23,820 - DEBUG - recv heater power
+2023-07-26 18:09:23,997 - DEBUG - recv temperature
+2023-07-26 18:09:26,328 - DEBUG - recv heater power
+2023-07-26 18:09:26,450 - DEBUG - recv temperature
+2023-07-26 18:09:28,797 - DEBUG - recv heater power
+2023-07-26 18:09:28,914 - DEBUG - recv temperature
+2023-07-26 18:09:31,198 - DEBUG - recv heater power
+2023-07-26 18:09:31,311 - DEBUG - recv temperature
+2023-07-26 18:09:33,712 - DEBUG - recv heater power
+2023-07-26 18:09:33,824 - DEBUG - recv temperature

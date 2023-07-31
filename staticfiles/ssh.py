@@ -1,5 +1,5 @@
 import paramiko
-
+import time
 class SSH:
     def __init__(self,hostname,username, password, port=22):
         self.hostname = hostname
@@ -27,7 +27,7 @@ class SSH:
         shell.send('sudo -i\n')
 
         # Wait for the login process to complete
-        import time
+
         time.sleep(1)  # Adjust the delay as needed
         output = shell.recv(65535).decode('utf-8')
         while 'password' in output.lower():

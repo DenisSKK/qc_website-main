@@ -3,7 +3,7 @@ from qick import *
 from qick.parser import load_program
 from sequence import sequence_TTL
 import numpy as np
-
+from math import asin
 from create_json import import_json_file, save_list_to_json_file
 from XMLGenerator import xml_config_to_dict
 # config = import_json_file("config.json")
@@ -16,6 +16,15 @@ soccfg = soc
 out_chs = [0,1]
 
 def divide_nested_list(nested_list, divisor):
+    """
+    The function `divide_nested_list` takes a nested list of numbers and a divisor, and returns a new
+    nested list where each number is divided by the divisor and rounded to the nearest whole number.
+    @param nested_list - A nested list containing sublists of numbers.
+    @param divisor - The divisor is a number that will be used to divide each element in the nested
+    list.
+    @returns a new nested list where each number in the original nested list has been divided by the
+    given divisor and rounded to the nearest whole number.
+    """
     result = []
     for sublist in nested_list:
         divided_sublist = []
@@ -24,6 +33,10 @@ def divide_nested_list(nested_list, divisor):
         result.append(divided_sublist)
     return result
 
+def phase_generator(freq):
+    return asin(freq/1000)
+
+# The class MultiSequenceProgram is a subclass of AveragerProgram.
 class MultiSequenceProgram(AveragerProgram):
     def __init__(self,soccfg, cfg):
         super().__init__(soccfg, cfg)
@@ -58,13 +71,17 @@ class MultiSequenceProgram(AveragerProgram):
             self.default_pulse_registers(ch=ch,style="arb",waveform="measure", mode=cfg["EOM"]["mode"+str(ch)])
 
     def body(self):
+        """
+        The function triggers ADC acquisition, sets pulse registers, plays readout pulses, and triggers
+        AOM sequences.
+        """
         cfg=self.cfg
 
         #EOM
         self.trigger(adcs=[0,1],adc_trig_offset=cfg["adc_trig_offset"])  # trigger the adc acquisition
-        for ii, chseq in enumerate(cfg["EOM"]['channel_seq0']):
-            for kk, ch in enumerate(chseq):
-                self.set_pulse_registers(ch=ch, freq=soccfg.freq2reg(cfg["EOM"]["freq_seq0"][ii]), phase=soccfg.deg2reg(cfg["EOM"]["phase_seq0"][ii]), gain=cfg["EOM"]["gain_seq0"][ii])
+        for ii, freqseq in enumerate(cfg["EOM"]['freq_seq0']):
+            for kk, ch in [0,1]:
+                self.set_pulse_registers(ch=ch, freq=soccfg.freq2reg(freqseq), phase=soccfg.deg2reg(phase_generator(freqseq)), gain=cfg["EOM"]["gain_seq0"][ii])
                 #PULSE AT CHANNEL 0 and 1
                 self.pulse(ch=ch, t=cfg["EOM"]["time_seq"][ii]) # play readout pulse
 

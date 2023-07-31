@@ -1,0 +1,36 @@
+2023-07-24 18:13:31,743 - INFO - Current is set to 25.6
+2023-07-24 18:13:31,744 - INFO - Field is set to 10.0
+2023-07-24 18:14:01,551 - INFO - Current is set to 25.6
+2023-07-24 18:14:01,552 - INFO - Field is set to 10.0
+2023-07-24 18:14:06,229 - INFO - Caylar connection has already been established.
+2023-07-24 18:14:06,236 - INFO - Current is set to 25.6
+2023-07-24 18:14:06,236 - INFO - Field is set to 10.0
+2023-07-24 18:14:33,165 - INFO - Current is set to 25.6
+2023-07-24 18:14:33,166 - INFO - Field is set to 10.0
+2023-07-24 18:14:50,444 - INFO - Caylar connection has already been established.
+2023-07-24 18:14:50,445 - INFO - Current is set to 25.6
+2023-07-24 18:14:50,447 - INFO - Field is set to 10.0
+2023-07-24 18:15:26,065 - INFO - Current is set to 25.6
+2023-07-24 18:15:26,068 - INFO - Field is set to 10.0
+2023-07-24 18:15:33,783 - INFO - Caylar connection has already been established.
+2023-07-24 18:15:33,784 - INFO - Current is set to 25.6
+2023-07-24 18:15:33,785 - INFO - Field is set to 10.0
+2023-07-24 18:16:13,065 - INFO - Current is set to 25.6
+2023-07-24 18:16:13,066 - INFO - Field is set to 10.0
+2023-07-24 18:17:14,308 - INFO - Current is set to 25.6
+2023-07-24 18:17:14,309 - INFO - Field is set to 10.0
+2023-07-24 18:17:14,389 - INFO - Caylar connection has already been established.
+2023-07-24 18:17:14,390 - INFO - Current is set to 25.6
+2023-07-24 18:17:14,390 - INFO - Field is set to 10.0
+2023-07-24 18:18:01,109 - INFO - Current is set to 25.6
+2023-07-24 18:18:01,110 - INFO - Field is set to 10.0
+2023-07-24 18:18:25,162 - INFO - Caylar connection has already been established.
+2023-07-24 18:18:25,163 - INFO - Current is set to 25.6
+2023-07-24 18:18:25,164 - INFO - Field is set to 10.0
+2023-07-24 18:18:25,220 - INFO - Current is set to 25.6
+2023-07-24 18:18:25,222 - INFO - Field is set to 10.0
+2023-07-24 18:18:25,232 - INFO - Caylar connection has already been established.
+2023-07-24 18:18:25,233 - INFO - Current is set to 25.6
+2023-07-24 18:18:25,234 - INFO - Field is set to 10.0
+2023-07-24 18:24:51,797 - INFO - Caylar connection has already been established.
+2023-07-24 18:32:56,970 - INFO - Caylar connection has already been established.

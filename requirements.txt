@@ -14,6 +14,9 @@ paramiko
 instrbuilder
 git+https://github.com/lucask07/ophyd@master#egg=ophyd
 bluesky
+matplotlib
 mercuryitc
-databroker
+ipython
 toptica_lasersdk
+pyqt5
+databroker

@@ -22,9 +22,11 @@ from ophyd.ophydobj import OphydObject
 from IPython.display import clear_output
 from mercuryitc import MercuryITC
 
-logger = log_ophyd("ITC_log.txt",__name__)
+logger = log_ophyd("ITC_log.txt", __name__)
 
 DEFAULT_EPICSSIGNAL_VALUE = object()
+
+
 class ITCCommunicationError(Exception):
     pass
 
@@ -63,6 +65,7 @@ _type_map = {
     "string": (str,),
     "integer": (int, np.integer),
 }
+
 
 def data_shape(val):
     """Determine data-shape (dimensions)
@@ -109,20 +112,21 @@ def data_type(val):
         f"list, tuple, np.ndarray, and so on."
     )
 
-class ITCController(OphydObject): #On off laser similar to controller
+
+class ITCController(OphydObject):  # On off laser similar to controller
     _controller_instances = {}
     SUB_CONNECTION_CHANGE = "connection_change"
 
     def __init__(
-        self,
-        *,
-        name=None,
-        host=None,
-        port=None,
-        attr_name="",
-        parent=None,
-        labels=None,
-        kind=None,
+            self,
+            *,
+            name=None,
+            host=None,
+            port=None,
+            attr_name="",
+            parent=None,
+            labels=None,
+            kind=None,
     ):
         if not hasattr(self, "_initialized"):
             super().__init__(
@@ -154,14 +158,24 @@ class ITCController(OphydObject): #On off laser similar to controller
 
     @property
     def connected(self):
+        """
+        The function returns the value of the "_connected" attribute.
+        @returns The method is returning the value of the variable `_connected`.
+        """
         return self._connected
 
     def connect(self):
+        """
+        The function connects to a Mercury ITC device and returns True if the connection is successful,
+        otherwise it returns False.
+        @returns The connect() method returns a boolean value. If the connection to the Mercury ITC is
+        successful, it returns True. If the connection fails, it returns False.
+        """
         print("connecting to Mercury ITC")
         try:
 
-            self.ITC = MercuryITC(f"TCPIP0::{self.host}::7020::SOCKET")
-            self.htr = self.ITC.modules[1] #main htr
+            self.ITC = MercuryITC(f"TCPIP0::{self.host}::{self.port}::SOCKET")
+            self.htr = self.ITC.modules[1]  # main htr
             self.temp = self.ITC.modules[2]
             self.aux = self.ITC.modules[0]
             self._connected = True
@@ -171,48 +185,54 @@ class ITCController(OphydObject): #On off laser similar to controller
             print("Mercury ITC cannot be connected")
             self._connected = False
             return False
+
     # def open(self):
     #     self.connect()
     #     self.is_open = True
 
-
     def off(self):
+        """
+        The function "off" closes the connection to the laser and updates the connection status.
+        """
         """Close the connection to the laser"""
         logger.info("The connection is already closed.")
         self.ITC.disconnect()
-        self.connected = False
+        self._connected = False
 
-    def get_laser_data(self):
+    def get_itc_data(self):
+        """
+        The function `get_laser_data` returns a dictionary of various laser data values.
+        @returns a dictionary called "signals" which contains various laser data values.
+        """
         signals = {
             # "wide scan amplitude":{"value": self.ITC.laser1.wide_scan.amplitude.get()},
             # "wide scan offset":{"value": self.ITC.laser1.wide_scan.offset.get()},
             # "wide scan remaining time":{"value": self.ITC.laser1.wide_scan.remaining_time.get()},
-            "Main heater volt":{"value": self.htr.volt},
-            "Main heater current RO":{"value": self.htr.curr},
-            "Main heater power":{"value": self.heater_power},#
-            "Main heater voltage limit":{"value": self.htr.vlim},
-            "Temperature sensor volt RO":{"value": self.temp.volt},
-            "Temperature sensor excitation magnitude":{"value": self.temp.exct_mag},
-            "Temperature sensor scaling factor":{"value": self.temp.cal_scal},
-            "Temperature sensor offset":{"value": self.temp.cal_offs},
-            "Temperature sensor hot limit":{"value": self.temp.cal_hotl},
-            "Temperature sensor cold limit":{"value": self.temp.cal_coldl},
-            "Temperature sensor temperature":{"value": self.temp.temp},#
-            "Temperature sensor sensitivity":{"value": self.temp.slop},
-            "Temperature sensor associate heater":{"value": self.temp.loop_temp},
-            "Temperature sensor associate auxiliary":{"value": self.temp.loop_aux},
-            "Temperature sensor propotional gain":{"value": self.temp.loop_p},
-            "Temperature sensor internal gain":{"value": self.temp.loop_i},
-            "Temperature sensor differential gain":{"value": self.temp.loop_d},
-            "Temperature sensor Enables or disables automatic gas flow":{"value": self.temp.loop_faut},
-            "Temperature sensor ramp speed in K/min":{"value": self.temp.loop_rset},
-            "Temperature sensor Enables or disables temperature ramp":{"value": self.temp.loop_rena},
-            "Gas flow minimum flow":{"value": self.aux.gmin},
-            "Gas flow Temperature error sensitivity":{"value": self.aux.tes},
-            "Gas flow Temperature voltage error sensitivity":{"value": self.aux.tves},
-            "Gas flow stepper speed":{"value": self.aux.spd},
-            "Gas flow position stepper motor":{"value": self.aux.step},
-
+            "Main heater volt": {"value": self.htr.volt},
+            "Main heater current RO": {"value": self.htr.curr},
+            "Main heater power": {"value": self.heater_power},  #
+            "Main heater voltage limit": {"value": self.htr.vlim},
+            "Temperature sensor volt RO": {"value": self.temp.volt},
+            "Temperature sensor excitation magnitude": {"value": self.temp.exct_mag},
+            "Temperature sensor scaling factor": {"value": self.temp.cal_scal},
+            "Temperature sensor offset": {"value": self.temp.cal_offs},
+            "Temperature sensor hot limit": {"value": self.temp.cal_hotl},
+            "Temperature sensor cold limit": {"value": self.temp.cal_coldl},
+            "Temperature sensor temperature": {"value": self.temp.temp},  #
+            "Temperature sensor sensitivity": {"value": self.temp.slop},
+            "Temperature sensor associate heater": {"value": self.temp.loop_temp},
+            "Temperature sensor associate auxiliary": {"value": self.temp.loop_aux},
+            "Temperature sensor propotional gain": {"value": self.temp.loop_p},
+            "Temperature sensor internal gain": {"value": self.temp.loop_i},
+            "Temperature sensor differential gain": {"value": self.temp.loop_d},
+            "Temperature sensor Enables or disables automatic gas flow": {"value": self.temp.loop_faut},
+            "Temperature sensor ramp speed in K/min": {"value": self.temp.loop_rset},
+            "Temperature sensor Enables or disables temperature ramp": {"value": self.temp.loop_rena},
+            "Gas flow minimum flow": {"value": self.aux.gmin},
+            "Gas flow Temperature error sensitivity": {"value": self.aux.tes},
+            "Gas flow Temperature voltage error sensitivity": {"value": self.aux.tves},
+            "Gas flow stepper speed": {"value": self.aux.spd},
+            "Gas flow position stepper motor": {"value": self.aux.step},
 
         }
         return signals
@@ -298,17 +318,17 @@ class ITCController(OphydObject): #On off laser similar to controller
             "valve open percentage",
         ]
         t.add_row(
-                    [
-                        self.heater_power(),
-                        self.temperature(),
-                        self.flow_percentage(),
-                        self.temperature_set_point(),
-                        self.voltage(),
-                        self.automatic_heating(),
-                        self.automatic_pid(),
-                        self.flow_percentage(),
-                    ]
-                )
+            [
+                self.heater_power(),
+                self.temperature(),
+                self.flow_percentage(),
+                self.temperature_set_point(),
+                self.voltage(),
+                self.automatic_heating(),
+                self.automatic_pid(),
+                self.flow_percentage(),
+            ]
+        )
         print(t)
 
     # def __new__(cls, *args, **kwargs):
@@ -321,8 +341,11 @@ class ITCController(OphydObject): #On off laser similar to controller
     #     if host_port not in Controller._controller_instances:
     #         Controller._controller_instances[host_port] = object.__new__(cls)
     #     return Controller._controller_instances[host_port]
-class ITCSignalBase(abc.ABC,Signal): #Similar to socketsignal
+
+
+class ITCSignalBase(abc.ABC, Signal):  # Similar to socketsignal
     SUB_SETPOINT = "setpoint"
+
     def __init__(self, signal_name, **kwargs):
         self.signal_name = signal_name
         super().__init__(**kwargs)
@@ -346,9 +369,10 @@ class ITCSignalBase(abc.ABC,Signal): #Similar to socketsignal
         timestamp = time.time()
         old_value = self.get()
         VALUE = value
-        super().put(value, timestamp=timestamp,force=True)
+        super().put(value, timestamp=timestamp, force=True)
         self._run_subs(sub_type=self.SUB_SETPOINT, old_value=old_value,
                        value=VALUE, timestamp=self.timestamp)
+
     def describe(self):
         if self._readback is DEFAULT_EPICSSIGNAL_VALUE:
             val = self.get()
@@ -356,15 +380,16 @@ class ITCSignalBase(abc.ABC,Signal): #Similar to socketsignal
             val = self._readback
         return {
             self.name: {
-                "source":self.ITC.name,
+                "source": self.ITC.name,
                 "dtype": data_type(val),
-                "shape":data_shape(val)
+                "shape": data_shape(val)
             }
         }
 
     # def get_laser(self, item):
     #     """Get motor instance for a specified controller axis."""
     #     return self._client.get(item)
+
 
 class ITCSignalRO(ITCSignalBase):
     def __init__(self, signal_name, **kwargs):
@@ -375,6 +400,7 @@ class ITCSignalRO(ITCSignalBase):
     def _set(self):
         raise ReadOnlyError("Read-only signals cannot be set")
 
+
 class ITCHeaterPower(ITCSignalBase):
     # @threadlocked
     def _get(self):
@@ -382,7 +408,7 @@ class ITCHeaterPower(ITCSignalBase):
 
     # @threadlocked
     def _set(self, val):
-        logger.info("Heater power is set to "+str(val))
+        logger.info("Heater power is set to " + str(val))
         self.ITC.heater_power_setter(val)
 
 class ITCTemperature(ITCSignalRO):
@@ -452,10 +478,7 @@ class ITCValveOpenPercentage(ITCSignalRO):
 
 
 class MercuryITCDevice(Device):
-    # widescan_amplitude = Cpt(ITCWideScanAmplitude, signal_name="widescan_amplitude")
-    # widescan_offset = Cpt(ITCWideScanOffset, signal_name="widescan_offset")
-    # widescan_time = Cpt(ITCWideScanRemainingTime, signal_name="widescan_remaining_time")
-    heater_power = Cpt(ITCHeaterPower, signal_name="heater_power",kind="hinted")
+    heater_power = Cpt(ITCHeaterPower, signal_name="heater_power", kind="hinted")
     temperature = Cpt(ITCTemperature, signal_name="temperature", kind="hinted")
     flow_percentage = Cpt(ITCFlowPercentage, signal_name="flow_percentage", kind="hinted")
     temperature_set_point = Cpt(ITCTemperatureSetPoint, signal_name="temperature_set_point", kind="hinted")
@@ -464,11 +487,12 @@ class MercuryITCDevice(Device):
     automatic_pid = Cpt(ITCAutomaticPID, signal_name="automatic_pid", kind="hinted")
     valve_open_percentage = Cpt(ITCValveOpenPercentage, signal_name="valve_open_percentage", kind="hinted")
 
-    def __init__(self, prefix,name, host, port=None, kind=None,configuration_attrs=None, parent=None,config_host=None,**kwargs):
-        if config_host==None:
-            self.itccontroller = ITCController(host=host,port=port)
+    def __init__(self, prefix, name, host, port=None, kind=None, configuration_attrs=None, parent=None,
+                 config_host=None, **kwargs):
+        if config_host == None:
+            self.itccontroller = ITCController(host=host, port=port)
         else:
-            self.itccontroller = ITCController(host=config_host["host"],port=config_host["port"])
+            self.itccontroller = ITCController(host=config_host["host"], port=config_host["port"])
         super().__init__(
             prefix=prefix,
             name=name,
@@ -480,9 +504,24 @@ class MercuryITCDevice(Device):
         )
         self.name = name
         self.tolerance = kwargs.pop("tolerance", 0.5)
+    def disconnect(self):
+        """
+        The `disconnect` function turns off the controller by calling the `off` method on the
+        `controller` object.
+        @returns The result of calling the `off` method on the `controller` object.
+        """
+        return self.itccontroller.off()
+
     def try_connect(self):
         return self.itccontroller.connect()
+
     def update_all_xml(self, xml):
+        """
+        The function updates the configuration settings of an ITC (Integrated Temperature Controller)
+        using an XML file.
+        @param xml - The `xml` parameter is a string that represents the XML content. It is used as
+        input to update the configuration settings of the object.
+        """
         from .XMLGenerator import xml_config_to_dict
         try:
             self.config = xml_config_to_dict(xml)
@@ -513,8 +552,11 @@ class MercuryITCDevice(Device):
             print("ITC Updated")
         except:
             print("XML not Found")
-
-    def update_heater_power(self, val):
+    def update_heater_power(self,val):
+        """
+        The function updates the power of a heater in an ITC controller.
+        @param val - The parameter "val" is the value that you want to set for the heater power.
+        """
         self.itccontroller.heater_power_setter(val)
 
     def update_flow_percentage(self, val):
@@ -533,9 +575,17 @@ class MercuryITCDevice(Device):
         self.itccontroller.automatic_pid_setter(val)
 
     def report_heater_power(self):
+        """
+        The function returns the value of the heater power.
+        @returns The value of the `heater_power` attribute.
+        """
         return self.heater_power.get()
 
     def report_temperature(self):
+        """
+        The function returns the value of the scan_start attribute.
+        @returns The value of `self.scan_start.get()` is being returned.
+        """
         return self.temperature.get()
 
     def report_flow_percentage(self):
@@ -557,6 +607,10 @@ class MercuryITCDevice(Device):
         return self.valve_open_percentage.get()
 
     def stage(self) -> List[object]:
+        """
+        The function returns the result of calling the `stage()` method of the superclass.
+        @returns The method is returning a list of objects.
+        """
         return super().stage()
 
     def unstage(self) -> List[object]:
@@ -568,7 +622,7 @@ class MercuryITCDevice(Device):
 
 
 if __name__ == "__main__":
-    ITCD = MercuryITCDevice(prefix="...",name="ITCD", host="itc-optistat.psi.ch")
+    ITCD = MercuryITCDevice(prefix="...", name="ITCD", host="itc-optistat.psi.ch")
     ITCD.stage()
     print(ITCD.read())
 

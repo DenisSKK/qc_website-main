@@ -1,0 +1,75 @@
+{% extends 'layouts/base.html' %} {% block title %} Manual {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+<div class="container-fluid mt--7 pb-8 pt-5 pt-md-8">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">Manual</h3>
+        </div>
+        <div class="card-body">
+          <h4>Problem connection or error on Dashboard</h4>
+          <p>Click update status button it will refresh every connection or if it cannot resolve your problem please restart the server.</p>
+          <hr />
+        </div>
+        <div class="card-body">
+          <h4>Toptica Manual</h4>
+          <h5>System Health</h5>
+          <p>
+            Returns 0 if the system has no problems.
+            <br />bit 0 - main FPGA fault <br />bit 1 - power supply fault <br />bit 2 - laser 1 problem <br />bit 3 - laser 2 problem <br />bit 8 - problem with module in M-slot 1 <br />bit 9 - problem with module in M-slot 2 <br />bit 10 - problem with module in M-slot 3 <br />bit 11 - problem with module in M-slot 4 <br />bit 12 - problem with module in S-slot 1 <br />bit 13 - problem with module in S-slot 2 <br />bit 14 - problem with module in S-slot 3 <br />bit 15 - problem with module in S-slot 4 <br />bit 16 - problem with IO board
+          </p>
+          <form>
+            {% csrf_token %}
+            <!-- Other form fields and content -->
+          </form>
+
+          <hr />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "includes/footer.html" %}
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+<script>
+  function LoggingFile(interval) {
+    const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+    // Include the CSRF token in the AJAX request headers
+    $.ajaxSetup({
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
+    });
+    $.ajax({
+      url: "{% url 'plot' %}", // URL mapped to the status view
+      type: "POST",
+      data: { changePage: false },
+      dataType: "json",
+      success: function (response) {},
+      error: function (xhr, status, error) {
+        console.log(xhr.responseText);
+      },
+      complete: function () {
+        // Call the updatePlot function again after the specified interval
+        setTimeout(function () {
+          LoggingFile(interval);
+        }, interval);
+      },
+    });
+  }
+
+  LoggingFile(1000);
+</script>
+{% endblock javascripts %}

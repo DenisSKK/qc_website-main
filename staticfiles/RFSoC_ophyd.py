@@ -27,6 +27,13 @@ from ssh import SSH
 from create_json import import_json_file, save_list_to_json_file
 
 def startupCheck(PATH):
+    """
+    The function `startupCheck` checks if a file exists and is readable, and returns True if it does.
+    @param PATH - The `PATH` parameter is a string that represents the file path of the file you want to
+    check.
+    @returns a boolean value. If the file exists and is readable, it returns True. Otherwise, it returns
+    False.
+    """
     if os.path.isfile(PATH) and os.access(PATH, os.R_OK):
         # checks if file exists
         print ("File exists and is readable")
@@ -144,6 +151,14 @@ class RFSoCController(OphydObject): #On off laser similar to controller
         self.config =None
 
     def check_config(self, source_file=None):
+        """
+        The function checks if a configuration file exists, and if not, it downloads it from a specified
+        source file.
+        @param source_file - The `source_file` parameter is the path to the JSON file that you want to
+        download and import as the configuration file. If `source_file` is not provided or is set to
+        `None`, the code will download the configuration file from the specified location
+        (`/home/xilinx/jupyter_notebooks
+        """
         if startupCheck("config.json"):
             self.config = import_json_file("config.json")
         else:
@@ -159,6 +174,9 @@ class RFSoCController(OphydObject): #On off laser similar to controller
         return self._connected
 
     def off(self):
+        """
+        The function closes the connection to the laser.
+        """
         """Close the connection to the laser"""
         logger.info("The connection is already closed.")
         self.RFSoC.disconnect()

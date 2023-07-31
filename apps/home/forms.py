@@ -1,4 +1,5 @@
 # forms.py
+from django import forms
 from django.forms.formsets import BaseFormSet
 from django import forms
 
@@ -160,7 +161,8 @@ class LaserForm(forms.Form):
     scan_end = forms.FloatField(label='Scan End')
     scan_start = forms.FloatField(label='Scan Start')
     scan_freq = forms.FloatField(label='Scan Frequency')
-    scan_offset = forms.FloatField(label='Scan Offset')
+    voltage_act = forms.FloatField(label='Voltage')
+    current_act = forms.FloatField(label='Current')
 
 
 class LaserFormIP(forms.Form):
@@ -173,7 +175,8 @@ class LaserFormConfig(forms.Form):
     scan_end = forms.FloatField(label='Scan End')
     scan_start = forms.FloatField(label='Scan Start')
     scan_freq = forms.FloatField(label='Scan Frequency')
-    scan_offset = forms.FloatField(label='Scan Offset')
+    voltage_act = forms.FloatField(label='Voltage')
+    current_act = forms.FloatField(label='Current')
 
 
 # forms.py
@@ -184,51 +187,20 @@ class CaylarForm(forms.Form):
     caylar_field = forms.FloatField(label='Field', required=False)
 
 
+class CaylarFormCurrent(forms.Form):
+    caylar_current = forms.FloatField(label='Current')
+
+
 class CaylarFormIP(forms.Form):
     caylar_host = forms.CharField(label='IP Address', max_length=100)
     caylar_port = forms.IntegerField(label='Port', required=False)
 
 
-class CaylarFormConfig(forms.Form):
-    caylar_current = forms.FloatField(label='Current', required=False)
-    caylar_field = forms.FloatField(label='Field', required=False)
-
-
-# def current_validator(value, gain_value):
-#     gain_to_current = {
-#         0: (2e-09, -2e-09),
-#         1: (2e-08, -2e-08),
-#         2: (2e-07, -2e-07),
-#         3: (2e-06, -2e-06),
-#         4: (2e-05, -2e-05),
-#         5: (2e-04, -2e-04),
-#         6: (2e-03, -2e-03),
-#         7: (2e-02, -2e-02),
-#         8: (1e-01, -1e-01),
-#     }
-#     min_current, max_current = gain_to_current.get(int(gain_value), (0, 0))
-#     if min_current <= float(value) <= max_current:
-#         return value
-#     else:
-#         raise forms.ValidationError(
-#             f"Invalid current value for Gain {gain_value}. Valid range: {min_current} to {max_current}")
+class CaylarFormField(forms.Form):
+    caylar_field = forms.FloatField(label='Field')
 
 
 class SX199Form(forms.Form):
-
-    # def curr_val_1(self):
-    #     curr1_value = self.cleaned_data.get('curr1')
-    #     gain_value = self.cleaned_data.get('gain1', 0)
-    #     return current_validator(curr1_value, gain_value)
-    #
-    # def curr_val_2(self):
-    #     self.
-    #     print(self)
-    #     curr2_value = self.cleaned_data.get('curr2')
-    #
-    #     gain_value = self.cleaned_data.get('gain2', 0)
-    #     return current_validator(curr2_value, gain_value)
-
     gain1 = forms.ChoiceField(label='CS580 1 Gain', required=False, choices=GAIN_CHOICES)
     gain2 = forms.ChoiceField(label='CS580 2 Gain', required=False, choices=GAIN_CHOICES)
     input1 = forms.ChoiceField(label='CS580 1 Input', required=False, choices=ON_OFF_CHOICES)
@@ -296,6 +268,8 @@ class RFSoCConfigForm(forms.Form):
     eom_mode1 = forms.CharField(label='EOM Mode 1', required=False)
 
 
+
+
 class RFSoCConfigFormIP(forms.Form):
     rfsoc_host = forms.CharField(label='IP Address', max_length=100)
     rfsoc_port = forms.IntegerField(label='Port', required=False)
@@ -303,13 +277,12 @@ class RFSoCConfigFormIP(forms.Form):
     rfsoc_password = forms.CharField(label='Password', required=False)
 
 
+
+
 class RFSoCEOMSequenceForm(forms.Form):
-    channel0 = forms.ChoiceField(choices=[('0', '0'), ('1', '1'), ('01', '01')])
     frequency0 = forms.FloatField(label='EOM Frequency')
-    phase0 = forms.FloatField(label='EOM Phase')
     gain0 = forms.FloatField(label='EOM Gain')
     time0 = forms.FloatField(label='EOM Time')
-    length0 = forms.FloatField(label='EOM Length 0')
 
 
 class RFSoCAOMSequenceForm(forms.Form):

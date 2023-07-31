@@ -1,1 +1,1 @@
-<data><host>129.129.131.136</host><port>1234</port><wavelength_act>1560.0</wavelength_act><scan_end>19.25</scan_end><scan_start>18.95</scan_start><scan_freq>19.1</scan_freq><scan_offset>19.1</scan_offset><time_update>28/07/2023 15:58:46</time_update></data>
+<data><host>129.129.131.136</host><voltage_act /><current_act /><wavelength_act>1560.0</wavelength_act><scan_end>19.25</scan_end><scan_start>18.95</scan_start><scan_freq>19.1</scan_freq><time_update>26/07/2023 17:24:33</time_update></data>

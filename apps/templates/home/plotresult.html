@@ -1,0 +1,135 @@
+{% extends 'layouts/base.html' %} {% block title %} Plot Result {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+<div class="container-fluid mt--7 pb-8 pt-5 pt-md-8">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">Plot Result</h3>
+        </div>
+        <div class="card-body">
+          <form id="fileUploadForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="file" id="fileInput" class="form-control" />
+            <button type="submit" class="btn btn-primary mt-2">Upload and Plot</button>
+          </form>
+          <div id="plotContainer" class="mt-4">
+            <!-- This is where the plot will be displayed -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "includes/footer.html" %}
+</div>
+{% endblock content %}
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+<script>
+  let fileContent = null;
+  let previousContent = null;
+
+  // Function to handle file upload and plot
+  function handleFileUpload() {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
+    if (file) {
+      // Create a FileReader instance
+      const reader = new FileReader();
+
+      // Set up the event listener for when the file is read
+      reader.onload = function (event) {
+        // Get the file content as a text string
+        fileContent = event.target.result;
+
+        // Check if the content has changed since the last update
+        if (fileContent !== previousContent) {
+          previousContent = fileContent; // Update the previousContent with the new content
+
+          // Create a FormData object to send the file content to the server
+          const formData = new FormData();
+          formData.append("file", new Blob([fileContent], { type: "text/plain" }), "temp.txt");
+
+          // Use Fetch API to send the file content to the server for processing
+          fetch("{% url 'resultplot' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+              "X-CSRFToken": getCSRFToken(), // Get CSRF token from the function
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Process the data received from the server and display the plot
+              // Assuming data contains the necessary information for plotting the result
+              // For example, if data is a URL to the generated plot image, you can do:
+              const plotContainer = document.getElementById("plotContainer");
+              plotContainer.innerHTML = `<img src="${data.plot_url}" alt="">`; // Use data.plot_url instead of {{plot_url}}
+              console.log(plotContainer);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        }
+      };
+
+      // Read the file as a text string
+      reader.readAsText(file);
+    }
+  }
+
+  // Function to get CSRF token from the form input field
+  function getCSRFToken() {
+    return document.querySelector("input[name='csrfmiddlewaretoken']").value;
+  }
+
+  // Attach an event listener to the form submit event
+  const fileUploadForm = document.getElementById("fileUploadForm");
+  fileUploadForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
+    handleFileUpload();
+  });
+
+  // Function to continuously update the plot
+  function updatePlot() {
+    // Call the handleFileUpload function to check for file updates and update the plot
+    handleFileUpload();
+  }
+
+  // Call the updatePlot function repeatedly every 1 second
+  setInterval(updatePlot, 1000);
+  function LoggingFile(interval) {
+    const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+    // Include the CSRF token in the AJAX request headers
+    $.ajaxSetup({
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
+    });
+    $.ajax({
+      url: "{% url 'plot' %}", // URL mapped to the status view
+      type: "POST",
+      data: { changePage: false },
+      dataType: "json",
+      success: function (response) {},
+      error: function (xhr, status, error) {
+        console.log(xhr.responseText);
+      },
+      complete: function () {
+        // Call the updatePlot function again after the specified interval
+        setTimeout(function () {
+          LoggingFile(interval);
+        }, interval);
+      },
+    });
+  }
+
+  LoggingFile(1000);
+</script>
+{% endblock javascripts %}

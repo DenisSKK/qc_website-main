@@ -1,6 +1,6 @@
 <data>
     <host>itc-optistat.psi.ch</host>
-    <port>None</port>
+    <port>7020</port>
     <heater_power>2.0</heater_power>
     <ITC_flow_percentage>10.0</ITC_flow_percentage>
     <ITC_temperature_set_point>295.0</ITC_temperature_set_point>
