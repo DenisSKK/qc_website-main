@@ -20,3 +20,5 @@ ipython
 toptica_lasersdk
 pyqt5
 databroker
+prettytable
+numpy

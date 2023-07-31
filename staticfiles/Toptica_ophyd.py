@@ -4,9 +4,6 @@ import time
 from typing import List
 import abc
 import typing
-import logging
-from ophyd.log import config_ophyd_logging
-# config_ophyd_logging(file='/tmp/ophyd.log', level='DEBUG')
 from prettytable import PrettyTable
 from .log_ophyd import log_ophyd
 
