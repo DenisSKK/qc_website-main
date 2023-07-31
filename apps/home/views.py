@@ -4,13 +4,10 @@ Copyright (c) 2019 - present AppSeed.us
 """
 import os
 # The above code is importing the `reverse` function from the `django.urls` module.
-from .construct_object import construct_object, construct_caylar, construct_itc, construct_rfsoc, construct_toptica, \
-    construct_sx
-from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, SX199Form, MercuryForm, ExperimentForm, \
-    LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, CaylarFormConfig, \
-    MercuryFormConfig, MercuryFormIP
 
 # TODO comment code
+from django.views.decorators.csrf import csrf_exempt
+import numpy as np
 from django import template
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -24,25 +21,18 @@ from django.template import loader
 from django.urls import reverse
 
 from staticfiles.XMLGenerator import xml_config_to_dict, dict_to_xml_file
-from .construct_object import construct_object, construct_caylar, construct_itc, construct_rfsoc, construct_toptica
+from .construct_object import construct_object, construct_caylar, construct_itc, construct_rfsoc, construct_toptica, \
+    construct_sx
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, CaylarFormConfig, \
     MercuryFormConfig, MercuryFormIP
 
-# def restart_server(request):
-from datetime import datetime
 import threading
-import subprocess
 import shutil
-import csv
-from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib
 
 matplotlib.use('Agg')
-
-from django.views.decorators.csrf import csrf_exempt
-import numpy as np
 
 
 def two_decimal(number):
@@ -1062,50 +1052,52 @@ def update_live_plot(request):
     data = {'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     if done_event.is_set() and running_rfsoc:
-        data["message"]="The RFSoC has finished its execution."
+        data["message"] = "The RFSoC has finished its execution."
         done_event.clear()
         running_rfsoc = False
     elif running_rfsoc:
-        data["message"]="The RFSoC is still running or not started yet."
+        data["message"] = "The RFSoC is still running or not started yet."
     if ULaser != None:
         data['laser_status'] = "ON"
         try:
-            laser_scan_end = round(ULaser.report_scan_end(),4)
-            laser_scan_start = round(ULaser.report_scan_start(),4)
+            laser_scan_end = round(ULaser.report_scan_end(), 4)
+            laser_scan_start = round(ULaser.report_scan_start(), 4)
             laser_scan_frequency = two_decimal(ULaser.report_scan_frequency())
-            laser_wavelength = round(ULaser.report_ctl_wavelength_act(),4)
+            laser_wavelength = round(ULaser.report_ctl_wavelength_act(), 4)
             laser_current = two_decimal(ULaser.report_current_act())
-            laser_voltage = round(ULaser.report_voltage_act(),4)
+            laser_voltage = round(ULaser.report_voltage_act(), 4)
             laser_emission = ULaser.report_emission()
             laser_system_health = ULaser.report_system_health()
-            laser_column_headers = ['timestamp', 'scan frequency (Hz)', 'wavelength (nm)','current (mA)','voltage (V)','emission','system health']
-            laser_data_row = [timestamp, laser_scan_frequency, laser_wavelength,laser_current,laser_voltage,laser_emission,laser_system_health]
-            laser_csv_file_path = 'logging/'+datetime.now().strftime("%Y%m%d/")+'laser.csv'
-            append_to_csv(laser_csv_file_path, laser_data_row,laser_column_headers)
-            data['laser_scan_end']= laser_scan_end,
-            data['laser_scan_start']= laser_scan_start,
-            data['laser_scan_frequency']= laser_scan_frequency,
-            if (request.POST['changePage']=="true"):
-                data['laser_wavelength']= find_csv(laser_csv_file_path,'wavelength (nm)'),
-                data['laser_current']= find_csv(laser_csv_file_path,'current (mA)'),
-                data['laser_voltage']= find_csv(laser_csv_file_path,'voltage (V)'),
-                data['laser_wavelength1']= laser_wavelength,
-                data['laser_current1']= laser_current,
-                data['laser_voltage1']= laser_voltage,
-                data['timestampT']= find_csv(laser_csv_file_path,'timestamp'),
+            laser_column_headers = ['timestamp', 'scan frequency (Hz)', 'wavelength (nm)', 'current (mA)',
+                                    'voltage (V)', 'emission', 'system health']
+            laser_data_row = [timestamp, laser_scan_frequency, laser_wavelength, laser_current, laser_voltage,
+                              laser_emission, laser_system_health]
+            laser_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'laser.csv'
+            append_to_csv(laser_csv_file_path, laser_data_row, laser_column_headers)
+            data['laser_scan_end'] = laser_scan_end,
+            data['laser_scan_start'] = laser_scan_start,
+            data['laser_scan_frequency'] = laser_scan_frequency,
+            if (request.POST['changePage'] == "true"):
+                data['laser_wavelength'] = find_csv(laser_csv_file_path, 'wavelength (nm)'),
+                data['laser_current'] = find_csv(laser_csv_file_path, 'current (mA)'),
+                data['laser_voltage'] = find_csv(laser_csv_file_path, 'voltage (V)'),
+                data['laser_wavelength1'] = laser_wavelength,
+                data['laser_current1'] = laser_current,
+                data['laser_voltage1'] = laser_voltage,
+                data['timestampT'] = find_csv(laser_csv_file_path, 'timestamp'),
             else:
-                data['laser_wavelength']= laser_wavelength,
-                data['laser_current']= laser_current,
-                data['laser_voltage']= laser_voltage,
-                data['laser_wavelength1']= laser_wavelength,
-                data['laser_current1']= laser_current,
-                data['laser_voltage1']= laser_voltage,
-                data['timestampT']= timestamp,
-            data['laser_emission']= laser_emission,
-            data['laser_system_health']= laser_system_health,
+                data['laser_wavelength'] = laser_wavelength,
+                data['laser_current'] = laser_current,
+                data['laser_voltage'] = laser_voltage,
+                data['laser_wavelength1'] = laser_wavelength,
+                data['laser_current1'] = laser_current,
+                data['laser_voltage1'] = laser_voltage,
+                data['timestampT'] = timestamp,
+            data['laser_emission'] = laser_emission,
+            data['laser_system_health'] = laser_system_health,
         except Exception as e:
             print(e)
-    if UCaylar !=None:
+    if UCaylar != None:
         data['caylar_status'] = "ON"
         caylar_current = two_decimal(UCaylar.current)
         caylar_voltage = two_decimal(UCaylar.voltage)
@@ -1115,66 +1107,68 @@ def update_live_plot(request):
         caylar_rack_temp = two_decimal(UCaylar.rack_temp)
         caylar_water_temp = two_decimal(UCaylar.water_temp)
         caylar_water_flow = two_decimal(UCaylar.water_flow)
-        caylar_column_headers = ['timestamp', 'current (A)', 'voltage (V)','field (G)', 'ADCDAC temp (Deg)', 'box temp (Deg)', 'rack temp (Deg)', 'water temp (Deg)', 'water flow (L/Min)']
-        caylar_data_row = [timestamp,caylar_current,caylar_voltage,caylar_field,caylar_ADCDAC_temp,caylar_box_temp,caylar_rack_temp,caylar_water_temp,caylar_water_flow]
-        caylar_csv_file_path = 'logging/'+datetime.now().strftime("%Y%m%d/")+'caylar.csv'
-        append_to_csv(caylar_csv_file_path, caylar_data_row,caylar_column_headers)
-        if not (request.POST['changePage']=="true"):
-            data['caylar_current']= caylar_current,
-            data['caylar_voltage']= caylar_voltage,
-            data['caylar_field']= caylar_field,
-            data['caylar_ADCDAC_temp']= caylar_ADCDAC_temp,
-            data['caylar_box_temp']= caylar_box_temp,
-            data['caylar_rack_temp']= caylar_rack_temp,
-            data['caylar_water_temp']= caylar_water_temp,
-            data['caylar_water_flow']= caylar_water_flow,
-            data['caylar_current1']= caylar_current,
-            data['caylar_voltage1']= caylar_voltage,
-            data['caylar_field1']= caylar_field,
-            data['caylar_ADCDAC_temp1']= caylar_ADCDAC_temp,
-            data['caylar_box_temp1']= caylar_box_temp,
-            data['caylar_rack_temp1']= caylar_rack_temp,
-            data['caylar_water_temp1']= caylar_water_temp,
-            data['caylar_water_flow1']= caylar_water_flow,
-            data['timestampC']= timestamp,
+        caylar_column_headers = ['timestamp', 'current (A)', 'voltage (V)', 'field (G)', 'ADCDAC temp (Deg)',
+                                 'box temp (Deg)', 'rack temp (Deg)', 'water temp (Deg)', 'water flow (L/Min)']
+        caylar_data_row = [timestamp, caylar_current, caylar_voltage, caylar_field, caylar_ADCDAC_temp, caylar_box_temp,
+                           caylar_rack_temp, caylar_water_temp, caylar_water_flow]
+        caylar_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'caylar.csv'
+        append_to_csv(caylar_csv_file_path, caylar_data_row, caylar_column_headers)
+        if not (request.POST['changePage'] == "true"):
+            data['caylar_current'] = caylar_current,
+            data['caylar_voltage'] = caylar_voltage,
+            data['caylar_field'] = caylar_field,
+            data['caylar_ADCDAC_temp'] = caylar_ADCDAC_temp,
+            data['caylar_box_temp'] = caylar_box_temp,
+            data['caylar_rack_temp'] = caylar_rack_temp,
+            data['caylar_water_temp'] = caylar_water_temp,
+            data['caylar_water_flow'] = caylar_water_flow,
+            data['caylar_current1'] = caylar_current,
+            data['caylar_voltage1'] = caylar_voltage,
+            data['caylar_field1'] = caylar_field,
+            data['caylar_ADCDAC_temp1'] = caylar_ADCDAC_temp,
+            data['caylar_box_temp1'] = caylar_box_temp,
+            data['caylar_rack_temp1'] = caylar_rack_temp,
+            data['caylar_water_temp1'] = caylar_water_temp,
+            data['caylar_water_flow1'] = caylar_water_flow,
+            data['timestampC'] = timestamp,
         else:
-            data['caylar_current']= find_csv(caylar_csv_file_path,'current (A)'),
-            data['caylar_voltage']= find_csv(caylar_csv_file_path,'voltage (V)'),
-            data['caylar_field']= find_csv(caylar_csv_file_path,'field (G)'),
-            data['caylar_ADCDAC_temp']= find_csv(caylar_csv_file_path,'ADCDAC temp (Deg)'),
-            data['caylar_box_temp']= find_csv(caylar_csv_file_path,'box temp (Deg)'),
-            data['caylar_rack_temp']= find_csv(caylar_csv_file_path,'rack temp (Deg)'),
-            data['caylar_water_temp']= find_csv(caylar_csv_file_path,'water temp (Deg)'),
-            data['caylar_water_flow']= find_csv(caylar_csv_file_path,'water flow (L/Min)'),
-            data['caylar_current1']= caylar_current,
-            data['caylar_voltage1']= caylar_voltage,
-            data['caylar_field1']= caylar_field,
-            data['caylar_ADCDAC_temp1']= caylar_ADCDAC_temp,
-            data['caylar_box_temp1']= caylar_box_temp,
-            data['caylar_rack_temp1']= caylar_rack_temp,
-            data['caylar_water_temp1']= caylar_water_temp,
-            data['caylar_water_flow1']= caylar_water_flow,
-            data['timestampC']= find_csv(caylar_csv_file_path,'timestamp'),
-    if UmercuryITC!=None:
+            data['caylar_current'] = find_csv(caylar_csv_file_path, 'current (A)'),
+            data['caylar_voltage'] = find_csv(caylar_csv_file_path, 'voltage (V)'),
+            data['caylar_field'] = find_csv(caylar_csv_file_path, 'field (G)'),
+            data['caylar_ADCDAC_temp'] = find_csv(caylar_csv_file_path, 'ADCDAC temp (Deg)'),
+            data['caylar_box_temp'] = find_csv(caylar_csv_file_path, 'box temp (Deg)'),
+            data['caylar_rack_temp'] = find_csv(caylar_csv_file_path, 'rack temp (Deg)'),
+            data['caylar_water_temp'] = find_csv(caylar_csv_file_path, 'water temp (Deg)'),
+            data['caylar_water_flow'] = find_csv(caylar_csv_file_path, 'water flow (L/Min)'),
+            data['caylar_current1'] = caylar_current,
+            data['caylar_voltage1'] = caylar_voltage,
+            data['caylar_field1'] = caylar_field,
+            data['caylar_ADCDAC_temp1'] = caylar_ADCDAC_temp,
+            data['caylar_box_temp1'] = caylar_box_temp,
+            data['caylar_rack_temp1'] = caylar_rack_temp,
+            data['caylar_water_temp1'] = caylar_water_temp,
+            data['caylar_water_flow1'] = caylar_water_flow,
+            data['timestampC'] = find_csv(caylar_csv_file_path, 'timestamp'),
+    if UmercuryITC != None:
         data['mercury_status'] = "ON"
         itc_heater_power = UmercuryITC.report_heater_power()
         itc_temperature = two_decimal(UmercuryITC.report_temperature())
-        itc_data_row = [timestamp,itc_heater_power,itc_temperature]
-        itc_column_headers = ['timestamp', 'Heater Power','temperature (K)']
-        itc_csv_file_path = 'logging/'+datetime.now().strftime("%Y%m%d/")+'itc.csv'
-        append_to_csv(itc_csv_file_path, itc_data_row,itc_column_headers)
-        if not (request.POST['changePage']=="true"):
-            data['itc_heater_power']= itc_heater_power,
-            data['itc_temperature']= itc_temperature,
-            data['itc_heater_power1']= itc_heater_power,
-            data['itc_temperature1']= itc_temperature,
-            data['timestampM']= timestamp,
+        itc_data_row = [timestamp, itc_heater_power, itc_temperature]
+        itc_column_headers = ['timestamp', 'Heater Power', 'temperature (K)']
+        itc_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'itc.csv'
+        append_to_csv(itc_csv_file_path, itc_data_row, itc_column_headers)
+        if not (request.POST['changePage'] == "true"):
+            data['itc_heater_power'] = itc_heater_power,
+            data['itc_temperature'] = itc_temperature,
+            data['itc_heater_power1'] = itc_heater_power,
+            data['itc_temperature1'] = itc_temperature,
+            data['timestampM'] = timestamp,
         else:
-            data['itc_heater_power']= find_csv(itc_csv_file_path,'Heater Power'),
-            data['itc_temperature']= find_csv(itc_csv_file_path,'temperature (K)'),
-            data['itc_heater_power1']= itc_heater_power,
-            data['itc_temperature1']= itc_temperature,
-            data['timestampM']= find_csv(itc_csv_file_path,'timestamp'),
+            data['itc_heater_power'] = find_csv(itc_csv_file_path, 'Heater Power'),
+            data['itc_temperature'] = find_csv(itc_csv_file_path, 'temperature (K)'),
+            data['itc_heater_power1'] = itc_heater_power,
+            data['itc_temperature1'] = itc_temperature,
+            data['timestampM'] = find_csv(itc_csv_file_path, 'timestamp'),
 
     return JsonResponse(data)
 
@@ -1243,7 +1237,6 @@ def statusSX(request):
         'sx_status': sx_status,
     }
     return JsonResponse(status)
-
 
 
 def statusLaser(request):
