@@ -1,3 +1,5 @@
+import datetime
+
 from staticfiles.instrbuilder.instrument_opening import open_by_name
 from staticfiles.ophyd.ee_instruments import generate_ophyd_obj
 from typing import List
@@ -68,7 +70,7 @@ class SX199Device():
         # escape() is used to make sure that if there is a previous-linked port or error, it will be reset.
         self.escape()
         self.update_link(link)
-        sleep(0.001)
+        sleep(0.0001)
         try:
             id_string = self.sx_ophyd.id.get()
         except:
@@ -87,7 +89,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(1)
-        sleep(0.001)
+        sleep(0.0001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -124,7 +126,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(2)
-        sleep(0.001)
+        sleep(0.0001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -160,6 +162,7 @@ class SX199Device():
     def all_report_link(self, link):
         self.escape()
         self.update_link(link)
+        print(f'SX report, linked {datetime.time}')
         sleep(0.0001)
         gain = self.report_gain()
         input_val = self.report_input()
@@ -171,6 +174,7 @@ class SX199Device():
         volt = self.report_volt()
         sleep(0.0001)
         self.escape()
+        print(f'SX report, everything read {datetime.time}')
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output
 
