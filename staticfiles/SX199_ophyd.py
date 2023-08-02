@@ -61,6 +61,11 @@ class SX199Device():
         self.sx_instr.comm_handle.close()
 
     # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
+    def is_connected(self):
+        id_string = self.sx_ophyd.id.get()
+        return id_string.startswith("Stanford_Research_Systems,SX199")
+
+    # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
     def is_cs_connected(self, link):
         # escape() is used to make sure that if there is a previous-linked port or error, it will be reset.
         self.escape()
