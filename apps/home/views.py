@@ -556,6 +556,10 @@ def sx_page_view(request):
     if SX_instance is None:
         print("Constructing sx")
         SX_instance = construct_sx()
+    else:
+        SX_instance.disconnect()
+        SX_instance = None
+        SX_instance = construct_sx()
 
     # SX_instance.connect()
     connected = SX_instance.is_connected()
@@ -565,6 +569,7 @@ def sx_page_view(request):
     else:
         info = f'SX199 is not connected!'
         messages.error(request, info)
+        SX_instance.disconnect()
         SX_instance = None
 
     sx_xml_dict = xml_config_to_dict(xml_path)
