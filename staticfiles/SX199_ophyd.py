@@ -160,7 +160,7 @@ class SX199Device():
     def all_report_link(self, link):
         self.escape()
         self.update_link(link)
-        sleep(0.001)
+        sleep(0.0001)
         gain = self.report_gain()
         input_val = self.report_input()
         speed = self.report_speed()
@@ -169,7 +169,7 @@ class SX199Device():
         output = self.report_output()
         curr = self.report_curr()
         volt = self.report_volt()
-        sleep(0.001)
+        sleep(0.0001)
         self.escape()
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output
