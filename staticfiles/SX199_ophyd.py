@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from staticfiles.instrbuilder.instrument_opening import open_by_name
 from staticfiles.ophyd.ee_instruments import generate_ophyd_obj

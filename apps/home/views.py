@@ -19,6 +19,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
+from datetime import datetime
 
 from staticfiles.XMLGenerator import xml_config_to_dict, dict_to_xml_file
 from .construct_object import construct_object, construct_caylar, construct_itc, construct_rfsoc, construct_toptica, \
