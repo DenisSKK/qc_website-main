@@ -61,16 +61,11 @@ class SX199Device():
         self.sx_instr.comm_handle.close()
 
     # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
-    def is_connected(self):
-        id_string = self.sx_ophyd.id.get()
-        return id_string.startswith("Stanford_Research_Systems,SX199")
-
-    # This function is for checking if the CS580 is connected on port number {link}. Same way as SX199 with ID getter.
     def is_cs_connected(self, link):
         # escape() is used to make sure that if there is a previous-linked port or error, it will be reset.
         self.escape()
         self.update_link(link)
-        sleep(0.001)
+        sleep(0.0001)
         try:
             id_string = self.sx_ophyd.id.get()
         except:
@@ -89,7 +84,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(1)
-        sleep(0.001)
+        sleep(0.0001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -126,7 +121,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(2)
-        sleep(0.001)
+        sleep(0.0001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -163,7 +158,7 @@ class SX199Device():
         self.escape()
         self.update_link(link)
         print(f'SX report, linked {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
-        sleep(0.001)
+        sleep(0.0001)
         gain = self.report_gain()
         input_val = self.report_input()
         speed = self.report_speed()
@@ -172,7 +167,7 @@ class SX199Device():
         output = self.report_output()
         curr = self.report_curr()
         volt = self.report_volt()
-        sleep(0.000001)
+        sleep(0.0001)
         self.escape()
         print(f'SX report, everything read {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
         # print(f"CS link {link} report")
