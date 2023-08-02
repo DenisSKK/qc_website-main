@@ -70,7 +70,7 @@ class SX199Device():
         # escape() is used to make sure that if there is a previous-linked port or error, it will be reset.
         self.escape()
         self.update_link(link)
-        sleep(0.0001)
+        sleep(0.001)
         try:
             id_string = self.sx_ophyd.id.get()
         except:
@@ -89,7 +89,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(1)
-        sleep(0.0001)
+        sleep(0.001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -126,7 +126,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(2)
-        sleep(0.0001)
+        sleep(0.001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -162,8 +162,8 @@ class SX199Device():
     def all_report_link(self, link):
         self.escape()
         self.update_link(link)
-        print(f'SX report, linked {datetime.time}')
-        sleep(0.0001)
+        print(f'SX report, linked {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        sleep(0.001)
         gain = self.report_gain()
         input_val = self.report_input()
         speed = self.report_speed()
@@ -172,9 +172,9 @@ class SX199Device():
         output = self.report_output()
         curr = self.report_curr()
         volt = self.report_volt()
-        sleep(0.0001)
+        sleep(0.000001)
         self.escape()
-        print(f'SX report, everything read {datetime.time}')
+        print(f'SX report, everything read {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output
 
