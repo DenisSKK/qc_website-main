@@ -565,6 +565,7 @@ def sx_page_view(request):
     else:
         info = f'SX199 is not connected!'
         messages.error(request, info)
+        SX_instance = None
 
     sx_xml_dict = xml_config_to_dict(xml_path)
     # if connected and connected_link_1:
