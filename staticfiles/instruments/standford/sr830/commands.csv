@@ -82,7 +82,7 @@ data_transf_mode,FAST,,TRUE,int,TRUE,int,"[0,2]",The FAST command sets the data 
 fast_data_transf,STRD,,FALSE,none,TRUE,none,None,"After using FAST1 or FAST 2 to turn on fast data transfer, use the STRD command to 
 start the scan.",Data Transfer commands,,,
 reset,*RST,,FALSE,none,TRUE,none,None,The ❊RST command resets the SR830 to its default configurations.,Interface commands,,,
-id,*IDN,,FALSE,none,TRUE,none,None,The ❊IDN? query returns the SR830's device identification string.,Interface commands,,,
+id,*IDN,,TRUE,None,FALSE,none,None,The ❊IDN? query returns the SR830's device identification string.,Interface commands,,,
 local_remote_fun,LOCL,,TRUE,int,TRUE,int,"[0,2]","The LOCL command sets the local/remote function. If i=0 the SR830 is
 LOCAL, if i=1 the SR830 will go REMOTE, and if i=2 the SR830 will go
 into LOCAL LOCKOUT state.",Interface commands,,,

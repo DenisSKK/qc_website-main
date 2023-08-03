@@ -15,3 +15,5 @@ instruments:
     host: 129.129.131.103
     username: xilinx
     password: xilinx
+  sr830:
+    address: GPIB1::8::INSTR

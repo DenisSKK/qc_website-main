@@ -14,3 +14,8 @@ instruments:
       pyvisa: TCPIP::SX199::8888::SOCKET
     csv_folder: standford/sx199
     python_class: StandfordSX199
+  sr830:
+    address:
+      pyvisa: TCPIP::SX199::8888::SOCKET
+    csv_folder: standford/sr830
+    python_class: StandfordSR830

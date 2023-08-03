@@ -19,6 +19,7 @@ def update_configs():
     update_toptica_config()
     update_caylar_config()
     update_instrbuilder_config()
+    update_sr830_config()
 
 
 def update_sx_config():
@@ -35,6 +36,25 @@ def update_sx_config():
 
     # Update the pyvisa section for sx199 in .instrbuilder/config.yaml
     config_data_dest["instruments"]["sx199"]["address"]["pyvisa"] = f"TCPIP::{sx199_host}::{sx199_port}::SOCKET"
+
+    # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
+    with open(config_file_dest, "w") as instr_yaml_file:
+        yaml_dest.dump(config_data_dest, instr_yaml_file)
+
+
+def update_sr830_config():
+    # Extract sx199 host and port
+    sr830_address = config_data_src["instruments"]["sr830"]["address"]
+
+    # Create path for .instrbuilder/config.yaml and yaml object
+    yaml_dest = ruamel.yaml.YAML()
+
+    # Read the .instrbuilder/config.yaml file
+    with open(config_file_dest, "r") as instr_yaml_file:
+        config_data_dest = yaml_dest.load(instr_yaml_file)
+
+    # Update the pyvisa section for sx199 in .instrbuilder/config.yaml
+    config_data_dest["instruments"]["sr830"]["address"]["pyvisa"] = sr830_address
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
     with open(config_file_dest, "w") as instr_yaml_file:

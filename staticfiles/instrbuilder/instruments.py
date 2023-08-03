@@ -32,6 +32,21 @@ class StandfordSX199(SCPI):
         super().__init__(cmd_list, comm_handle, name=name, unconnected=unconnected)
 
 
+# Creating SX199 class for Instrbuilder to use.
+class StandfordSR830(SCPI):
+    def __init__(self,
+                 cmd_list,
+                 comm_handle,
+                 name='curr',
+                 unconnected=False):
+        # After problem with controlling, setting read and write termination solved the problem.
+        comm_handle.read_termination = '\r\n'
+        comm_handle.write_termination = '\r\n'
+
+        comm_handle.write('*CLS\n')
+        super().__init__(cmd_list, comm_handle, name=name, unconnected=unconnected)
+
+
 class RigolPowerSupply(SCPI):
     def __init__(self,
                  cmd_list,
