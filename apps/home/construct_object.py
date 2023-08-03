@@ -1,7 +1,3 @@
-import os
-
-import ruamel.yaml
-
 from staticfiles.ITC_ophyd import MercuryITCDevice
 from staticfiles.RFSoC_controller import RFSoC_controller
 from staticfiles.SX199_ophyd import SX199Device

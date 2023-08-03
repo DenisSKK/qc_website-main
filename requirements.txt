@@ -22,3 +22,4 @@ pyqt5
 databroker
 prettytable
 numpy
+ruamel.yaml
