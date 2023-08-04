@@ -27,7 +27,7 @@ from .construct_object import construct_object, construct_caylar, construct_itc,
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
     MercuryFormIP, SX199Form
-from staticfiles.update_configs import update_yaml_from_xml_mercury, update_yaml_from_xml_rfsoc
+from staticfiles.update_configs import update_yaml_from_xml_mercury, update_yaml_from_xml_rfsoc, update_yaml_from_xml_toptica
 
 import threading
 import shutil
@@ -173,6 +173,7 @@ def laser_page_view(request):
             context["standby"] = "Transition from standby mode to power mode"
         toptica_host["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(toptica_host, "staticfiles/toptica.xml")
+        update_yaml_from_xml_toptica()
         toptica_host = xml_config_to_dict("staticfiles/toptica.xml")
     else:
         info = "Last time connected " + toptica_host["time_update"] + " because not connected with the device!"
@@ -192,6 +193,7 @@ def laser_page_view(request):
                 toptica_host["voltage_act"] = form.cleaned_data['voltage_act']
                 toptica_host["current_act"] = form.cleaned_data['current_act']
                 dict_to_xml_file(toptica_host, "staticfiles/toptica.xml")
+                update_yaml_from_xml_toptica()
                 if connected:
                     Update_Laser.try_connect()
                     Update_Laser.update_all_xml("staticfiles/toptica.xml")
@@ -212,6 +214,7 @@ def laser_page_view(request):
 
                 toptica_host["host"] = form.cleaned_data['laser_host']
                 dict_to_xml_file(toptica_host, "staticfiles/toptica.xml")
+                update_yaml_from_xml_toptica()
                 # Add success message to the Django messages framework
                 messages.success(request, 'Changes saved successfully in XML!')
                 # Redirect to the laser page to reload the page with the updated values
@@ -389,6 +392,7 @@ def rfsoc_page_view(request):
         rfsoc_config = xml_config_to_dict("staticfiles/xilinx.xml")
         xilinx_host["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(xilinx_host, "staticfiles/xilinx_host.xml")
+        update_yaml_from_xml_rfsoc()
     else:
         info = "Parameter has not updated since " + xilinx_host[
             "time_update"] + " because not connected with the device!"
@@ -766,6 +770,7 @@ def mercury_page_view(request):
         context["mercury_itc_valve_open_percentage"] = Update_mercury.report_valve_open_percentage()
         mercury_host["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(mercury_host, "staticfiles/mercuryITC.xml")
+        update_yaml_from_xml_mercury()
         mercury_host = xml_config_to_dict("staticfiles/mercuryITC.xml")
     else:
         info = "Parameter has not updated since " + mercury_host[

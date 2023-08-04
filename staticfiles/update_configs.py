@@ -190,3 +190,25 @@ def update_yaml_from_xml_rfsoc():
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
     with open(config_file_src, "w") as instr_yaml_file:
         yaml_dest.dump(config_data_dest, instr_yaml_file)
+
+
+def update_yaml_from_xml_toptica():
+    # Read data from staticfiles/toptica.xml
+    toptica_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "toptica.xml")
+    toptica_config_dict = xml_config_to_dict(toptica_config_path)
+
+    # Create path for .instrbuilder/config.yaml and yaml object
+    yaml_dest = ruamel.yaml.YAML()
+
+    # Read the .instrbuilder/config.yaml file
+    with open(config_file_src, "r") as instr_yaml_file:
+        config_data_dest = yaml_dest.load(instr_yaml_file)
+
+    print(config_data_dest['instruments'])
+    # Update the pyvisa section for toptica in .instrbuilder/config.yaml
+    config_data_dest["instruments"]["toptica"]["host"] = toptica_config_dict['host']
+    config_data_dest["instruments"]["toptica"]["port"] = toptica_config_dict['port']
+
+    # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
+    with open(config_file_src, "w") as instr_yaml_file:
+        yaml_dest.dump(config_data_dest, instr_yaml_file)
