@@ -27,7 +27,7 @@ from .construct_object import construct_object, construct_caylar, construct_itc,
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
     MercuryFormIP, SX199Form
-from staticfiles.update_configs import update_yaml_from_xml_mercury
+from staticfiles.update_configs import update_yaml_from_xml_mercury, update_yaml_from_xml_rfsoc
 
 import threading
 import shutil
@@ -454,6 +454,7 @@ def rfsoc_page_view(request):
                                                                              'rfsoc_port'] is not None else ''
                 xilinx_host["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 dict_to_xml_file(xilinx_host, "staticfiles/xilinx_host.xml")
+                update_yaml_from_xml_rfsoc()
 
                 # Update General configuration
                 rfsoc_config["adc_trig_offset"] = form.cleaned_data['adc_trig_offset']
@@ -498,6 +499,7 @@ def rfsoc_page_view(request):
                                                                              'rfsoc_port'] is not None else ''
                 xilinx_host["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 dict_to_xml_file(xilinx_host, "staticfiles/xilinx_host.xml")
+                update_yaml_from_xml_rfsoc()
     else:
         form = RFSoCConfigForm()
         initial_data0 = [{'time0': t, 'frequency0': f, 'gain0': int(g)} for t, f, g in
@@ -786,6 +788,7 @@ def mercury_page_view(request):
                 mercury_host["automatic_heating"] = form.cleaned_data['mercury_itc_automatic_heating']
                 mercury_host["automatic_pid"] = form.cleaned_data['mercury_itc_automatic_pid']
                 dict_to_xml_file(mercury_host, "staticfiles/mercuryITC.xml")
+                update_yaml_from_xml_mercury()
 
                 if connected:
                     Update_mercury.update_all_xml("staticfiles/mercuryITC.xml")

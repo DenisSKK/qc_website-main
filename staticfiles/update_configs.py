@@ -84,6 +84,7 @@ def update_rfsoc_config():
 
     # Extract itc host and port
     rfsoc_host = config_data_src["instruments"]["rfsoc"]["host"]
+    rfsoc_port = config_data_src["instruments"]["rfsoc"]["port"]
     rfsoc_username = config_data_src["instruments"]["rfsoc"]["username"]
     rfsoc_password = config_data_src["instruments"]["rfsoc"]["password"]
 
@@ -93,6 +94,7 @@ def update_rfsoc_config():
     # Update the host and port in staticfiles/xilinx_host.xml
     rfsoc_config_dict = xml_config_to_dict(rfsoc_config_path)
     rfsoc_config_dict['host'] = rfsoc_host
+    rfsoc_config_dict['port'] = rfsoc_port
     rfsoc_config_dict['username'] = rfsoc_username
     rfsoc_config_dict['password'] = rfsoc_password
     dict_to_xml_file(rfsoc_config_dict, rfsoc_config_path)
@@ -160,6 +162,30 @@ def update_yaml_from_xml_mercury():
     # Update the pyvisa section for mercuryITC in .instrbuilder/config.yaml
     config_data_dest["instruments"]["itc"]["host"] = mercuryITC_config_dict['host']
     config_data_dest["instruments"]["itc"]["port"] = mercuryITC_config_dict['port']
+
+    # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
+    with open(config_file_src, "w") as instr_yaml_file:
+        yaml_dest.dump(config_data_dest, instr_yaml_file)
+
+
+def update_yaml_from_xml_rfsoc():
+    # Read data from staticfiles/xilinx_host.xml
+    rfsoc_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "xilinx_host.xml")
+    rfsoc_config_dict = xml_config_to_dict(rfsoc_config_path)
+
+    # Create path for .instrbuilder/config.yaml and yaml object
+    yaml_dest = ruamel.yaml.YAML()
+
+    # Read the .instrbuilder/config.yaml file
+    with open(config_file_src, "r") as instr_yaml_file:
+        config_data_dest = yaml_dest.load(instr_yaml_file)
+
+    print(config_data_dest['instruments'])
+    # Update the pyvisa section for rfsoc in .instrbuilder/config.yaml
+    config_data_dest["instruments"]["rfsoc"]["host"] = rfsoc_config_dict['host']
+    config_data_dest["instruments"]["rfsoc"]["port"] = rfsoc_config_dict['port']
+    config_data_dest["instruments"]["rfsoc"]["username"] = rfsoc_config_dict['username']
+    config_data_dest["instruments"]["rfsoc"]["password"] = rfsoc_config_dict['password']
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
     with open(config_file_src, "w") as instr_yaml_file:
