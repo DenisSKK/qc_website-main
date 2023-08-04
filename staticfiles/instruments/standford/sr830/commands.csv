@@ -16,14 +16,14 @@ time_const,OFLT,,TRUE,int,TRUE,int,"[0,19]",The OFLT command sets or queries the
 low_pass_filter_slope,OFSL,,TRUE,int,TRUE,int,"[0,3]","The OFSL command sets or queries the low pass filter slope. 6 dB/oct (i=0), 12 dB/oct (i=1), 18 dB/oct (i=2) or
 24 dB/oct (i=3).",Gain and Time Constant commands,,,
 synch_filter_status,SYNC,,TRUE,int,TRUE,int,"[0,1]",The SYNC command sets or queries the synchronous filter status.,Gain and Time Constant commands,,,
-select_ch,"DDEF {ch}, {display}, {ratio}",DDEF? {ch},TRUE,str,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
-f_panel_out_source,"FPOP {ch}, {quantity}",FPOP? {ch},TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
+select_ch,"DDEF {ch}, {display}, {value}",DDEF? {ch},TRUE,str,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
+f_panel_out_source,"FPOP {ch}, {value}",FPOP? {ch},TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
 output sources.",Display and Output commands,TRUE,2,1
-out_off,"OEXP {i}, {offset}, {expand}",OEXP ? {i},TRUE,int,TRUE,int,"[1,2]","The OEXP command sets or queries the output offsets and expands.X (i=1), Y (i=2) or R (i=3) and is required.",Display and Output commands,TRUE,3,1
+out_off,"OEXP {i}, {offset}, {value}",OEXP ? {i},TRUE,int,TRUE,int,"[1,2]","The OEXP command sets or queries the output offsets and expands.X (i=1), Y (i=2) or R (i=3) and is required.",Display and Output commands,TRUE,3,1
 auto_offset,AOFF {i},,FALSE,none,TRUE,int,"[1,3]","The AOFF i command automatically offsets X (i=1), Y (i=2) or R (i=3) to
 zero.",Display and Output commands,,,
 aux_in_val,OAUX? {auxin},OAUX? {auxin},TRUE,int,FALSE,none,None,The OAUX? command queries the Aux Input values.,Display and Output commands,,,
-aux_out_volt,"AUXV {auxout}, {voltage}",AUXV ? {auxout},TRUE,int,TRUE,int,"[1,4]","The AUXV command sets or queries the Aux Output voltage when the
+aux_out_volt,"AUXV {auxout}, {value}",AUXV ? {auxout},TRUE,int,TRUE,int,"[1,4]","The AUXV command sets or queries the Aux Output voltage when the
 output.",Display and Output commands,TRUE,2,1
 set_out_interface,OUTX,,TRUE,int,TRUE,int,"[0,1]","The OUTX command sets the output interface to RS232 (i=0) or GPIB
 (i=1). The OUTX i command should be sent before any query commands to direct the responses to the interface in use.",Setup commands,,,
