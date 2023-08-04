@@ -20,7 +20,7 @@ class StandfordSX199(SCPI):
                  name='curr',
                  unconnected=False):
         # After problem with controlling, setting read and write termination solved the problem.
-        comm_handle.read_termination = '\r\n'
+        # comm_handle.read_termination = '\r\n'
         comm_handle.write_termination = '\r\n'
 
         # Calling basic commands like ! to unlink, *CLS to clear status with errors, ULOC 1 to unlock ethernet port,

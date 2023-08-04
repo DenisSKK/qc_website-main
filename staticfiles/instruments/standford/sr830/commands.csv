@@ -62,7 +62,7 @@ read_val,OUTP ?,OUTP ?,TRUE,int,FALSE,none,None,"The OUTP? i command reads the v
 i selects X (i=1), Y (i=2), R (i=3) or θ (i=4).",Data Transfer commands,,,
 read_ch,OUTR ?,OUTR ?,TRUE,int,FALSE,none,None,"The OUTR? i command reads the value of the CH1 or CH2 display.
 The parameter i selects the display (i=1 or 2).",Data Transfer commands,,,
-read_vals,"SNAP ? {i},{j}{k}","SNAP ? {i},{j}{k}",TRUE,int,FALSE,none,None,"The SNAP? command records the values of either 2, 3, 4, 5 or 6 parameters at a single instant. For example, SNAP? is a way to query values of
+read_vals,"SNAP ? {i},{j}{k}","SNAP ? {i},{j}{k}",TRUE,str,FALSE,none,None,"The SNAP? command records the values of either 2, 3, 4, 5 or 6 parameters at a single instant. For example, SNAP? is a way to query values of
 X and Y (or R and θ) which are taken at the same time. This is important
 when the time constant is very short.",Data Transfer commands,,,
 read_aux_in_val,OAUX?,OAUX?,TRUE,int,FALSE,none,None,The OAUX? command reads the Aux Input values.,Data Transfer commands,,,
