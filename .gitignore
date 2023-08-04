@@ -21,7 +21,6 @@ venv
 # javascript
 package-lock.json
 
-apps/static/*
 !staticfiles/.gitkeep
 .vscode/symbols.json
 
