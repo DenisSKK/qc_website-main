@@ -153,13 +153,14 @@ def update_yaml_from_xml_mercury():
     yaml_dest = ruamel.yaml.YAML()
 
     # Read the .instrbuilder/config.yaml file
-    with open(config_file_dest, "r") as instr_yaml_file:
+    with open(config_file_src, "r") as instr_yaml_file:
         config_data_dest = yaml_dest.load(instr_yaml_file)
 
+    print(config_data_dest['instruments'])
     # Update the pyvisa section for mercuryITC in .instrbuilder/config.yaml
     config_data_dest["instruments"]["itc"]["host"] = mercuryITC_config_dict['host']
     config_data_dest["instruments"]["itc"]["port"] = mercuryITC_config_dict['port']
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
-    with open(config_file_dest, "w") as instr_yaml_file:
+    with open(config_file_src, "w") as instr_yaml_file:
         yaml_dest.dump(config_data_dest, instr_yaml_file)

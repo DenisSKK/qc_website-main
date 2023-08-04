@@ -4,7 +4,7 @@ instruments:
     port: 8888
   itc:
     host: itc-optistat.psi.ch
-    port: None
+    port: 7020
   caylar:
     host: PUTE30DC28
     port: 1234
