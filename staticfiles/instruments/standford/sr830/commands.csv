@@ -16,13 +16,14 @@ time_const,OFLT,,TRUE,int,TRUE,int,"[0,19]",The OFLT command sets or queries the
 low_pass_filter_slope,OFSL,,TRUE,int,TRUE,int,"[0,3]","The OFSL command sets or queries the low pass filter slope. 6 dB/oct (i=0), 12 dB/oct (i=1), 18 dB/oct (i=2) or
 24 dB/oct (i=3).",Gain and Time Constant commands,,,
 synch_filter_status,SYNC,,TRUE,int,TRUE,int,"[0,1]",The SYNC command sets or queries the synchronous filter status.,Gain and Time Constant commands,,,
-select_ch,"DDEF {i}, {j}, {k}",DDEF ? {i},TRUE,int,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
+select_ch1,"DDEF 1, {j}, {k}",DDEF? 1,TRUE,int,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
+select_ch2,"DDEF 2, {j}, {k}",DDEF? 2,TRUE,int,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
 f_panel_out_source,"FPOP {i}, {j}",FPOP ? {i},TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
 output sources.",Display and Output commands,TRUE,2,1
 out_off,"OEXP {i}, {x}, {j}",OEXP ? {i},TRUE,int,TRUE,int,"[1,2]","The OEXP command sets or queries the output offsets and expands.X (i=1), Y (i=2) or R (i=3) and is required.",Display and Output commands,TRUE,3,1
 auto_offset,AOFF,,FALSE,none,TRUE,int,"[1,3]","The AOFF i command automatically offsets X (i=1), Y (i=2) or R (i=3) to
 zero.",Display and Output commands,,,
-aux_in_val,OAUX,,TRUE,int,FALSE,none,None,The OAUX? command queries the Aux Input values.,Display and Output commands,,,
+aux_in_val,OAUX? {i},OAUX? {i},TRUE,int,FALSE,none,None,The OAUX? command queries the Aux Input values.,Display and Output commands,,,
 aux_out_volt,"AUXV {i}, {x}",AUXV ? {i},TRUE,int,TRUE,int,"[1,4]","The AUXV command sets or queries the Aux Output voltage when the
 output.",Display and Output commands,TRUE,2,1
 set_out_interface,OUTX,,TRUE,int,TRUE,int,"[0,1]","The OUTX command sets the output interface to RS232 (i=0) or GPIB
@@ -58,24 +59,24 @@ reset_data_buff,REST,,FALSE,none,TRUE,none,None,"The REST command resets the dat
 be sent at any time - any storage in progress, paused or not, will be
 reset. This command will erase the data buffer. 
 ",Data Storage commands,,,
-read_val,,OUTP ?,TRUE,int,FALSE,none,None,"The OUTP? i command reads the value of X, Y, R or θ. The parameter
+read_val,OUTP ?,OUTP ?,TRUE,int,FALSE,none,None,"The OUTP? i command reads the value of X, Y, R or θ. The parameter
 i selects X (i=1), Y (i=2), R (i=3) or θ (i=4).",Data Transfer commands,,,
-read_ch,,OUTR ?,TRUE,int,FALSE,none,None,"The OUTR? i command reads the value of the CH1 or CH2 display.
+read_ch,OUTR ?,OUTR ?,TRUE,int,FALSE,none,None,"The OUTR? i command reads the value of the CH1 or CH2 display.
 The parameter i selects the display (i=1 or 2).",Data Transfer commands,,,
-read_vals,,"SNAP ? {i},{j}{k}",TRUE,int,FALSE,none,None,"The SNAP? command records the values of either 2, 3, 4, 5 or 6 parameters at a single instant. For example, SNAP? is a way to query values of
+read_vals,"SNAP ? {i},{j}{k}","SNAP ? {i},{j}{k}",TRUE,int,FALSE,none,None,"The SNAP? command records the values of either 2, 3, 4, 5 or 6 parameters at a single instant. For example, SNAP? is a way to query values of
 X and Y (or R and θ) which are taken at the same time. This is important
 when the time constant is very short.",Data Transfer commands,,,
-read_aux_in_val,,OAUX?,TRUE,int,FALSE,none,None,The OAUX? command reads the Aux Input values.,Data Transfer commands,,,
-buff_points,,SPTS ?,TRUE,int,FALSE,none,None,"The SPTS? command queries the number of points stored in the buffer.
+read_aux_in_val,OAUX?,OAUX?,TRUE,int,FALSE,none,None,The OAUX? command reads the Aux Input values.,Data Transfer commands,,,
+buff_points,SPTS ?,SPTS ?,TRUE,int,FALSE,none,None,"The SPTS? command queries the number of points stored in the buffer.
 Both displays have the same number of points. If the buffer is reset, then
 0 is returned.",Data Transfer commands,,,
-ch_buff_points_ascii,,"TRCA ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCA? command queries the points stored in the Channel i buffer.
+ch_buff_points_ascii,"TRCA ? {i}, {j}, {k}","TRCA ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCA? command queries the points stored in the Channel i buffer.
 The values are returned as ASCII floating point numbers with the units of
 the trace.",Data Transfer commands,,,
-ch_buff_points_bin,,"TRCB ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCB? command queries the points stored in the Channel i buffer.
+ch_buff_points_bin,"TRCB ? {i}, {j}, {k}","TRCB ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCB? command queries the points stored in the Channel i buffer.
 The values are returned as IEEE format binary floating point numbers
 (with the units of the trace).",Data Transfer commands,,,
-ch_buff_points_float,,"TRCL ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCL? command queries the points stored in the Channel i buffer.
+ch_buff_points_float,"TRCL ? {i}, {j}, {k}","TRCL ? {i}, {j}, {k}",TRUE,int,FALSE,none,None,"The TRCL? command queries the points stored in the Channel i buffer.
 The values are returned in a non-normalized floating point format (with
 the units of the trace).",Data Transfer commands,,,
 data_transf_mode,FAST,,TRUE,int,TRUE,int,"[0,2]",The FAST command sets the data transfer mode on and off.,Data Transfer commands,,,
@@ -89,10 +90,10 @@ into LOCAL LOCKOUT state.",Interface commands,,,
 clear_stat_reg,*CLS,,FALSE,none,TRUE,none,None,The ❊CLS command clears all status registers. The status enable registers are NOT cleared.,Status Reporting commands,,,
 stand_ev_enable_reg,"*ESE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]","The ❊ESE i command sets the standard event enable register to the
 decimal value i (0-255).",Status Reporting commands,,,
-val_stand_ev_status,,*ESR?,TRUE,int,FALSE,none,None,"The ❊ESR? command queries the value of the standard event status
+val_stand_ev_status,*ESR?,*ESR?,TRUE,int,FALSE,none,None,"The ❊ESR? command queries the value of the standard event status
 byte. The value is returned as a decimal number from 0 to 255.",Status Reporting commands,,,
 ser_poll_en_reg,"*SRE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]",The ❊SRE i command sets the serial poll enable register to the decimal value i (0-255).,Status Reporting commands,,,
-val_ser_poll_stat_byte,,*STB?,TRUE,int,FALSE,none,None,The ❊STB? command queries the value of the serial poll status byte.,Status Reporting commands,,,
+val_ser_poll_stat_byte,*STB?,*STB?,TRUE,int,FALSE,none,None,The ❊STB? command queries the value of the serial poll status byte.,Status Reporting commands,,,
 val_of_pwr_on_stat,*PSC,,TRUE,int,TRUE,int,"[0,1]","The ❊PSC command sets the value of the power-on status clear bit. If
 i=1 the power-on status clear bit is set and all status registers and enable
 registers are cleared on power up. If i=0 the bit is cleared and the status
@@ -100,14 +101,14 @@ enable registers maintain their values at power down. This allows a service req
 err_stat_en_reg,"ERRE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]","The ERRE i command sets the error status enable register to the decimal value i (0-255). The ERRE i,j command sets bit i (0-7) to j (0 or 1).
 The ERRE? command queries the value (0-255) of the error status
 enable register. The ERRE? i command queries the value (0 or 1) of bit i.",Status Reporting commands,,,
-val_err_stat_byte,,ERRS?,TRUE,int,FALSE,none,None,"The ERRS? command queries the value of the error status byte. The
+val_err_stat_byte,ERRS?,ERRS?,TRUE,int,FALSE,none,None,"The ERRS? command queries the value of the error status byte. The
 value is returned as a decimal number from 0 to 255. The ERRS? i command queries the value (0 or 1) of bit i (0-7). Reading the entire byte will
 clear it while reading bit i will clear just bit i.",Status Reporting commands,,,
 lock_in_stat_en_reg,"LIAE {i}, {j}",,TRUE,int,TRUE,int,"[0,255]","The LIAE command sets the lock-in (LIA) status enable register to the
 decimal value i (0-255). The LIAE i,j command sets bit i (0-7) to j (0 or 1).
 The LIAE? command queries the value of the LIA status enable register.
 The LIAE? i command queries the value (0 or 1) of bit i.",Status Reporting commands,,,
-val_lock_in_stat_byte,,LIAS?,TRUE,int,FALSE,none,None,"The LIAS? command queries the value of the lock-in (LIA) status byte.
+val_lock_in_stat_byte,LIAS?,LIAS?,TRUE,int,FALSE,none,None,"The LIAS? command queries the value of the lock-in (LIA) status byte.
 The value is returned as a decimal number from 0 to 255. The LIAS? i
 command queries the value (0 or 1) of bit i (0-7). Reading the entire byte
 will clear it while reading bit i will clear just bit i.
