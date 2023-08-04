@@ -27,6 +27,7 @@ from .construct_object import construct_object, construct_caylar, construct_itc,
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
     MercuryFormIP, SX199Form
+from staticfiles.update_configs import update_yaml_from_xml_mercury
 
 import threading
 import shutil
@@ -804,6 +805,7 @@ def mercury_page_view(request):
                 mercury_host["host"] = form.cleaned_data['mercury_host']
                 mercury_host["port"] = form.cleaned_data['mercury_port']
                 dict_to_xml_file(mercury_host, "staticfiles/mercuryITC.xml")
+                update_yaml_from_xml_mercury()
                 # Add success message to the Django messages framework
                 messages.success(request, 'Changes saved successfully in XML!')
         elif "updateconfig" in request.POST:
