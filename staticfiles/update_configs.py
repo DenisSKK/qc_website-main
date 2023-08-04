@@ -157,8 +157,8 @@ def update_yaml_from_xml_mercury():
         config_data_dest = yaml_dest.load(instr_yaml_file)
 
     # Update the pyvisa section for mercuryITC in .instrbuilder/config.yaml
-    config_data_dest["instruments"]["mercuryITC"]["host"] = mercuryITC_config_dict['host']
-    config_data_dest["instruments"]["mercuryITC"]["port"] = mercuryITC_config_dict['port']
+    config_data_dest["instruments"]["itc"]["host"] = mercuryITC_config_dict['host']
+    config_data_dest["instruments"]["itc"]["port"] = mercuryITC_config_dict['port']
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
     with open(config_file_dest, "w") as instr_yaml_file:
