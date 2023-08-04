@@ -117,7 +117,7 @@ class SR830Device():
         return curr, volt, gain, input_val, speed, shield, isolation, output"""
 
     def read_vals(self):
-        return self.sr_ophyd.read_vals.get(i='1', j='2', k=',3,4')
+        return self.sr_ophyd.read_vals.get(configs={'i': '1', 'j': '2', 'k': ',3,4'})
 
     def report_id(self):
         return self.sr_ophyd.id.get()
