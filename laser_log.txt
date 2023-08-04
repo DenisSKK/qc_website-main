@@ -59869,3 +59869,6 @@
 2023-07-26 18:09:33,636 - DEBUG - recv voltage act
 2023-07-26 18:09:33,642 - DEBUG - recv emission
 2023-07-26 18:09:33,649 - DEBUG - recv system health
+2023-08-04 10:53:06,750 - INFO - The connection is already closed.
+2023-08-04 10:54:56,943 - INFO - The connection is already closed.
+2023-08-04 10:55:44,612 - INFO - The connection is already closed.

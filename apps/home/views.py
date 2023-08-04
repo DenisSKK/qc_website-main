@@ -26,8 +26,9 @@ from .construct_object import construct_object, construct_caylar, construct_itc,
     construct_sx
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
-    MercuryFormIP, SX199Form
-from staticfiles.update_configs import update_yaml_from_xml_mercury, update_yaml_from_xml_rfsoc, update_yaml_from_xml_toptica
+    MercuryFormIP, SX199Form, CaylarFormCurrent, CaylarFormField
+from staticfiles.update_configs import update_yaml_from_xml_mercury, update_yaml_from_xml_rfsoc, \
+    update_yaml_from_xml_toptica, update_yaml_from_xml_caylar
 
 import threading
 import shutil
@@ -298,6 +299,7 @@ def caylar_page_view(request):
         context["caylar_water_flow"] = two_decimal(Update_caylar.water_flow)
         caylar_host["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(caylar_host, "staticfiles/caylar.xml")
+        update_yaml_from_xml_caylar()
         caylar_host = xml_config_to_dict("staticfiles/caylar.xml")
     else:
         info = "Parameter has not updated since " + caylar_host[
@@ -329,6 +331,7 @@ def caylar_page_view(request):
                 caylar_host["host"] = form.cleaned_data['caylar_host']
                 caylar_host["port"] = form.cleaned_data['caylar_port']
                 dict_to_xml_file(caylar_host, "staticfiles/caylar.xml")
+                update_yaml_from_xml_caylar()
                 messages.success(request, 'Changes saved successfully in XML!')
                 # Redirect to the magnet page to reload the page with the updated values
                 return redirect('caylar_page')
