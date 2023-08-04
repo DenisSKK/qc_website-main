@@ -45,6 +45,7 @@ def update_sx_config():
 def update_sr830_config():
     # Extract sx199 host and port
     sr830_address = config_data_src["instruments"]["sr830"]["address"]
+    sr830_port = config_data_src["instruments"]["sr830"]["port"]
 
     # Create path for .instrbuilder/config.yaml and yaml object
     yaml_dest = ruamel.yaml.YAML()
@@ -54,7 +55,7 @@ def update_sr830_config():
         config_data_dest = yaml_dest.load(instr_yaml_file)
 
     # Update the pyvisa section for sx199 in .instrbuilder/config.yaml
-    config_data_dest["instruments"]["sr830"]["address"]["pyvisa"] = sr830_address
+    config_data_dest["instruments"]["sr830"]["address"]["pyvisa"] = f'{sr830_address}::{sr830_port}::INSTR'
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
     with open(config_file_dest, "w") as instr_yaml_file:

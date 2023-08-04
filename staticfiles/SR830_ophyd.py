@@ -46,7 +46,10 @@ class SR830Device():
 
     # Closing PyVisa connection and setting both objects to None
     def disconnect(self):
-        self.sr_instr.comm_handle.close()
+        try:
+            self.sr_instr.comm_handle.close()
+        except:
+            print('Disconnecting error: Object does not have Socket opened.')
 
     # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
     def is_connected(self):
@@ -112,6 +115,9 @@ class SR830Device():
         print(f'SX report, everything read {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output"""
+
+    def read_vals(self):
+        return self.sr_ophyd.read_vals.get(i='1', j='2', k=',3,4')
 
     def report_id(self):
         return self.sr_ophyd.id.get()

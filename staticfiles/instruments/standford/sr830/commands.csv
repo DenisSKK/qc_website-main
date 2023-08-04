@@ -47,7 +47,7 @@ auto_phase_fun,APHS,,FALSE,none,TRUE,none,None,"The APHS command performs the Au
 is the same as pressing the [Auto Phase] key.",Auto Functions,,,
 sample_rate,SRAT,,TRUE,int,TRUE,int,"[0,14]",The SRAT command sets or queries the data sample rate. The parameter i selects the sample rate listed below.,Data Storage commands,,,
 buff_mode,SEND,,TRUE,int,TRUE,int,"[0,1]",The SEND command sets or queries the end of buffer mode. The parameter i selects 1 Shot (i=0) or Loop (i=1).,Data Storage commands,,,
-trigger,TRIG,,FALSE,none,TRUE,none,None,"The TRIG command is the software trigger command. This command
+trigg,TRIG,,FALSE,none,TRUE,none,None,"The TRIG command is the software trigger command. This command
 has the same effect as a trigger at the rear panel trigger input.",Data Storage commands,,,
 trigg_start_mode,TSTR,,TRUE,int,TRUE,int,"[0,1]",The TSTR command sets or queries the trigger start mode. The parameter i=1 selects trigger starts the scan and i=0 turns the trigger start feature off.,Data Storage commands,,,
 data_storage_start,STRT,,FALSE,none,TRUE,none,None,"The STRT command starts or resumes data storage. STRT is ignored if

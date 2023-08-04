@@ -4,6 +4,7 @@ from staticfiles.SX199_ophyd import SX199Device
 from staticfiles.Toptica_ophyd import LaserToptica
 from staticfiles.XMLGenerator import xml_config_to_dict
 from staticfiles.caylar_magnet_ophyd import CaylarMagnet
+from staticfiles.SR830_ophyd import SR830Device
 
 
 def construct_object():
@@ -16,12 +17,18 @@ def construct_object():
     magneticIR = CaylarMagnet("H", name="magneticIR", config_host=caylar_host)
     ITCD = MercuryITCDevice(prefix="...", name="ITCD", host="itc-optistat.psi.ch", config_host=itc_host)
     SX = SX199Device(name='sx199')
-    return RFSoC, LTDLC, magneticIR, ITCD, SX
+    SR = SR830Device(name='sr830')
+    return RFSoC, LTDLC, magneticIR, ITCD, SX, SR
 
 
 def construct_sx():
     SX = SX199Device(name='sx199')
     return SX
+
+
+def construct_sr():
+    SR = SR830Device(name='sr830')
+    return SR
 
 
 def construct_toptica():

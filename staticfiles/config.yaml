@@ -18,4 +18,5 @@ instruments:
     username: xilinx
     password: xilinx
   sr830:
-    address: GPIB1::8::INSTR
+    address: GPIB1
+    port: 8

@@ -14,6 +14,7 @@ urlpatterns = [
     path('laser/', views.laser_page_view, name='laser_page'),
     path('rfsoc/', views.rfsoc_page_view, name='rfsoc_page'),
     path('sx199/', views.sx_page_view, name='sx_page'),
+    path('sr830/', views.sr_page_view, name='sr_page'),
     path('mercury/', views.mercury_page_view, name='mercury_page'),
     path('caylar/', views.caylar_page_view, name='caylar_page'),
     path('start-experiment/', views.start_experiment, name='start_experiment'),
