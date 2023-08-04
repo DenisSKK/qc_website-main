@@ -12,7 +12,8 @@ instruments:
     host: 129.129.131.136
     port: 1234
   rfsoc:
-    host: 129.129.131.103
+#    host: 129.129.131.103
+    host:
     port: {}
     username: xilinx
     password: xilinx
