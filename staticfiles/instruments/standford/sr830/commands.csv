@@ -16,9 +16,11 @@ time_const,OFLT,,TRUE,int,TRUE,int,"[0,19]",The OFLT command sets or queries the
 low_pass_filter_slope,OFSL,,TRUE,int,TRUE,int,"[0,3]","The OFSL command sets or queries the low pass filter slope. 6 dB/oct (i=0), 12 dB/oct (i=1), 18 dB/oct (i=2) or
 24 dB/oct (i=3).",Gain and Time Constant commands,,,
 synch_filter_status,SYNC,,TRUE,int,TRUE,int,"[0,1]",The SYNC command sets or queries the synchronous filter status.,Gain and Time Constant commands,,,
-select_ch1,"DDEF 1, {j}, {k}",DDEF? 1,TRUE,int,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
-select_ch2,"DDEF 2, {j}, {k}",DDEF? 2,TRUE,int,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
-f_panel_out_source,"FPOP {i}, {j}",FPOP ? {i},TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
+select_ch1,"DDEF 1, {j}, {k}",DDEF? 1,TRUE,str,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
+select_ch2,"DDEF 2, {j}, {k}",DDEF? 2,TRUE,str,TRUE,int,"[0,4]",The DDEF command selects the CH1 and CH2 displays.,Display and Output commands,TRUE,3,1
+f_panel_out_source1,"FPOP 1, {j}",FPOP? 1,TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
+output sources.",Display and Output commands,TRUE,2,1
+f_panel_out_source2,"FPOP 2, {j}",FPOP? 2,TRUE,int,TRUE,int,"[0,1]","The FPOP command sets or queries the front panel (CH1 and CH2)
 output sources.",Display and Output commands,TRUE,2,1
 out_off,"OEXP {i}, {x}, {j}",OEXP ? {i},TRUE,int,TRUE,int,"[1,2]","The OEXP command sets or queries the output offsets and expands.X (i=1), Y (i=2) or R (i=3) and is required.",Display and Output commands,TRUE,3,1
 auto_offset,AOFF,,FALSE,none,TRUE,int,"[1,3]","The AOFF i command automatically offsets X (i=1), Y (i=2) or R (i=3) to
