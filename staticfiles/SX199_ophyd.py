@@ -57,8 +57,8 @@ class SX199Device():
         return False
 
     # Closing PyVisa connection and setting both objects to None
-    def disconnect(self):
-        self.sx_instr.comm_handle.close()
+    # def disconnect(self):
+    #     self.sx_instr.comm_handle.close()
 
     # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
     def is_connected(self):
