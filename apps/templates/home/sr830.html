@@ -78,11 +78,47 @@
             <div class="pl-lg-4">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-x">CS580 1 Gain</label>
-                  {% if connectedlink1 %}
+                  <label class="form-control-label" for="input-x">SR830 X value</label>
+                  {% if connected %}
                   <input id="input-x" class="form-control" name="X" placeholder="N/A"
                          type="number" step="any" value="{{X}}" disabled/>
                   {% else %} <input id="input-x" class="form-control" name="X" placeholder="Disconnected"
+                                    type="number"
+                                    step="any" value="NA" disabled/>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-y">SR830 Y value</label>
+                  {% if connected %}
+                  <input id="input-y" class="form-control" name="Y" placeholder="N/A"
+                         type="number" step="any" value="{{Y}}" disabled/>
+                  {% else %} <input id="input-y" class="form-control" name="Y" placeholder="Disconnected"
+                                    type="number"
+                                    step="any" value="NA" disabled/>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-r">SR830 R value</label>
+                  {% if connected %}
+                  <input id="input-r" class="form-control" name="R" placeholder="N/A"
+                         type="number" step="any" value="{{R}}" disabled/>
+                  {% else %} <input id="input-r" class="form-control" name="R" placeholder="Disconnected"
+                                    type="number"
+                                    step="any" value="NA" disabled/>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-o">SR830 O value</label>
+                  {% if connected %}
+                  <input id="input-o" class="form-control" name="O" placeholder="N/A"
+                         type="number" step="any" value="{{O}}" disabled/>
+                  {% else %} <input id="input-o" class="form-control" name="O" placeholder="Disconnected"
                                     type="number"
                                     step="any" value="NA" disabled/>
                   {% endif %}
