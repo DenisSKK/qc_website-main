@@ -121,7 +121,7 @@ class SR830Device():
         return x, y, r, o
 
     def read_sensitivity(self):
-        return self.sr_ophyd.sens.get()
+        return self.sr_ophyd.sensitivity.get()
 
     def report_id(self):
         return self.sr_ophyd.id.get()
