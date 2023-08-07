@@ -201,10 +201,10 @@
                     <label class="form-control-label" for="input-slope">CS580 Slope</label>
                     {% if connected %}
                     <select name="slope" id="input-slope" class="form-control" disabled>
-                      <option value="0" {% if time_constant == 0 %}selected{% endif %}>6 dB/oct</option>
-                      <option value="1" {% if time_constant == 1 %}selected{% endif %}>12 dB/oct</option>
-                      <option value="2" {% if time_constant == 2 %}selected{% endif %}>18 dB/oct</option>
-                      <option value="3" {% if time_constant == 3 %}selected{% endif %}>24 dB/oct</option>
+                      <option value="0" {% if slope == 0 %}selected{% endif %}>6 dB/oct</option>
+                      <option value="1" {% if slope == 1 %}selected{% endif %}>12 dB/oct</option>
+                      <option value="2" {% if slope == 2 %}selected{% endif %}>18 dB/oct</option>
+                      <option value="3" {% if slope == 3 %}selected{% endif %}>24 dB/oct</option>
                     </select>
                     {% else %}
                     <input id="input-slope" class="form-control" name="slope" placeholder="N/A"
@@ -218,7 +218,7 @@
                     {% if connected %}
                     <input id="input-synch-filter" class="form-control" name="synch_filter" placeholder="N/A"
                            type="text"
-                           value="{% if synch_filter == '0' %}OFF{% else %}ON{% endif %}" disabled/>
+                           value="{% if synch_filter == 0 %}OFF{% else %}ON{% endif %}" disabled/>
                     {% else %}
                     <input id="input-synch-filter" class="form-control" name="synch_filter" placeholder="Disconnected"
                            type="text" value="Disconnected" disabled/>
