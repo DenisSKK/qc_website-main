@@ -70,7 +70,7 @@ class SX199Device():
         # escape() is used to make sure that if there is a previous-linked port or error, it will be reset.
         self.escape()
         self.update_link(link)
-        sleep(0.001)
+        sleep(0.005)
         try:
             id_string = self.sx_ophyd.id.get()
         except:
@@ -89,7 +89,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(1)
-        sleep(0.001)
+        sleep(0.005)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -126,7 +126,7 @@ class SX199Device():
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.update_link(2)
-        sleep(0.001)
+        sleep(0.005)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
@@ -163,7 +163,7 @@ class SX199Device():
         self.escape()
         self.update_link(link)
         print(f'SX report, linked {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
-        sleep(0.001)
+        sleep(0.005)
         gain = self.report_gain()
         input_val = self.report_input()
         speed = self.report_speed()
