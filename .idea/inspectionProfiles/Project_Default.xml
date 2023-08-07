@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="32">
+          <list size="52">
             <item index="0" class="java.lang.String" itemvalue="form.mercury_itc_automatic_pid.value" />
             <item index="1" class="java.lang.String" itemvalue="form.gain2.value" />
             <item index="2" class="java.lang.String" itemvalue="form.input2.value" />
@@ -37,6 +37,26 @@
             <item index="29" class="java.lang.String" itemvalue="7" />
             <item index="30" class="java.lang.String" itemvalue="8" />
             <item index="31" class="java.lang.String" itemvalue="form.sensitivity.value" />
+            <item index="32" class="java.lang.String" itemvalue="time_constant" />
+            <item index="33" class="java.lang.String" itemvalue="sensitivity" />
+            <item index="34" class="java.lang.String" itemvalue="9" />
+            <item index="35" class="java.lang.String" itemvalue="10" />
+            <item index="36" class="java.lang.String" itemvalue="11" />
+            <item index="37" class="java.lang.String" itemvalue="12" />
+            <item index="38" class="java.lang.String" itemvalue="13" />
+            <item index="39" class="java.lang.String" itemvalue="14" />
+            <item index="40" class="java.lang.String" itemvalue="15" />
+            <item index="41" class="java.lang.String" itemvalue="16" />
+            <item index="42" class="java.lang.String" itemvalue="17" />
+            <item index="43" class="java.lang.String" itemvalue="18" />
+            <item index="44" class="java.lang.String" itemvalue="19" />
+            <item index="45" class="java.lang.String" itemvalue="26" />
+            <item index="46" class="java.lang.String" itemvalue="25" />
+            <item index="47" class="java.lang.String" itemvalue="24" />
+            <item index="48" class="java.lang.String" itemvalue="23" />
+            <item index="49" class="java.lang.String" itemvalue="22" />
+            <item index="50" class="java.lang.String" itemvalue="21" />
+            <item index="51" class="java.lang.String" itemvalue="20" />
           </list>
         </value>
       </option>

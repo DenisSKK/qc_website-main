@@ -123,6 +123,27 @@ class SR830Device():
     def read_sensitivity(self):
         return self.sr_ophyd.sensitivity.get()
 
+    def write_sensitivity(self, value):
+        return self.sr_ophyd.sensitivity.set(value)
+
+    def read_time_constant(self):
+        return self.sr_ophyd.time_const.get()
+
+    def write_time_constant(self, value):
+        return self.sr_ophyd.time_const.set(value)
+
+    def read_slope(self):
+        return self.sr_ophyd.low_pass_filter_slope.get()
+
+    def write_slope(self, value):
+        return self.sr_ophyd.low_pass_filter_slope.set(value)
+
+    def read_synch_filter(self):
+        return self.sr_ophyd.synch_filter_status.get()
+
+    def write_synch_filter(self, value):
+        return self.sr_ophyd.synch_filter_status.set(value)
+
     def report_id(self):
         return self.sr_ophyd.id.get()
 
