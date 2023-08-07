@@ -41,7 +41,7 @@
           </div>
           {% endif %} {% endfor %} {% endif %}
 
-          <form method="post" action="{% url 'sx_page' %}">
+          <form method="post" action="{% url 'sx_page' %}" id="sx_form">
             {% csrf_token %}
             <div class="col-12">
               <div class="row">
@@ -458,4 +458,47 @@
     </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock content %} {% block javascripts %}
+<script>
+  // Get the form element
+  const form = document.getElementById("sx_form");
+
+  // Add an event listener to the form
+  form.addEventListener("keydown", function (event) {
+    // Check if the pressed key is "Enter" (keyCode for Enter is 13)
+    if (event.keyCode === 13 || event.key === "Enter") {
+      // Prevent the default form submission
+      event.preventDefault();
+    }
+  });
+
+  function LoggingFile(interval) {
+    const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+    // Include the CSRF token in the AJAX request headers
+    $.ajaxSetup({
+      headers: {
+        "X-CSRFToken": csrfToken,
+      },
+    });
+    $.ajax({
+      url: "{% url 'plot' %}", // URL mapped to the status view
+      type: "POST",
+      data: { changePage: false },
+      dataType: "json",
+      success: function (response) {},
+      error: function (xhr, status, error) {
+        console.log(xhr.responseText);
+      },
+      complete: function () {
+        // Call the updatePlot function again after the specified interval
+        setTimeout(function () {
+          LoggingFile(interval);
+        }, interval);
+      },
+    });
+  }
+
+  LoggingFile(1000);
+</script>
+{% endblock javascripts %}

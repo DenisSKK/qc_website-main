@@ -3,15 +3,17 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %} {% block content %}
 <style>
-  .hidden {
-    display: none;
-  }
+    .hidden {
+        display: none;
+    }
 </style>
 <!-- Header -->
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      Please wait until the update status finished if not the logging will be not started<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      Please wait until the update status finished if not the logging will be not started
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
     </div>
     <div class="header-body">
       <div class="row align-items-center py-4">
@@ -165,7 +167,7 @@
         <div class="card card-stats">
           <div class="card-body">
             Logging Frequency (s):
-            <input type="number" id="freqUpdateInput" value="2" />
+            <input type="number" id="freqUpdateInput" value="2"/>
           </div>
         </div>
       </div>
@@ -178,7 +180,8 @@
     <button type="button" class="btn btn-danger" id="pauseExperimentButton">Pause Experiment</button>
     <button type="button" class="btn btn-danger" id="continueExperimentButton">Continue Experiment</button>
     <button type="button" class="btn btn-danger" id="stopExperimentButton">Stop Experiment</button>
-    <button type="button" class="btn btn-danger" id="resetDashboardButton" style="display: none">Reset Dashboard</button>
+    <button type="button" class="btn btn-danger" id="resetDashboardButton" style="display: none">Reset Dashboard
+    </button>
   </div>
 
   <div id="messageLaserOff"></div>
@@ -187,7 +190,7 @@
       <div class="col-8"><h4 class="heading-small text-muted mb-4">Toptica Laser Current</h4></div>
       <div class="col-4 text-right">
         <label>Hide</label>
-        <input type="checkbox" id="toggleCheckboxTopticaCurrent" onchange="toggleVisibilityTopticaCurrent()" />
+        <input type="checkbox" id="toggleCheckboxTopticaCurrent" onchange="toggleVisibilityTopticaCurrent()"/>
       </div>
       <div id="livePlotCurrent"></div>
     </div>
@@ -197,7 +200,7 @@
       <div class="col-8"><h4 class="heading-small text-muted mb-4">Toptica Laser Voltage</h4></div>
       <div class="col-4 text-right">
         <label>Hide</label>
-        <input type="checkbox" id="toggleCheckboxTopticaVoltage" onchange="toggleVisibilityTopticaVoltage()" />
+        <input type="checkbox" id="toggleCheckboxTopticaVoltage" onchange="toggleVisibilityTopticaVoltage()"/>
       </div>
     </div>
     <div id="livePlotVoltage"></div>
@@ -208,7 +211,7 @@
       <div class="col-8"><h4 class="heading-small text-muted mb-4">Toptica Laser Wavelength</h4></div>
       <div class="col-4 text-right">
         <label>Hide</label>
-        <input type="checkbox" id="toggleCheckboxTopticaWavelength" onchange="toggleVisibilityTopticaWavelength()" />
+        <input type="checkbox" id="toggleCheckboxTopticaWavelength" onchange="toggleVisibilityTopticaWavelength()"/>
       </div>
     </div>
     <div id="livePlotWavelength">
@@ -230,7 +233,7 @@
       <div class="col-8"><h4 class="heading-small text-muted mb-4">Caylar</h4></div>
       <div class="col-4 text-right">
         <label>Hide</label>
-        <input type="checkbox" id="toggleCheckboxCaylar" onchange="toggleVisibilityCaylar()" />
+        <input type="checkbox" id="toggleCheckboxCaylar" onchange="toggleVisibilityCaylar()"/>
       </div>
     </div>
     <div id="livePlotCaylar">
@@ -252,7 +255,7 @@
       <div class="col-8"><h4 class="heading-small text-muted mb-4">ITC</h4></div>
       <div class="col-4 text-right">
         <label>Hide</label>
-        <input type="checkbox" id="toggleCheckboxITC" onchange="toggleVisibilityITC()" />
+        <input type="checkbox" id="toggleCheckboxITC" onchange="toggleVisibilityITC()"/>
       </div>
     </div>
     <div id="livePlotITC">
@@ -279,10 +282,11 @@
             <div class="card-header bg-transparent">
               <h3 class="mb-0">Experiments</h3>
             </div>
-            <input type="hidden" id="experimentCountInput" name="experimentCount" value="{{ experiment_forms|length }}" />
+            <input type="hidden" id="experimentCountInput" name="experimentCount"
+                   value="{{ experiment_forms|length }}"/>
             <div class="form-group px-4 py-4">
               <label for="id_experiment_name">Experiment Name:</label>
-              <input type="text" class="form-control" id="id_experiment_name" name="experiment_name" required />
+              <input type="text" class="form-control" id="id_experiment_name" name="experiment_name" required/>
             </div>
             <div class="form-group px-4">
               <label for="id_experiment_description">Experiment Description:</label>
@@ -290,25 +294,29 @@
             </div>
             <div class="form-group px-4">
               <label for="N">Experiment Folder Name (Path):</label>
-              <input type="text" class="form-control" id="id_file_Name" name="file_name" required />
+              <input type="text" class="form-control" id="id_file_Name" name="file_name" required/>
             </div>
             <div class="form-group px-4">
               <label for="id_selected_devices">Select Devices:</label>
               <div class="col-auto">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-laser" value="Laser" checked />
+                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-laser"
+                         value="Laser" checked/>
                   <label class="form-check-label" for="input-device-laser">Laser</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-mercuryitc" value="Mercury" checked />
+                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-mercuryitc"
+                         value="Mercury" checked/>
                   <label class="form-check-label" for="input-device-mercuryitc">MercuryITC</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-caylar" value="Caylar" checked />
+                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-caylar"
+                         value="Caylar" checked/>
                   <label class="form-check-label" for="input-device-caylar">Caylar Magnet</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-caylar" value="RFSoC" checked />
+                  <input class="form-check-input" type="checkbox" name="selected_devices[]" id="input-device-caylar"
+                         value="RFSoC" checked/>
                   <label class="form-check-label" for="input-device-caylar">RFSoC</label>
                 </div>
               </div>
@@ -336,637 +344,659 @@
 <!-- Include Plotly library -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-  let file_name_save;
-  function appendToList(listName, element) {
-    if (Array.isArray(element)) {
-      // If the element is a list (array), concatenate it with the existing list
-      listName.push(...element);
-    } else {
-      // If the element is a single value, append it to the existing list
-      listName.push(element);
-    }
-    // while (listName.length > 100) {
-    //   listName.shift();
-    // }
-  }
+    let file_name_save;
 
-  function toggleVisibilityTopticaCurrent() {
-    var div = document.getElementById("livePlotCurrent");
-    div.classList.toggle("hidden");
-  }
-  function toggleVisibilityTopticaVoltage() {
-    var div = document.getElementById("livePlotVoltage");
-    div.classList.toggle("hidden");
-  }
-  function toggleVisibilityTopticaWavelength() {
-    var div = document.getElementById("livePlotWavelength");
-    div.classList.toggle("hidden");
-  }
-  function toggleVisibilityITC() {
-    var div = document.getElementById("livePlotITC");
-    div.classList.toggle("hidden");
-  }
-  function toggleVisibilityCaylar() {
-    var div = document.getElementById("livePlotCaylar");
-    div.classList.toggle("hidden");
-  }
-  function showResetDashboardButton() {
-    let resetDashboardButton = document.getElementById("resetDashboardButton");
-    resetDashboardButton.style.display = "inline-block";
-  }
-  function validateDeviceListForm() {
-    var experimentName = document.getElementById("id_experiment_name").value;
-    var experimentFile = document.getElementById("id_file_Name").value;
+    function appendToList(listName, element) {
+        if (Array.isArray(element)) {
+            // If the element is a list (array), concatenate it with the existing list
+            listName.push(...element);
+        } else {
+            // If the element is a single value, append it to the existing list
+            listName.push(element);
+        }
+        // while (listName.length > 100) {
+        //   listName.shift();
+        // }
+    }
 
-    if (experimentName === "") {
-      alert("Please type experiment name.");
-      return false; // Prevent form submission
+    function toggleVisibilityTopticaCurrent() {
+        var div = document.getElementById("livePlotCurrent");
+        div.classList.toggle("hidden");
     }
-    if (experimentFile === "") {
-      alert("Please type experiment file.");
-      return false; // Prevent form submission
-    }
-    var checkboxes = document.querySelectorAll('input[name="selected_devices[]"]');
-    var checkedCount = 0;
-    for (var i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked) {
-        checkedCount++;
-      }
-    }
-    if (checkedCount === 0) {
-      alert("Please select at least one device.");
-      return false; // Prevent form submission
-    }
-    return true; // Proceed with form submission
-  }
 
-  $(document).ready(function () {
-    // Attach a submit event handler to the form
-    // Add a click event handler to the "Stop Experiment" button
-    $("#stopExperimentButton").on("click", function () {
-      $("#pauseExperimentButton").prop("disabled", false);
-      $("#continueExperimentButton").prop("disabled", false);
-      $("#stopExperimentButton").prop("disabled", false);
-      stopExperiment();
+    function toggleVisibilityTopticaVoltage() {
+        var div = document.getElementById("livePlotVoltage");
+        div.classList.toggle("hidden");
+    }
+
+    function toggleVisibilityTopticaWavelength() {
+        var div = document.getElementById("livePlotWavelength");
+        div.classList.toggle("hidden");
+    }
+
+    function toggleVisibilityITC() {
+        var div = document.getElementById("livePlotITC");
+        div.classList.toggle("hidden");
+    }
+
+    function toggleVisibilityCaylar() {
+        var div = document.getElementById("livePlotCaylar");
+        div.classList.toggle("hidden");
+    }
+
+    function showResetDashboardButton() {
+        let resetDashboardButton = document.getElementById("resetDashboardButton");
+        resetDashboardButton.style.display = "inline-block";
+    }
+
+    function validateDeviceListForm() {
+        var experimentName = document.getElementById("id_experiment_name").value;
+        var experimentFile = document.getElementById("id_file_Name").value;
+
+        if (experimentName === "") {
+            alert("Please type experiment name.");
+            return false; // Prevent form submission
+        }
+        if (experimentFile === "") {
+            alert("Please type experiment file.");
+            return false; // Prevent form submission
+        }
+        var checkboxes = document.querySelectorAll('input[name="selected_devices[]"]');
+        var checkedCount = 0;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkedCount++;
+            }
+        }
+        if (checkedCount === 0) {
+            alert("Please select at least one device.");
+            return false; // Prevent form submission
+        }
+        return true; // Proceed with form submission
+    }
+
+    $(document).ready(function () {
+        // Attach a submit event handler to the form
+        // Add a click event handler to the "Stop Experiment" button
+        $("#stopExperimentButton").on("click", function () {
+            $("#pauseExperimentButton").prop("disabled", false);
+            $("#continueExperimentButton").prop("disabled", false);
+            $("#stopExperimentButton").prop("disabled", false);
+            stopExperiment();
+        });
+        $("#pauseExperimentButton").on("click", function () {
+            pauseExperiment();
+        });
+        $("#continueExperimentButton").on("click", function () {
+            continueExperiment();
+        });
+        $("#resetDashboardButton").on("click", function () {
+            resetExperiment();
+        });
+
+        // Get the form element
+        const form = document.getElementById("experimentForms");
+
+        // Add an event listener to the form
+        form.addEventListener("keydown", function (event) {
+            // Check if the pressed key is "Enter" (keyCode for Enter is 13)
+            if (event.keyCode === 13 || event.key === "Enter") {
+                // Prevent the default form submission
+                event.preventDefault();
+            }
+        });
+
+        function resetExperiment() {
+            // $("#experimentForms").removeClass("hidden");
+            // $("#buttonExperiment").addClass("hidden");
+            $("#messageUpdateExpContainer .alert").remove();
+            $("#TopticaWavelengthPlot").addClass("hidden");
+            $("#TopticaCurrentPlot").addClass("hidden");
+            $("#TopticaVoltagePlot").addClass("hidden");
+            $("#CaylarPlot").addClass("hidden");
+            $("#ITCPlot").addClass("hidden");
+            $("#messageITCOff .alert").remove();
+            $("#messageCaylarOff .alert").remove();
+            $("#messageLaserOff .alert").remove();
+            updateStatusLaser();
+        }
+
+        $("#experimentForms").on("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Serialize the form data
+
+            $("#messageLoadingContainer").html('<div class="alert alert-info" role="alert">Loading...</div>');
+            // Make an AJAX POST request only if the form is valid
+            if (this.checkValidity() && validateDeviceListForm()) {
+                // Retrieve the CSRF token from the HTML page
+                // Enable all input elements inside the container after click
+                $(".container-fluid input").prop("disabled", true);
+                $(".container-fluid textarea").prop("disabled", true);
+                const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+                // Include the CSRF token in the AJAX request headers
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRFToken": csrfToken,
+                    },
+                });
+                // let formData = $(this).serialize();
+                const selectedDevices = [];
+                $("input[name='selected_devices[]']:checked").each(function () {
+                    selectedDevices.push($(this).val());
+                });
+                sessionStorage.setItem("selected_devices", selectedDevices);
+                $.ajax({
+                    url: "{% url 'start_experiment' %}",
+                    type: "POST",
+                    data: {
+                        file_name: document.getElementById("id_file_Name").value,
+                        experiment_name: document.getElementById("id_experiment_name").value,
+                        description: document.getElementById("id_experiment_description").value,
+                        selected_devices: selectedDevices,
+                        startLogging: false,
+                    },
+                    success: function (response) {
+                        // Handle the response if needed
+                        isDashboardUpdating = false;
+                        $("#messageLoadingContainer .alert").remove();
+
+                        // Update the message dynamically from the response
+                        let messageContainer = $("#messageContainer");
+                        messageContainer.html('<div class="alert alert-success alert-dismissible fade show" role="alert">' + response.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
+
+                        // Reset the form fields
+                        $("#experimentForms")[0].reset();
+                        // $("#experimentForms").addClass("hidden");
+                        isUpdating = true;
+                        isLogging = false;
+                        isDashboardUpdating = false;
+                        file_name_save = response.file_name;
+                        sessionStorage.setItem("folder_name", response.file_name);
+                        // $("#buttonExperiment").removeClass("hidden");
+                        DashboardPlot(freqUpdate, false, selectedDevices);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any error that occurs during the request
+                        $(".container-fluid input").prop("disabled", false);
+                        $(".container-fluid textarea").prop("disabled", false);
+                        // Update the message dynamically
+                        let messageContainer = $("#messageContainer");
+                        messageContainer.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + xhr.responseJSON.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
+                    },
+                    complete: function () {
+                        // Remove the loading indicator
+                        $("#messageLoadingContainer .alert").remove();
+                    },
+                });
+            } else {
+                let messageContainer = $("#messageContainer");
+                messageContainer.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + "Please fill the name of experiment and the file path" + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
+            }
+        });
     });
-    $("#pauseExperimentButton").on("click", function () {
-      pauseExperiment();
-    });
-    $("#continueExperimentButton").on("click", function () {
-      continueExperiment();
-    });
-    $("#resetDashboardButton").on("click", function () {
-      resetExperiment();
-    });
 
-    // Get the form element
-    const form = document.getElementById("experimentForms");
-
-    // Add an event listener to the form
-    form.addEventListener("keydown", function (event) {
-      // Check if the pressed key is "Enter" (keyCode for Enter is 13)
-      if (event.keyCode === 13 || event.key === "Enter") {
-        // Prevent the default form submission
-        event.preventDefault();
-      }
-    });
-    function resetExperiment() {
-      // $("#experimentForms").removeClass("hidden");
-      // $("#buttonExperiment").addClass("hidden");
-      $("#messageUpdateExpContainer .alert").remove();
-      $("#TopticaWavelengthPlot").addClass("hidden");
-      $("#TopticaCurrentPlot").addClass("hidden");
-      $("#TopticaVoltagePlot").addClass("hidden");
-      $("#CaylarPlot").addClass("hidden");
-      $("#ITCPlot").addClass("hidden");
-      $("#messageITCOff .alert").remove();
-      $("#messageCaylarOff .alert").remove();
-      $("#messageLaserOff .alert").remove();
-      updateStatusLaser();
+    function getCurrentDateTime() {
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = String(now.getMonth() + 1).padStart(2, "0");
+        let day = String(now.getDate()).padStart(2, "0");
+        let hours = String(now.getHours()).padStart(2, "0");
+        let minutes = String(now.getMinutes()).padStart(2, "0");
+        let seconds = String(now.getSeconds()).padStart(2, "0");
+        let currentDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+        return currentDateTime;
     }
-    $("#experimentForms").on("submit", function (event) {
-      event.preventDefault(); // Prevent the default form submission
 
-      // Serialize the form data
+    let xDateT = [];
+    let xDateC = [];
+    let xDateM = [];
+    // Initialize an empty data array
+    let laser_wavelength = {x: xDateT, y: [], mode: "lines+markers", name: "wavelength"};
+    let laser_current = {x: xDateT, y: [], mode: "lines+markers", name: "current"};
+    let laser_voltage = {x: xDateT, y: [], mode: "lines+markers", name: "voltage"};
+    // Caylar data
+    let caylar_current = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Current"};
+    let caylar_voltage = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Voltage"};
+    let caylar_field = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Field"};
+    let caylar_adcdac_temp = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar ADC/DAC Temperature"};
+    let caylar_box_temp = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Box Temperature"};
+    let caylar_rack_temp = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Rack Temperature"};
+    let caylar_water_temp = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Water Temperature"};
+    let caylar_water_flow = {x: xDateC, y: [], mode: "lines+markers", name: "Caylar Water Flow"};
+    let itc_heater_power = {x: xDateM, y: [], mode: "lines+markers", name: "ITC Heater Power"};
+    let itc_temperature = {x: xDateM, y: [], mode: "lines+markers", name: "ITC Temperature"};
+    // let laser_data = [laser_scan_end, laser_scan_start, laser_scan_offset, laser_scan_frequency];
+    let caylar_data = [caylar_current, caylar_voltage, caylar_field, caylar_adcdac_temp, caylar_box_temp, caylar_rack_temp, caylar_water_temp, caylar_water_flow];
+    let itc_data = [itc_heater_power, itc_temperature];
+    // Create an empty plot with a layout
+    let layoutWavelength = {
+        title: "Toptica Wavelength (nm)",
+        xaxis: {
+            title: "Date",
+            type: "date",
+        },
+        yaxis: {
+            title: "Wavelength (nm)",
+        },
+        autosize: true, // Disable automatic resizing
+        height: 400,
+    };
+    let layoutCurrent = {
+        title: "Toptica Current (mA)",
+        xaxis: {
+            title: "Date",
+            type: "date",
+        },
+        yaxis: {
+            title: "Current (mA)",
+        },
+        autosize: true, // Disable automatic resizing
+        height: 400,
+    };
+    let layoutVoltage = {
+        title: "Toptica Voltage (V)",
+        xaxis: {
+            title: "Date",
+            type: "date",
+        },
+        yaxis: {
+            title: "Voltage (v)",
+        },
+        autosize: true, // Disable automatic resizing
+        height: 400,
+    };
+    let layoutCaylar = {
+        title: "Live Plot Caylar",
+        xaxis: {
+            title: "Date",
+            type: "date",
+        },
+        yaxis: {
+            title: "Y-axis",
+        },
+        autosize: true, // Disable automatic resizing
+        height: 400,
+    };
 
-      $("#messageLoadingContainer").html('<div class="alert alert-info" role="alert">Loading...</div>');
-      // Make an AJAX POST request only if the form is valid
-      if (this.checkValidity() && validateDeviceListForm()) {
-        // Retrieve the CSRF token from the HTML page
-        // Enable all input elements inside the container after click
-        $(".container-fluid input").prop("disabled", true);
-        $(".container-fluid textarea").prop("disabled", true);
+    let layoutITC = {
+        title: "Live Plot ITC",
+        xaxis: {
+            title: "Date",
+            type: "date",
+        },
+        yaxis: {
+            title: "Y-axis",
+        },
+        autosize: true, // Disable automatic resizing
+        height: 400,
+    };
+
+    // Create a plotly object with the laser_data and layout
+    // let livePlot = Plotly.newPlot("livePlot", laser_data, layout);
+    function stopExperiment() {
+        isUpdating = false;
+        $.ajax({
+            url: "{% url 'stop_experiment' %}", // Replace with your Django view URL
+            type: "GET",
+            success: function (response) {
+                // Stop the plot updates
+                showResetDashboardButton();
+                DashboardPlot(freqUpdate, false);
+            },
+            error: function (xhr, status, error) {
+                // Handle any error that occurs during the request
+            },
+        });
+    }
+
+    function pauseExperiment() {
+        isUpdating = false;
+    }
+
+    function continueExperiment() {
+        isUpdating = true;
+        updatePlot(freqUpdate, file_name_save);
+    }
+
+    let statusCaylarElement = $("#caylar_status");
+    let statusLaserElement = $("#laser_status");
+    let statusRFSoCElement = $("#rfsoc_status");
+    let statusMercuryElement = $("#mercury_status");
+    let statusSXElement = $("#sx_status");
+
+    function updateStatusColor(statusElement) {
+        let statusText = statusElement.text().trim();
+        statusElement.removeClass("text-success text-danger").css("color", "");
+
+        if (statusText === "Connected") {
+            statusElement.addClass("text-success"); // Add green text color class
+        } else if (statusText === "Not Connected") {
+            statusElement.addClass("text-danger"); // Add red text color class
+        } else {
+            statusElement.css("color", "#adb5bd"); // Set text color to #adb5bd (gray)
+        }
+    }
+
+    function DashboardPlot(interval, changePage, device = ["Caylar", "Mercury", "Laser"]) {
+        if (typeof device === "boolean") {
+            device = ["Caylar", "Mercury", "Laser"];
+        }
+        devices = device;
         const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
 
         // Include the CSRF token in the AJAX request headers
         $.ajaxSetup({
-          headers: {
-            "X-CSRFToken": csrfToken,
-          },
+            headers: {
+                "X-CSRFToken": csrfToken,
+            },
         });
-        // let formData = $(this).serialize();
-        const selectedDevices = [];
-        $("input[name='selected_devices[]']:checked").each(function () {
-          selectedDevices.push($(this).val());
-        });
-        sessionStorage.setItem("selected_devices", selectedDevices);
         $.ajax({
-          url: "{% url 'start_experiment' %}",
-          type: "POST",
-          data: {
-            file_name: document.getElementById("id_file_Name").value,
-            experiment_name: document.getElementById("id_experiment_name").value,
-            description: document.getElementById("id_experiment_description").value,
-            selected_devices: selectedDevices,
-            startLogging: false,
-          },
-          success: function (response) {
-            // Handle the response if needed
-            isDashboardUpdating = false;
-            $("#messageLoadingContainer .alert").remove();
+            url: "{% url 'plot' %}", // URL mapped to the status view
+            type: "POST",
+            data: {changePage: changePage},
+            dataType: "json",
+            success: function (response) {
+                // appendToList(xDate, getCurrentDateTime());
+                // Check if response.message exists
+                if ("message" in response) {
+                    // Do something with response.message if it exists
+                    if (response.message == "The RFSoC is still running or not started yet.") {
+                        $("#messageContainer .alert").remove();
+                    } else {
+                        $(".container-fluid input").prop("disabled", false);
+                        $(".container-fluid textarea").prop("disabled", false);
+                    }
 
-            // Update the message dynamically from the response
-            let messageContainer = $("#messageContainer");
-            messageContainer.html('<div class="alert alert-success alert-dismissible fade show" role="alert">' + response.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
-
-            // Reset the form fields
-            $("#experimentForms")[0].reset();
-            // $("#experimentForms").addClass("hidden");
-            isUpdating = true;
-            isLogging = false;
-            isDashboardUpdating = false;
-            file_name_save = response.file_name;
-            sessionStorage.setItem("folder_name", response.file_name);
-            // $("#buttonExperiment").removeClass("hidden");
-            DashboardPlot(freqUpdate, false, selectedDevices);
-          },
-          error: function (xhr, status, error) {
-            // Handle any error that occurs during the request
-            $(".container-fluid input").prop("disabled", false);
-            $(".container-fluid textarea").prop("disabled", false);
-            // Update the message dynamically
-            let messageContainer = $("#messageContainer");
-            messageContainer.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + xhr.responseJSON.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
-          },
-          complete: function () {
-            // Remove the loading indicator
-            $("#messageLoadingContainer .alert").remove();
-          },
+                    $("#messageContainer").html('<div class="alert alert-info alert-dismissible fade show" role="alert">' + response.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
+                }
+                if (response.caylar_status == "ON" && device.includes("Caylar")) {
+                    $("#CaylarPlot").removeClass("hidden");
+                    $("#caylar_current_number").text(response.caylar_current1[0]);
+                    $("#caylar_voltage_number").text(response.caylar_voltage1[0]);
+                    $("#caylar_field_number").text(response.caylar_field1[0]);
+                    $("#caylar_field_number1").text(response.caylar_field1[0]);
+                    $("#caylar_adcdac_temp_number").text(response.caylar_ADCDAC_temp1[0]);
+                    $("#caylar_box_temp_number").text(response.caylar_box_temp1[0]);
+                    $("#caylar_rack_temp_number").text(response.caylar_rack_temp1[0]);
+                    $("#caylar_water_temp_number").text(response.caylar_water_temp1[0]);
+                    $("#caylar_water_flow_number").text(response.caylar_water_flow1[0]);
+                    // Update Caylar data
+                    appendToList(caylar_current["y"], response.caylar_current[0]);
+                    appendToList(caylar_field["y"], response.caylar_field[0]);
+                    appendToList(caylar_voltage["y"], response.caylar_voltage[0]);
+                    appendToList(caylar_adcdac_temp["y"], response.caylar_ADCDAC_temp[0]);
+                    appendToList(caylar_box_temp["y"], response.caylar_box_temp[0]);
+                    appendToList(caylar_rack_temp["y"], response.caylar_rack_temp[0]);
+                    appendToList(caylar_water_temp["y"], response.caylar_water_temp[0]);
+                    appendToList(caylar_water_flow["y"], response.caylar_water_flow[0]);
+                    appendToList(xDateC, response.timestampC[0]);
+                    // Update the Caylar plot with the new data
+                    caylar_data = [caylar_current, caylar_voltage, caylar_field, caylar_adcdac_temp, caylar_box_temp, caylar_rack_temp, caylar_water_temp, caylar_water_flow];
+                    let livePlotCaylar = Plotly.newPlot("livePlotCaylar", caylar_data, layoutCaylar);
+                } else {
+                    $("#CaylarPlot").addClass("hidden");
+                }
+                if (response.mercury_status == "ON" && device.includes("Mercury")) {
+                    $("#ITCPlot").removeClass("hidden");
+                    $("#itc_heater_power_number").text(response.itc_heater_power1[0]);
+                    $("#itc_heater_power_number1").text(response.itc_heater_power1[0]);
+                    $("#itc_temperature_number").text(response.itc_temperature1[0]);
+                    $("#itc_temperature_number1").text(response.itc_temperature1[0]);
+                    // Update ITC data
+                    appendToList(itc_heater_power["y"], response.itc_heater_power[0]);
+                    appendToList(itc_temperature["y"], response.itc_temperature[0]);
+                    appendToList(xDateM, response.timestampM[0]);
+                    // Update the ITC plot with the new data
+                    itc_data = [itc_heater_power, itc_temperature];
+                    let livePlotITC = Plotly.newPlot("livePlotITC", itc_data, layoutITC);
+                } else {
+                    $("#ITCPlot").addClass("hidden");
+                }
+                if (response.laser_status == "ON" && device.includes("Laser")) {
+                    $("#TopticaWavelengthPlot").removeClass("hidden");
+                    $("#TopticaCurrentPlot").removeClass("hidden");
+                    $("#TopticaVoltagePlot").removeClass("hidden");
+                    $("#laser_scan_end_number").text(response.laser_scan_end[0]);
+                    $("#laser_scan_start_number").text(response.laser_scan_start[0]);
+                    $("#laser_scan_frequency_number").text(response.laser_scan_frequency[0]);
+                    $("#laser_scan_wavelength_number").text(response.laser_wavelength1[0]);
+                    $("#laser_scan_wavelength_number1").text(response.laser_wavelength1[0]);
+                    $("#laser_current_number").text(response.laser_current1[0]);
+                    $("#laser_voltage_number").text(response.laser_voltage1[0]);
+                    $("#laser_emission").text(response.laser_emission[0]);
+                    $("#laser_system_health").text(response.laser_system_health[0]);
+                    appendToList(laser_wavelength["y"], response.laser_wavelength[0]);
+                    appendToList(laser_current["y"], response.laser_current[0]);
+                    appendToList(laser_voltage["y"], response.laser_voltage[0]);
+                    appendToList(xDateT, response.timestampT[0]);
+                    // Update the plot with the new data
+                    laser_wavelength_data = [laser_wavelength];
+                    laser_current_data = [laser_current];
+                    laser_voltage_data = [laser_voltage];
+                    let livePlotWavelength = Plotly.newPlot("livePlotWavelength", laser_wavelength_data, layoutWavelength);
+                    let livePlotCurrent = Plotly.newPlot("livePlotCurrent", laser_current_data, layoutCurrent);
+                    let livePlotVoltage = Plotly.newPlot("livePlotVoltage", laser_voltage_data, layoutVoltage);
+                } else {
+                    $("#TopticaWavelengthPlot").addClass("hidden");
+                    $("#TopticaCurrentPlot").addClass("hidden");
+                    $("#TopticaVoltagePlot").addClass("hidden");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+            },
+            complete: function () {
+                setTimeout(function () {
+                    DashboardPlot(freqUpdate, false, devices);
+                }, freqUpdate);
+            },
         });
-      } else {
-        let messageContainer = $("#messageContainer");
-        messageContainer.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + "Please fill the name of experiment and the file path" + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
-      }
-    });
-  });
-  function getCurrentDateTime() {
-    let now = new Date();
-    let year = now.getFullYear();
-    let month = String(now.getMonth() + 1).padStart(2, "0");
-    let day = String(now.getDate()).padStart(2, "0");
-    let hours = String(now.getHours()).padStart(2, "0");
-    let minutes = String(now.getMinutes()).padStart(2, "0");
-    let seconds = String(now.getSeconds()).padStart(2, "0");
-    let currentDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
-    return currentDateTime;
-  }
-  let xDateT = [];
-  let xDateC = [];
-  let xDateM = [];
-  // Initialize an empty data array
-  let laser_wavelength = { x: xDateT, y: [], mode: "lines+markers", name: "wavelength" };
-  let laser_current = { x: xDateT, y: [], mode: "lines+markers", name: "current" };
-  let laser_voltage = { x: xDateT, y: [], mode: "lines+markers", name: "voltage" };
-  // Caylar data
-  let caylar_current = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Current" };
-  let caylar_voltage = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Voltage" };
-  let caylar_field = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Field" };
-  let caylar_adcdac_temp = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar ADC/DAC Temperature" };
-  let caylar_box_temp = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Box Temperature" };
-  let caylar_rack_temp = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Rack Temperature" };
-  let caylar_water_temp = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Water Temperature" };
-  let caylar_water_flow = { x: xDateC, y: [], mode: "lines+markers", name: "Caylar Water Flow" };
-  let itc_heater_power = { x: xDateM, y: [], mode: "lines+markers", name: "ITC Heater Power" };
-  let itc_temperature = { x: xDateM, y: [], mode: "lines+markers", name: "ITC Temperature" };
-  // let laser_data = [laser_scan_end, laser_scan_start, laser_scan_offset, laser_scan_frequency];
-  let caylar_data = [caylar_current, caylar_voltage, caylar_field, caylar_adcdac_temp, caylar_box_temp, caylar_rack_temp, caylar_water_temp, caylar_water_flow];
-  let itc_data = [itc_heater_power, itc_temperature];
-  // Create an empty plot with a layout
-  let layoutWavelength = {
-    title: "Toptica Wavelength (nm)",
-    xaxis: {
-      title: "Date",
-      type: "date",
-    },
-    yaxis: {
-      title: "Wavelength (nm)",
-    },
-    autosize: true, // Disable automatic resizing
-    height: 400,
-  };
-  let layoutCurrent = {
-    title: "Toptica Current (mA)",
-    xaxis: {
-      title: "Date",
-      type: "date",
-    },
-    yaxis: {
-      title: "Current (mA)",
-    },
-    autosize: true, // Disable automatic resizing
-    height: 400,
-  };
-  let layoutVoltage = {
-    title: "Toptica Voltage (V)",
-    xaxis: {
-      title: "Date",
-      type: "date",
-    },
-    yaxis: {
-      title: "Voltage (v)",
-    },
-    autosize: true, // Disable automatic resizing
-    height: 400,
-  };
-  let layoutCaylar = {
-    title: "Live Plot Caylar",
-    xaxis: {
-      title: "Date",
-      type: "date",
-    },
-    yaxis: {
-      title: "Y-axis",
-    },
-    autosize: true, // Disable automatic resizing
-    height: 400,
-  };
-
-  let layoutITC = {
-    title: "Live Plot ITC",
-    xaxis: {
-      title: "Date",
-      type: "date",
-    },
-    yaxis: {
-      title: "Y-axis",
-    },
-    autosize: true, // Disable automatic resizing
-    height: 400,
-  };
-
-  // Create a plotly object with the laser_data and layout
-  // let livePlot = Plotly.newPlot("livePlot", laser_data, layout);
-  function stopExperiment() {
-    isUpdating = false;
-    $.ajax({
-      url: "{% url 'stop_experiment' %}", // Replace with your Django view URL
-      type: "GET",
-      success: function (response) {
-        // Stop the plot updates
-        showResetDashboardButton();
-        DashboardPlot(freqUpdate, false);
-      },
-      error: function (xhr, status, error) {
-        // Handle any error that occurs during the request
-      },
-    });
-  }
-  function pauseExperiment() {
-    isUpdating = false;
-  }
-  function continueExperiment() {
-    isUpdating = true;
-    updatePlot(freqUpdate, file_name_save);
-  }
-  let statusCaylarElement = $("#caylar_status");
-  let statusLaserElement = $("#laser_status");
-  let statusRFSoCElement = $("#rfsoc_status");
-  let statusMercuryElement = $("#mercury_status");
-  let statusSXElement = $("#sx_status");
-
-  function updateStatusColor(statusElement) {
-    let statusText = statusElement.text().trim();
-    statusElement.removeClass("text-success text-danger").css("color", "");
-
-    if (statusText === "Connected") {
-      statusElement.addClass("text-success"); // Add green text color class
-    } else if (statusText === "Not Connected") {
-      statusElement.addClass("text-danger"); // Add red text color class
-    } else {
-      statusElement.css("color", "#adb5bd"); // Set text color to #adb5bd (gray)
     }
-  }
-  function DashboardPlot(interval, changePage, device = ["Caylar", "Mercury", "Laser"]) {
-    if (typeof device === "boolean") {
-      device = ["Caylar", "Mercury", "Laser"];
+
+    function updateStatus(plot = true) {
+        $.ajax({
+            url: "{% url 'status' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("rfsoc_status").innerHTML = data.rfsoc_status == "ON" ? "Connected" : "Not Connected";
+                document.getElementById("laser_status").innerHTML = data.laser_status == "ON" ? "Connected" : "Not Connected";
+                document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
+                document.getElementById("caylar_status").innerHTML = data.caylar_status == "ON" ? "Connected" : "Not Connected";
+                document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusLaserElement);
+                updateStatusColor(statusCaylarElement);
+                updateStatusColor(statusMercuryElement);
+                updateStatusColor(statusRFSoCElement);
+                updateStatusColor(statusSXElement);
+                $("#messageLastUpdate").html('<div class="alert alert-info" role="alert">Last Update Status: ' + data.Dtime + "</div>");
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                $("#experimentForms").removeClass("hidden");
+                $("#messageUpdateExpContainer .alert").remove();
+                if (plot) {
+                    isDashboardUpdating = true;
+                    DashboardPlot(freqUpdate, true);
+                }
+            },
+        });
     }
-    devices = device;
-    const csrfToken = $("input[name='csrfmiddlewaretoken']").val();
 
-    // Include the CSRF token in the AJAX request headers
-    $.ajaxSetup({
-      headers: {
-        "X-CSRFToken": csrfToken,
-      },
-    });
-    $.ajax({
-      url: "{% url 'plot' %}", // URL mapped to the status view
-      type: "POST",
-      data: { changePage: changePage },
-      dataType: "json",
-      success: function (response) {
-        // appendToList(xDate, getCurrentDateTime());
-        // Check if response.message exists
-        if ("message" in response) {
-          // Do something with response.message if it exists
-          if (response.message == "The RFSoC is still running or not started yet.") {
-            $("#messageContainer .alert").remove();
-          } else {
-            $(".container-fluid input").prop("disabled", false);
-            $(".container-fluid textarea").prop("disabled", false);
-          }
+    function updateStatusLaser() {
+        $("#messageLastUpdate .alert").remove();
+        document.getElementById("laser_status").innerHTML = "Connecting";
+        document.getElementById("rfsoc_status").innerHTML = "Connecting";
+        document.getElementById("mercury_status").innerHTML = "Connecting";
+        document.getElementById("caylar_status").innerHTML = "Connecting";
+        document.getElementById("sx_status").innerHTML = "Connecting";
+        updateStatusColor(statusLaserElement);
+        updateStatusColor(statusRFSoCElement);
+        updateStatusColor(statusMercuryElement);
+        updateStatusColor(statusCaylarElement);
+        updateStatusColor(statusSXElement);
+        $("#messageUpdateExpContainer").html('<div class="alert alert-info" role="alert">Please Wait Until The Status Loading Finished Before Starting the Experiment</div>');
+        $.ajax({
+            url: "{% url 'statuslaser' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("laser_status").innerHTML = data.laser_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusLaserElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusSX();
+            },
+        });
+    }
 
-          $("#messageContainer").html('<div class="alert alert-info alert-dismissible fade show" role="alert">' + response.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + "</button>" + "</div>");
-        }
-        if (response.caylar_status == "ON" && device.includes("Caylar")) {
-          $("#CaylarPlot").removeClass("hidden");
-          $("#caylar_current_number").text(response.caylar_current1[0]);
-          $("#caylar_voltage_number").text(response.caylar_voltage1[0]);
-          $("#caylar_field_number").text(response.caylar_field1[0]);
-          $("#caylar_field_number1").text(response.caylar_field1[0]);
-          $("#caylar_adcdac_temp_number").text(response.caylar_ADCDAC_temp1[0]);
-          $("#caylar_box_temp_number").text(response.caylar_box_temp1[0]);
-          $("#caylar_rack_temp_number").text(response.caylar_rack_temp1[0]);
-          $("#caylar_water_temp_number").text(response.caylar_water_temp1[0]);
-          $("#caylar_water_flow_number").text(response.caylar_water_flow1[0]);
-          // Update Caylar data
-          appendToList(caylar_current["y"], response.caylar_current[0]);
-          appendToList(caylar_field["y"], response.caylar_field[0]);
-          appendToList(caylar_voltage["y"], response.caylar_voltage[0]);
-          appendToList(caylar_adcdac_temp["y"], response.caylar_ADCDAC_temp[0]);
-          appendToList(caylar_box_temp["y"], response.caylar_box_temp[0]);
-          appendToList(caylar_rack_temp["y"], response.caylar_rack_temp[0]);
-          appendToList(caylar_water_temp["y"], response.caylar_water_temp[0]);
-          appendToList(caylar_water_flow["y"], response.caylar_water_flow[0]);
-          appendToList(xDateC, response.timestampC[0]);
-          // Update the Caylar plot with the new data
-          caylar_data = [caylar_current, caylar_voltage, caylar_field, caylar_adcdac_temp, caylar_box_temp, caylar_rack_temp, caylar_water_temp, caylar_water_flow];
-          let livePlotCaylar = Plotly.newPlot("livePlotCaylar", caylar_data, layoutCaylar);
-        } else {
-          $("#CaylarPlot").addClass("hidden");
-        }
-        if (response.mercury_status == "ON" && device.includes("Mercury")) {
-          $("#ITCPlot").removeClass("hidden");
-          $("#itc_heater_power_number").text(response.itc_heater_power1[0]);
-          $("#itc_heater_power_number1").text(response.itc_heater_power1[0]);
-          $("#itc_temperature_number").text(response.itc_temperature1[0]);
-          $("#itc_temperature_number1").text(response.itc_temperature1[0]);
-          // Update ITC data
-          appendToList(itc_heater_power["y"], response.itc_heater_power[0]);
-          appendToList(itc_temperature["y"], response.itc_temperature[0]);
-          appendToList(xDateM, response.timestampM[0]);
-          // Update the ITC plot with the new data
-          itc_data = [itc_heater_power, itc_temperature];
-          let livePlotITC = Plotly.newPlot("livePlotITC", itc_data, layoutITC);
-        } else {
-          $("#ITCPlot").addClass("hidden");
-        }
-        if (response.laser_status == "ON" && device.includes("Laser")) {
-          $("#TopticaWavelengthPlot").removeClass("hidden");
-          $("#TopticaCurrentPlot").removeClass("hidden");
-          $("#TopticaVoltagePlot").removeClass("hidden");
-          $("#laser_scan_end_number").text(response.laser_scan_end[0]);
-          $("#laser_scan_start_number").text(response.laser_scan_start[0]);
-          $("#laser_scan_frequency_number").text(response.laser_scan_frequency[0]);
-          $("#laser_scan_wavelength_number").text(response.laser_wavelength1[0]);
-          $("#laser_scan_wavelength_number1").text(response.laser_wavelength1[0]);
-          $("#laser_current_number").text(response.laser_current1[0]);
-          $("#laser_voltage_number").text(response.laser_voltage1[0]);
-          $("#laser_emission").text(response.laser_emission[0]);
-          $("#laser_system_health").text(response.laser_system_health[0]);
-          appendToList(laser_wavelength["y"], response.laser_wavelength[0]);
-          appendToList(laser_current["y"], response.laser_current[0]);
-          appendToList(laser_voltage["y"], response.laser_voltage[0]);
-          appendToList(xDateT, response.timestampT[0]);
-          // Update the plot with the new data
-          laser_wavelength_data = [laser_wavelength];
-          laser_current_data = [laser_current];
-          laser_voltage_data = [laser_voltage];
-          let livePlotWavelength = Plotly.newPlot("livePlotWavelength", laser_wavelength_data, layoutWavelength);
-          let livePlotCurrent = Plotly.newPlot("livePlotCurrent", laser_current_data, layoutCurrent);
-          let livePlotVoltage = Plotly.newPlot("livePlotVoltage", laser_voltage_data, layoutVoltage);
-        } else {
-          $("#TopticaWavelengthPlot").addClass("hidden");
-          $("#TopticaCurrentPlot").addClass("hidden");
-          $("#TopticaVoltagePlot").addClass("hidden");
-        }
-      },
-      error: function (xhr, status, error) {
-        console.log(xhr.responseText);
-      },
-      complete: function () {
-        setTimeout(function () {
-          DashboardPlot(freqUpdate, false, devices);
-        }, freqUpdate);
-      },
-    });
-  }
-  function updateStatus(plot = true) {
-    $.ajax({
-      url: "{% url 'status' %}", // URL mapped to the status view
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        document.getElementById("rfsoc_status").innerHTML = data.rfsoc_status == "ON" ? "Connected" : "Not Connected";
-        document.getElementById("laser_status").innerHTML = data.laser_status == "ON" ? "Connected" : "Not Connected";
-        document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
-        document.getElementById("caylar_status").innerHTML = data.caylar_status == "ON" ? "Connected" : "Not Connected";
-        document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
+    function updateStatusSX() {
+        $.ajax({
+            url: "{% url 'statussx' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusSXElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusRFSoC();
+            },
+        });
+    }
+
+    function updateStatusRFSoC() {
+        $.ajax({
+            url: "{% url 'statusrfsoc' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("rfsoc_status").innerHTML = data.rfsoc_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusRFSoCElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusMercury();
+            },
+        });
+    }
+
+    function updateStatusMercury() {
+        $.ajax({
+            url: "{% url 'statusmercury' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusMercuryElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusCaylar();
+            },
+        });
+    }
+
+    function updateStatusCaylar() {
+        $.ajax({
+            url: "{% url 'statuscaylar' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("caylar_status").innerHTML = data.caylar_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusCaylarElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                $("#experimentForms").removeClass("hidden");
+                $("#messageUpdateExpContainer .alert").remove();
+                isDashboardUpdating = true;
+                // Set the flag indicating that the script has been executed
+                sessionStorage.setItem("script_executed", true);
+                DashboardPlot(freqUpdate, true);
+            },
+        });
+    }
+
+    // Add event listener for the update button
+    const updateButton = document.getElementById("update_button");
+    updateButton.addEventListener("click", function () {
         updateStatusColor(statusLaserElement);
         updateStatusColor(statusCaylarElement);
         updateStatusColor(statusMercuryElement);
         updateStatusColor(statusRFSoCElement);
         updateStatusColor(statusSXElement);
-        $("#messageLastUpdate").html('<div class="alert alert-info" role="alert">Last Update Status: ' + data.Dtime + "</div>");
-      },
-      error: function (xhr, errmsg, err) {
-        console.log(xhr.status + ": " + xhr.responseText);
-      },
-      complete: function () {
-        $("#experimentForms").removeClass("hidden");
-        $("#messageUpdateExpContainer .alert").remove();
-        if (plot) {
-          isDashboardUpdating = true;
-          DashboardPlot(freqUpdate, true);
+        isDashboardUpdating = false;
+        let scriptExecuted = sessionStorage.getItem("script_executed");
+        sessionStorage.setItem("script_executed", false);
+        updateStatusLaser(); // Update the status immediately when the page loads
+    });
+
+    // Start the script once the HTML has finished loading
+    document.addEventListener("DOMContentLoaded", function () {
+        // Check if the script has already been executed
+        let scriptExecuted = sessionStorage.getItem("script_executed");
+        let folder_name = sessionStorage.getItem("folder_name");
+        let experiment_name = sessionStorage.getItem("experiment_name");
+        let description = sessionStorage.getItem("description");
+        let selected_devices = sessionStorage.getItem("selected_devices");
+        if (!scriptExecuted || scriptExecuted == "false") {
+            updateStatusColor(statusLaserElement);
+            updateStatusColor(statusCaylarElement);
+            updateStatusColor(statusMercuryElement);
+            updateStatusColor(statusRFSoCElement);
+            updateStatusColor(statusSXElement);
+            updateStatusLaser(); // Update the status immediately when the page loads
+        } else {
+            updateStatusColor(statusLaserElement);
+            updateStatusColor(statusCaylarElement);
+            updateStatusColor(statusMercuryElement);
+            updateStatusColor(statusRFSoCElement);
+            updateStatusColor(statusSXElement);
+            updateStatus();
         }
-      },
     });
-  }
-  function updateStatusLaser() {
-    $("#messageLastUpdate .alert").remove();
-    document.getElementById("laser_status").innerHTML = "Connecting";
-    document.getElementById("rfsoc_status").innerHTML = "Connecting";
-    document.getElementById("mercury_status").innerHTML = "Connecting";
-    document.getElementById("caylar_status").innerHTML = "Connecting";
-    document.getElementById("sx_status").innerHTML = "Connecting";
-    updateStatusColor(statusLaserElement);
-    updateStatusColor(statusRFSoCElement);
-    updateStatusColor(statusMercuryElement);
-    updateStatusColor(statusCaylarElement);
-    updateStatusColor(statusSXElement);
-    $("#messageUpdateExpContainer").html('<div class="alert alert-info" role="alert">Please Wait Until The Status Loading Finished Before Starting the Experiment</div>');
-    $.ajax({
-      url: "{% url 'statuslaser' %}", // URL mapped to the status view
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        document.getElementById("laser_status").innerHTML = data.laser_status == "ON" ? "Connected" : "Not Connected";
-        updateStatusColor(statusLaserElement);
-      },
-      error: function (xhr, errmsg, err) {
-        console.log(xhr.status + ": " + xhr.responseText);
-      },
-      complete: function () {
-        updateStatusSX();
-      },
-    });
-  }
-  function updateStatusSX() {
-    $.ajax({
-      url: "{% url 'statussx' %}", // URL mapped to the status view
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
-        updateStatusColor(statusSXElement);
-      },
-      error: function (xhr, errmsg, err) {
-        console.log(xhr.status + ": " + xhr.responseText);
-      },
-      complete: function () {
-        updateStatusRFSoC();
-      },
-    });
-  }
-  function updateStatusRFSoC() {
-    $.ajax({
-      url: "{% url 'statusrfsoc' %}", // URL mapped to the status view
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        document.getElementById("rfsoc_status").innerHTML = data.rfsoc_status == "ON" ? "Connected" : "Not Connected";
-        updateStatusColor(statusRFSoCElement);
-      },
-      error: function (xhr, errmsg, err) {
-        console.log(xhr.status + ": " + xhr.responseText);
-      },
-      complete: function () {
-        updateStatusMercury();
-      },
-    });
-  }
-  function updateStatusMercury() {
-    $.ajax({
-      url: "{% url 'statusmercury' %}", // URL mapped to the status view
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
-        updateStatusColor(statusMercuryElement);
-      },
-      error: function (xhr, errmsg, err) {
-        console.log(xhr.status + ": " + xhr.responseText);
-      },
-      complete: function () {
-        updateStatusCaylar();
-      },
-    });
-  }
-  function updateStatusCaylar() {
-    $.ajax({
-      url: "{% url 'statuscaylar' %}", // URL mapped to the status view
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        document.getElementById("caylar_status").innerHTML = data.caylar_status == "ON" ? "Connected" : "Not Connected";
-        updateStatusColor(statusCaylarElement);
-      },
-      error: function (xhr, errmsg, err) {
-        console.log(xhr.status + ": " + xhr.responseText);
-      },
-      complete: function () {
-        $("#experimentForms").removeClass("hidden");
-        $("#messageUpdateExpContainer .alert").remove();
-        isDashboardUpdating = true;
-        // Set the flag indicating that the script has been executed
-        sessionStorage.setItem("script_executed", true);
-        DashboardPlot(freqUpdate, true);
-      },
-    });
-  }
-  // Add event listener for the update button
-  const updateButton = document.getElementById("update_button");
-  updateButton.addEventListener("click", function () {
-    updateStatusColor(statusLaserElement);
-    updateStatusColor(statusCaylarElement);
-    updateStatusColor(statusMercuryElement);
-    updateStatusColor(statusRFSoCElement);
-    updateStatusColor(statusSXElement);
-    isDashboardUpdating = false;
-    let scriptExecuted = sessionStorage.getItem("script_executed");
-    sessionStorage.setItem("script_executed", false);
-    updateStatusLaser(); // Update the status immediately when the page loads
-  });
+    // Get the initial value from sessionStorage or set the default value
+    let freqUpdate = sessionStorage.getItem("freqUpdate") || 2000;
+    document.getElementById("freqUpdateInput").value = freqUpdate / 1000;
 
-  // Start the script once the HTML has finished loading
-  document.addEventListener("DOMContentLoaded", function () {
-    // Check if the script has already been executed
-    let scriptExecuted = sessionStorage.getItem("script_executed");
-    let folder_name = sessionStorage.getItem("folder_name");
-    let experiment_name = sessionStorage.getItem("experiment_name");
-    let description = sessionStorage.getItem("description");
-    let selected_devices = sessionStorage.getItem("selected_devices");
-    if (!scriptExecuted || scriptExecuted == "false") {
-      updateStatusColor(statusLaserElement);
-      updateStatusColor(statusCaylarElement);
-      updateStatusColor(statusMercuryElement);
-      updateStatusColor(statusRFSoCElement);
-      updateStatusColor(statusSXElement);
-      updateStatusLaser(); // Update the status immediately when the page loads
-    } else {
-      updateStatusColor(statusLaserElement);
-      updateStatusColor(statusCaylarElement);
-      updateStatusColor(statusMercuryElement);
-      updateStatusColor(statusRFSoCElement);
-      updateStatusColor(statusSXElement);
-      updateStatus();
-    }
-  });
-  // Get the initial value from sessionStorage or set the default value
-  let freqUpdate = sessionStorage.getItem("freqUpdate") || 2000;
-  document.getElementById("freqUpdateInput").value = freqUpdate / 1000;
+    // Function to update sessionStorage and freqUpdate variable
+    function updateFreqUpdateValue() {
+        const inputElement = document.getElementById("freqUpdateInput");
+        const newValue = parseInt(inputElement.value) * 1000;
 
-  // Function to update sessionStorage and freqUpdate variable
-  function updateFreqUpdateValue() {
-    const inputElement = document.getElementById("freqUpdateInput");
-    const newValue = parseInt(inputElement.value) * 1000;
+        // If the input is a valid number, update sessionStorage and freqUpdate
+        if (!isNaN(newValue)) {
+            freqUpdate = newValue;
+            sessionStorage.setItem("freqUpdate", freqUpdate);
+        } else {
+            // If the input is invalid or empty, set it to the default value
+            freqUpdate = 2000;
+            sessionStorage.removeItem("freqUpdate");
+        }
 
-    // If the input is a valid number, update sessionStorage and freqUpdate
-    if (!isNaN(newValue)) {
-      freqUpdate = newValue;
-      sessionStorage.setItem("freqUpdate", freqUpdate);
-    } else {
-      // If the input is invalid or empty, set it to the default value
-      freqUpdate = 2000;
-      sessionStorage.removeItem("freqUpdate");
+        // Update the input value to match freqUpdate
+        inputElement.value = freqUpdate / 1000;
     }
 
-    // Update the input value to match freqUpdate
-    inputElement.value = freqUpdate / 1000;
-  }
-
-  // Listen for changes in the input element
-  document.getElementById("freqUpdateInput").addEventListener("change", updateFreqUpdateValue);
+    // Listen for changes in the input element
+    document.getElementById("freqUpdateInput").addEventListener("change", updateFreqUpdateValue);
 </script>
 
 <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
