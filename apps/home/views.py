@@ -763,10 +763,19 @@ def sr_page_view(request):
     # SR_instance.connect()
     connected = SR_instance.is_connected()
 
+    # Given sensitivity values
+    sensitivity_values = [
+        "2nV/fA", "5nV/fA", "10nV/fA", "20nV/fA", "50nV/fA", "100nV/fA", "200nV/fA", "500nV/fA",
+        "1µV/pA", "2µV/pA", "5µV/pA", "10µV/pA", "20µV/pA", "50µV/pA", "100µV/pA", "200µV/pA",
+        "500µV/pA", "1mV/nA", "2mV/nA", "5mV/nA", "10mV/nA", "20mV/nA", "50mV/nA", "100mV/nA",
+        "200mV/nA", "500mV/nA", "1V/µA"
+    ]
+
     sx_xml_dict = xml_config_to_dict(xml_path)
     # if connected and connected_link_1:
     if connected:
         sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['O'] = SR_instance.read_xyr0()
+        sx_xml_dict['sensitivity'] = SR_instance.read_sensitivity()
         # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
         #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
         #     sx_xml_dict["cs_output_1"] = SR_instance.all_report_link(1)
@@ -774,6 +783,7 @@ def sr_page_view(request):
         context["Y"] = sx_xml_dict['Y']
         context["R"] = sx_xml_dict['R']
         context["O"] = sx_xml_dict['O']
+        context["sensitivity"] = sx_xml_dict['sensitivity']
         # context["input1"] = sx_xml_dict["cs_input_1"]
         # context["speed1"] = sx_xml_dict["cs_speed_1"]
         # context["shield1"] = sx_xml_dict["cs_shield_1"]

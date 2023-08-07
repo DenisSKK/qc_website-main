@@ -120,6 +120,9 @@ class SR830Device():
         x, y, r, o = map(str, self.sr_ophyd.read_vals.get(configs={'i': '1', 'j': '2', 'k': ',3,4'}).split(','))
         return x, y, r, o
 
+    def read_sensitivity(self):
+        return self.sr_ophyd.sens.get()
+
     def report_id(self):
         return self.sr_ophyd.id.get()
 

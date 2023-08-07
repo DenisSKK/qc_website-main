@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="31">
+          <list size="32">
             <item index="0" class="java.lang.String" itemvalue="form.mercury_itc_automatic_pid.value" />
             <item index="1" class="java.lang.String" itemvalue="form.gain2.value" />
             <item index="2" class="java.lang.String" itemvalue="form.input2.value" />
@@ -36,6 +36,7 @@
             <item index="28" class="java.lang.String" itemvalue="6" />
             <item index="29" class="java.lang.String" itemvalue="7" />
             <item index="30" class="java.lang.String" itemvalue="8" />
+            <item index="31" class="java.lang.String" itemvalue="form.sensitivity.value" />
           </list>
         </value>
       </option>
