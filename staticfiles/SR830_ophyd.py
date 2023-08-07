@@ -116,8 +116,9 @@ class SR830Device():
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output"""
 
-    def read_vals(self):
-        return self.sr_ophyd.read_vals.get(configs={'i': '1', 'j': '2', 'k': ',3,4'})
+    def read_xyr0(self):
+        x, y, r, o = map(str, self.sr_ophyd.read_vals.get(configs={'i': '1', 'j': '2', 'k': ',3,4'}).split(','))
+        return x, y, r, o
 
     def report_id(self):
         return self.sr_ophyd.id.get()

@@ -18,7 +18,7 @@ def update_configs():
     update_rfsoc_config()
     update_toptica_config()
     update_caylar_config()
-    update_instrbuilder_config()
+    update_instrbuilder_config_path()
     update_sr830_config()
 
 
@@ -43,7 +43,7 @@ def update_sx_config():
 
 
 def update_sr830_config():
-    # Extract sx199 host and port
+    # Extract sr830 host and port
     sr830_address = config_data_src["instruments"]["sr830"]["address"]
     sr830_port = config_data_src["instruments"]["sr830"]["port"]
 
@@ -54,7 +54,7 @@ def update_sr830_config():
     with open(config_file_dest, "r") as instr_yaml_file:
         config_data_dest = yaml_dest.load(instr_yaml_file)
 
-    # Update the pyvisa section for sx199 in .instrbuilder/config.yaml
+    # Update the pyvisa section for sr830 in .instrbuilder/config.yaml
     config_data_dest["instruments"]["sr830"]["address"]["pyvisa"] = f'{sr830_address}::{sr830_port}::INSTR'
 
     # Write the updated config_data_dest back to the .instrbuilder/config.yaml file
@@ -131,7 +131,7 @@ def update_caylar_config():
     dict_to_xml_file(caylar_config_dict, caylar_config_path)
 
 
-def update_instrbuilder_config():
+def update_instrbuilder_config_path():
     # Create path for .instrbuilder/config.yaml and yaml object
     yaml_dest = ruamel.yaml.YAML()
 

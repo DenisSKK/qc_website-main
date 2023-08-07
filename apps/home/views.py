@@ -766,14 +766,14 @@ def sr_page_view(request):
     sx_xml_dict = xml_config_to_dict(xml_path)
     # if connected and connected_link_1:
     if connected:
-        sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['0'] = map(float, SR_instance.read_vals().split(','))
+        sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['O'] = SR_instance.read_xyr0()
         # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
         #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
         #     sx_xml_dict["cs_output_1"] = SR_instance.all_report_link(1)
         context["X"] = sx_xml_dict['X']
         context["Y"] = sx_xml_dict['Y']
         context["R"] = sx_xml_dict['R']
-        context["0"] = sx_xml_dict['0']
+        context["O"] = sx_xml_dict['O']
         # context["input1"] = sx_xml_dict["cs_input_1"]
         # context["speed1"] = sx_xml_dict["cs_speed_1"]
         # context["shield1"] = sx_xml_dict["cs_shield_1"]

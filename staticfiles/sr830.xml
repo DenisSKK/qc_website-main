@@ -1,5 +1,7 @@
 <data>
-    <address>GPIB1</address>
-    <gpib_port>8</gpib_port>
+    <X>0.0</X>
+    <Y>0.0</Y>
+    <R>0.0</R>
+    <O>0.0</O>
     <time_update>24/07/2023 15:29:00</time_update>
 </data>
