@@ -261,15 +261,15 @@
                     <label class="form-control-label" for="input-gain-1">CS580 1 Gain</label>
                     {% if connectedlink1 %}
                     <select name="gain1" id="input-gain-1" class="form-control" disabled>
-                      <option value="0" {% if form.gain1.value == 0 %}selected{% endif %}>1nA</option>
-                      <option value="1" {% if form.gain1.value == 1 %}selected{% endif %}>10nA</option>
-                      <option value="2" {% if form.gain1.value == 2 %}selected{% endif %}>100nA</option>
-                      <option value="3" {% if form.gain1.value == 3 %}selected{% endif %}>1µA</option>
-                      <option value="4" {% if form.gain1.value == 4 %}selected{% endif %}>10µA</option>
-                      <option value="5" {% if form.gain1.value == 5 %}selected{% endif %}>100µA</option>
-                      <option value="6" {% if form.gain1.value == 6 %}selected{% endif %}>1mA</option>
-                      <option value="7" {% if form.gain1.value == 7 %}selected{% endif %}>10mA</option>
-                      <option value="8" {% if form.gain1.value == 8 %}selected{% endif %}>50mA</option>
+                      <option value="0" {% if gain1 == 0 %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if gain1 == 1 %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if gain1 == 2 %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if gain1 == 3 %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if gain1 == 4 %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if gain1 == 5 %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if gain1 == 6 %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if gain1 == 7 %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if gain1 == 8 %}selected{% endif %}>50mA</option>
                     </select>
                     {% else %}
                     <input id="input-gain-1" class="form-control" name="gain1" placeholder="N/A" type="text" value="Disconnected" disabled />
@@ -281,15 +281,15 @@
                     <label class="form-control-label" for="input-gain-2">CS580 2 Gain</label>
                     {% if connectedlink2 %}
                     <select name="gain2" id="input-gain-2" class="form-control" disabled>
-                      <option value="0" {% if form.gain2.value == 0 %}selected{% endif %}>1nA</option>
-                      <option value="1" {% if form.gain2.value == 1 %}selected{% endif %}>10nA</option>
-                      <option value="2" {% if form.gain2.value == 2 %}selected{% endif %}>100nA</option>
-                      <option value="3" {% if form.gain2.value == 3 %}selected{% endif %}>1µA</option>
-                      <option value="4" {% if form.gain2.value == 4 %}selected{% endif %}>10µA</option>
-                      <option value="5" {% if form.gain2.value == 5 %}selected{% endif %}>100µA</option>
-                      <option value="6" {% if form.gain2.value == 6 %}selected{% endif %}>1mA</option>
-                      <option value="7" {% if form.gain2.value == 7 %}selected{% endif %}>10mA</option>
-                      <option value="8" {% if form.gain2.value == 8 %}selected{% endif %}>50mA</option>
+                      <option value="0" {% if gain2 == 0 %}selected{% endif %}>1nA</option>
+                      <option value="1" {% if gain2 == 1 %}selected{% endif %}>10nA</option>
+                      <option value="2" {% if gain2 == 2 %}selected{% endif %}>100nA</option>
+                      <option value="3" {% if gain2 == 3 %}selected{% endif %}>1µA</option>
+                      <option value="4" {% if gain2 == 4 %}selected{% endif %}>10µA</option>
+                      <option value="5" {% if gain2 == 5 %}selected{% endif %}>100µA</option>
+                      <option value="6" {% if gain2 == 6 %}selected{% endif %}>1mA</option>
+                      <option value="7" {% if gain2 == 7 %}selected{% endif %}>10mA</option>
+                      <option value="8" {% if gain2 == 8 %}selected{% endif %}>50mA</option>
                     </select>
                     {% else %}
                     <input id="input-gain-2" class="form-control" name="gain2" placeholder="N/A" type="text" value="Disconnected" disabled />
