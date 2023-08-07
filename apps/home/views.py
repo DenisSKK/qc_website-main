@@ -769,7 +769,7 @@ def sr_page_view(request):
         sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['O'] = SR_instance.read_xyr0()
         sx_xml_dict['sensitivity'] = SR_instance.read_sensitivity()
         sx_xml_dict['time_constant'] = SR_instance.read_time_constant()
-        sx_xml_dict['slope'] = SR_instance.slope()
+        sx_xml_dict['slope'] = SR_instance.read_slope()
         sx_xml_dict['synch_filter'] = SR_instance.read_synch_filter()
         # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
         #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
