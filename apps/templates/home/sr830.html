@@ -130,33 +130,33 @@
                     <label class="form-control-label" for="input-sensitivity">CS580 Sensitivity</label>
                     {% if connected %}
                     <select name="sensitivity" id="input-sensitivity" class="form-control" disabled>
-                      <option value="0" {% if form.sensitivity.value == 0 %}selected{% endif %}>2nV/fA</option>
-                      <option value="1" {% if form.sensitivity.value == 1 %}selected{% endif %}>5nV/fA</option>
-                      <option value="2" {% if form.sensitivity.value == 2 %}selected{% endif %}>10nV/fA</option>
-                      <option value="3" {% if form.sensitivity.value == 3 %}selected{% endif %}>20nV/fA</option>
-                      <option value="4" {% if form.sensitivity.value == 4 %}selected{% endif %}>50nV/fA</option>
-                      <option value="5" {% if form.sensitivity.value == 5 %}selected{% endif %}>100nV/fA</option>
-                      <option value="6" {% if form.sensitivity.value == 6 %}selected{% endif %}>200nV/fA</option>
-                      <option value="7" {% if form.sensitivity.value == 7 %}selected{% endif %}>500nV/fA</option>
-                      <option value="8" {% if form.sensitivity.value == 8 %}selected{% endif %}>1µV/pA</option>
-                      <option value="9" {% if form.sensitivity.value == 9 %}selected{% endif %}>2µV/pA</option>
-                      <option value="10" {% if form.sensitivity.value == 10 %}selected{% endif %}>5µV/pA</option>
-                      <option value="11" {% if form.sensitivity.value == 11 %}selected{% endif %}>10µV/pA</option>
-                      <option value="12" {% if form.sensitivity.value == 12 %}selected{% endif %}>20µV/pA</option>
-                      <option value="13" {% if form.sensitivity.value == 13 %}selected{% endif %}>50µV/pA</option>
-                      <option value="14" {% if form.sensitivity.value == 14 %}selected{% endif %}>100µV/pA</option>
-                      <option value="15" {% if form.sensitivity.value == 15 %}selected{% endif %}>200µV/pA</option>
-                      <option value="16" {% if form.sensitivity.value == 16 %}selected{% endif %}>500µV/pA</option>
-                      <option value="17" {% if form.sensitivity.value == 17 %}selected{% endif %}>1mV/nA</option>
-                      <option value="18" {% if form.sensitivity.value == 18 %}selected{% endif %}>2mV/nA</option>
-                      <option value="19" {% if form.sensitivity.value == 19 %}selected{% endif %}>5mV/nA</option>
-                      <option value="20" {% if form.sensitivity.value == 20 %}selected{% endif %}>10mV/nA</option>
-                      <option value="21" {% if form.sensitivity.value == 21 %}selected{% endif %}>20mV/nA</option>
-                      <option value="22" {% if form.sensitivity.value == 22 %}selected{% endif %}>50mV/nA</option>
-                      <option value="23" {% if form.sensitivity.value == 23 %}selected{% endif %}>100mV/nA</option>
-                      <option value="24" {% if form.sensitivity.value == 24 %}selected{% endif %}>200mV/nA</option>
-                      <option value="25" {% if form.sensitivity.value == 25 %}selected{% endif %}>500mV/nA</option>
-                      <option value="26" {% if form.sensitivity.value == 26 %}selected{% endif %}>1V/µA</option>
+                      <option value="0" {% if sensitivity == 0 %}selected{% endif %}>2nV/fA</option>
+                      <option value="1" {% if sensitivity == 1 %}selected{% endif %}>5nV/fA</option>
+                      <option value="2" {% if sensitivity == 2 %}selected{% endif %}>10nV/fA</option>
+                      <option value="3" {% if sensitivity == 3 %}selected{% endif %}>20nV/fA</option>
+                      <option value="4" {% if sensitivity == 4 %}selected{% endif %}>50nV/fA</option>
+                      <option value="5" {% if sensitivity == 5 %}selected{% endif %}>100nV/fA</option>
+                      <option value="6" {% if sensitivity == 6 %}selected{% endif %}>200nV/fA</option>
+                      <option value="7" {% if sensitivity == 7 %}selected{% endif %}>500nV/fA</option>
+                      <option value="8" {% if sensitivity == 8 %}selected{% endif %}>1µV/pA</option>
+                      <option value="9" {% if sensitivity == 9 %}selected{% endif %}>2µV/pA</option>
+                      <option value="10" {% if sensitivity == 10 %}selected{% endif %}>5µV/pA</option>
+                      <option value="11" {% if sensitivity == 11 %}selected{% endif %}>10µV/pA</option>
+                      <option value="12" {% if sensitivity == 12 %}selected{% endif %}>20µV/pA</option>
+                      <option value="13" {% if sensitivity == 13 %}selected{% endif %}>50µV/pA</option>
+                      <option value="14" {% if sensitivity == 14 %}selected{% endif %}>100µV/pA</option>
+                      <option value="15" {% if sensitivity == 15 %}selected{% endif %}>200µV/pA</option>
+                      <option value="16" {% if sensitivity == 16 %}selected{% endif %}>500µV/pA</option>
+                      <option value="17" {% if sensitivity == 17 %}selected{% endif %}>1mV/nA</option>
+                      <option value="18" {% if sensitivity == 18 %}selected{% endif %}>2mV/nA</option>
+                      <option value="19" {% if sensitivity == 19 %}selected{% endif %}>5mV/nA</option>
+                      <option value="20" {% if sensitivity == 20 %}selected{% endif %}>10mV/nA</option>
+                      <option value="21" {% if sensitivity == 21 %}selected{% endif %}>20mV/nA</option>
+                      <option value="22" {% if sensitivity == 22 %}selected{% endif %}>50mV/nA</option>
+                      <option value="23" {% if sensitivity == 23 %}selected{% endif %}>100mV/nA</option>
+                      <option value="24" {% if sensitivity == 24 %}selected{% endif %}>200mV/nA</option>
+                      <option value="25" {% if sensitivity == 25 %}selected{% endif %}>500mV/nA</option>
+                      <option value="26" {% if sensitivity == 26 %}selected{% endif %}>1V/µA</option>
                     </select>
                     {% else %}
                     <input id="input-sensitivity" class="form-control" name="sensitivity" placeholder="N/A" type="text"
