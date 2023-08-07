@@ -766,11 +766,14 @@ def sr_page_view(request):
     sx_xml_dict = xml_config_to_dict(xml_path)
     # if connected and connected_link_1:
     if connected:
-        print('get done')
+        sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['0'] = map(float, SR_instance.read_vals().split(','))
         # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
         #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
         #     sx_xml_dict["cs_output_1"] = SR_instance.all_report_link(1)
-        # context["gain1"] = sx_xml_dict["cs_gain_1"]
+        context["X"] = sx_xml_dict['X']
+        context["Y"] = sx_xml_dict['Y']
+        context["R"] = sx_xml_dict['R']
+        context["0"] = sx_xml_dict['0']
         # context["input1"] = sx_xml_dict["cs_input_1"]
         # context["speed1"] = sx_xml_dict["cs_speed_1"]
         # context["shield1"] = sx_xml_dict["cs_shield_1"]
@@ -778,9 +781,9 @@ def sr_page_view(request):
         # context["output1"] = sx_xml_dict["cs_output_1"]
         # context["curr1"] = sx_xml_dict["cs_curr_1"]
         # context["volt1"] = sx_xml_dict["cs_volt_1"]
-        # sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        # dict_to_xml_file(sx_xml_dict, xml_path)
-        # sx_xml_dict = xml_config_to_dict(xml_path)
+        sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        dict_to_xml_file(sx_xml_dict, xml_path)
+        sx_xml_dict = xml_config_to_dict(xml_path)
     else:
         info = f'SR830 is not connected!'
         messages.error(request, info)
@@ -791,7 +794,7 @@ def sr_page_view(request):
         # Save old XML before updating
         shutil.copy(xml_path, old_xml_path)
         if "update-all" in request.POST:
-            print(SR_instance.read_vals())
+            pass
             # form = SX199Form(request.POST)
             # if form.is_valid() and connected:
             #     sx_xml_dict["cs_gain_1"] = form.cleaned_data['gain1']
