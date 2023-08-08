@@ -1304,25 +1304,25 @@ def update_live_plot(request):
             data['itc_heater_power1'] = itc_heater_power,
             data['itc_temperature1'] = itc_temperature,
             data['timestampM'] = find_csv(itc_csv_file_path, 'timestamp'),
-    if SX_instance is not None:
-        if SX_instance.is_cs_connected(1):
-            sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
-                SX_instance.all_report_link(1)
-            sx_data_row1 = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
-                            sx_isolation_1, sx_output_1]
-            sx_column_headers1 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
-                                  'output']
-            sx_csv_file_path1 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
-            append_to_csv(sx_csv_file_path1, sx_data_row1, sx_column_headers1)
-        elif SX_instance.is_cs_connected(2):
-            sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2 = \
-                SX_instance.all_report_link(2)
-            sx_data_row2 = [timestamp, sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2,
-                            sx_isolation_2, sx_output_2]
-            sx_column_headers2 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
-                                  'output']
-            sx_csv_file_path2 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'second_cs580.csv'
-            append_to_csv(sx_csv_file_path2, sx_data_row2, sx_column_headers2)
+    # if SX_instance is not None:
+    #     if SX_instance.is_cs_connected(1):
+    #         sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
+    #             SX_instance.all_report_link(1)
+    #         sx_data_row1 = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
+    #                         sx_isolation_1, sx_output_1]
+    #         sx_column_headers1 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
+    #                               'output']
+    #         sx_csv_file_path1 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
+    #         append_to_csv(sx_csv_file_path1, sx_data_row1, sx_column_headers1)
+    #     elif SX_instance.is_cs_connected(2):
+    #         sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2 = \
+    #             SX_instance.all_report_link(2)
+    #         sx_data_row2 = [timestamp, sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2,
+    #                         sx_isolation_2, sx_output_2]
+    #         sx_column_headers2 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
+    #                               'output']
+    #         sx_csv_file_path2 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'second_cs580.csv'
+    #         append_to_csv(sx_csv_file_path2, sx_data_row2, sx_column_headers2)
 
     return JsonResponse(data)
 
@@ -1373,15 +1373,13 @@ def statusSX(request):
     # global URFSoC
     global SX_instance
     global Dsx_status
-    if SX_instance != None:
-        SX_instance.disconnect()
-        SX_instance = None
-    SX = construct_sx()
+    if SX_instance is None:
+        # SX_instance.disconnect()
+        # SX_instance = None
+        SX_instance = construct_sx()
 
-    if SX.is_connected():
+    if SX_instance.is_connected():
         sx_status = "ON"
-        SX_instance = SX
-        # Laser.disconnect()
         Dsx_status = sx_status
     else:
         sx_status = "OFF"
