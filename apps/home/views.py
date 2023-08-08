@@ -37,6 +37,88 @@ import matplotlib
 
 matplotlib.use('Agg')
 
+SENSITIVITY_CHOICES = {
+    '0': '2nV/fA',
+    '1': '5nV/fA',
+    '2': '10nV/fA',
+    '3': '20nV/fA',
+    '4': '50nV/fA',
+    '5': '100nV/fA',
+    '6': '200nV/fA',
+    '7': '500nV/fA',
+    '8': '1µV/pA',
+    '9': '2µV/pA',
+    '10': '5µV/pA',
+    '11': '10µV/pA',
+    '12': '20µV/pA',
+    '13': '50µV/pA',
+    '14': '100µV/pA',
+    '15': '200µV/pA',
+    '16': '500µV/pA',
+    '17': '1mV/nA',
+    '18': '2mV/nA',
+    '19': '5mV/nA',
+    '20': '10mV/nA',
+    '21': '20mV/nA',
+    '22': '50mV/nA',
+    '23': '100mV/nA',
+    '24': '200mV/nA',
+    '25': '500mV/nA',
+    '26': '1V/µA',
+}
+
+TIME_CONSTANT_CHOICES = {
+    '0': '10µs',
+    '1': '30µs',
+    '2': '100µs',
+    '3': '300µs',
+    '4': '1ms',
+    '5': '3ms',
+    '6': '10ms',
+    '7': '30ms',
+    '8': '100ms',
+    '9': '300ms',
+    '10': '1s',
+    '11': '3s',
+    '12': '10s',
+    '13': '30s',
+    '14': '100s',
+    '15': '300s',
+    '16': '1ks',
+    '17': '3ks',
+    '18': '10ks',
+    '19': '30ks',
+}
+
+SLOPE_CHOICES = {
+    '0': '6 dB/oct',
+    '1': '12 dB/oct',
+    '2': '18 dB/oct',
+    '3': '24 dB/oct',
+}
+
+INPUT_CHOICES = {
+    '0': 'A',
+    '1': 'A-B',
+    '2': 'I(1MΩ)',
+    '3': 'I(100MΩ)',
+}
+
+ON_OFF_CHOICES = {
+    '0': 'OFF',
+    '1': 'ON',
+}
+
+COUPLE_CHOICES = {
+    '0': 'AC',
+    '1': 'DC',
+}
+
+SHIELD_CHOICES = {
+    '0': 'Float',
+    '1': 'Ground',
+}
+
 
 def two_decimal(number):
     return round(number, 2)
@@ -1302,9 +1384,9 @@ def update_live_plot(request):
             sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
                 SX_instance.all_report_link(1)
             sx_data_row = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
-                            sx_isolation_1, sx_output_1]
+                           sx_isolation_1, sx_output_1]
             sx_column_headers = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
-                                  'output']
+                                 'output']
             sx_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
             append_to_csv(sx_csv_file_path, sx_data_row, sx_column_headers)
         elif SX_instance.is_cs_connected(2):
@@ -1319,19 +1401,26 @@ def update_live_plot(request):
     if SR_instance is not None and SR_instance.is_connected():
         x_val, y_val, r_val, o_val = SR_instance.read_xyr0()
         sens_val = SR_instance.read_sensitivity()
+        sens_label = SENSITIVITY_CHOICES.get(sens_val, sens_val)
         time_const_val = SR_instance.read_time_constant()
+        time_const_label = TIME_CONSTANT_CHOICES.get(time_const_val, time_const_val)
         slope_val = SR_instance.read_slope()
+        slope_label = SLOPE_CHOICES.get(slope_val, slope_val)
         synch_filter_val = SR_instance.read_synch_filter()
+        synch_filter_label = ON_OFF_CHOICES.get(synch_filter_val, synch_filter_val)
         input_config_val = SR_instance.read_input_config()
+        input_label = INPUT_CHOICES.get(input_config_val, input_config_val)
         couple_val = SR_instance.read_couple()
+        couple_label = COUPLE_CHOICES.get(couple_val, couple_val)
         shield_val = SR_instance.read_shield()
+        shield_label = SHIELD_CHOICES.get(shield_val, shield_val)
         freq_val = SR_instance.read_freq()
         ref_source_val = SR_instance.read_reference_source()
-        sr_data_row = [timestamp, x_val, y_val, r_val, o_val, sens_val, time_const_val, slope_val, synch_filter_val,
-                        input_config_val, couple_val, shield_val, freq_val, ref_source_val]
+        sr_data_row = [timestamp, x_val, y_val, r_val, o_val, sens_label, time_const_label, slope_label,
+                       synch_filter_label, input_label, couple_label, shield_label, freq_val, ref_source_val]
         sr_column_headers = ['timestamp', 'x_value', 'y_value', 'r_value', 'O_value', 'sensitivity', 'time_constant',
-                              'slope', 'synch_filter', 'input_config', 'couple', 'shield', 'frequency',
-                              'frequency_source']
+                             'slope', 'synch_filter', 'input_config', 'couple', 'shield', 'frequency',
+                             'frequency_source']
         sr_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'sr830.csv'
         append_to_csv(sr_csv_file_path, sr_data_row, sr_column_headers)
 
