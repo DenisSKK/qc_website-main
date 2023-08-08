@@ -1370,25 +1370,26 @@ def status(request):
 
 
 def statusSX(request):
-    # global URFSoC
-    global SX_instance
-    global Dsx_status
-    if SX_instance is None:
-        # SX_instance.disconnect()
-        # SX_instance = None
-        SX_instance = construct_sx()
-
-    if SX_instance.is_connected():
-        sx_status = "ON"
-        Dsx_status = sx_status
-    else:
-        sx_status = "OFF"
-        Dsx_status = sx_status
-
-    status = {
-        'sx_status': sx_status,
-    }
-    return JsonResponse(status)
+    pass
+    # # global URFSoC
+    # global SX_instance
+    # global Dsx_status
+    # if SX_instance is None:
+    #     # SX_instance.disconnect()
+    #     # SX_instance = None
+    #     SX_instance = construct_sx()
+    #
+    # if SX_instance.is_connected():
+    #     sx_status = "ON"
+    #     Dsx_status = sx_status
+    # else:
+    #     sx_status = "OFF"
+    #     Dsx_status = sx_status
+    #
+    # status = {
+    #     'sx_status': sx_status,
+    # }
+    # return JsonResponse(status)
 
 
 def statusLaser(request):
