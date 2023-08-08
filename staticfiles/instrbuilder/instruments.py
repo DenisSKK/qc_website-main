@@ -40,7 +40,7 @@ class StandfordSR830(SCPI):
                  name='curr',
                  unconnected=False):
         # After problem with controlling, setting read and write termination solved the problem.
-        comm_handle.read_termination = '\r\n'
+        # comm_handle.read_termination = '\r\n'
         comm_handle.write_termination = '\r\n'
 
         comm_handle.write('*CLS\n')
