@@ -567,12 +567,8 @@ def sx_page_view(request):
     if SX_instance is None:
         print("Constructing sx")
         SX_instance = construct_sx()
-    else:
-        SX_instance.disconnect()
-        SX_instance = None
-        SX_instance = construct_sx()
 
-    # SX_instance.connect()
+    SX_instance.connect()
     connected = SX_instance.is_connected()
     if connected:
         connected_link_1 = SX_instance.is_cs_connected(1)
