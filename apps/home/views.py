@@ -1167,6 +1167,7 @@ def update_live_plot(request):
     global done_event
     global running_rfsoc
     global SX_instance
+    global SR_instance
     data = {'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     if done_event.is_set() and running_rfsoc:
@@ -1300,12 +1301,12 @@ def update_live_plot(request):
         if SX_instance.is_cs_connected(1):
             sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
                 SX_instance.all_report_link(1)
-            sx_data_row1 = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
+            sr_data_row = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
                             sx_isolation_1, sx_output_1]
-            sx_column_headers1 = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
+            sr_column_headers = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
                                   'output']
-            sx_csv_file_path1 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
-            append_to_csv(sx_csv_file_path1, sx_data_row1, sx_column_headers1)
+            sr_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
+            append_to_csv(sr_csv_file_path, sr_data_row, sr_column_headers)
         elif SX_instance.is_cs_connected(2):
             sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2 = \
                 SX_instance.all_report_link(2)
@@ -1315,6 +1316,24 @@ def update_live_plot(request):
                                   'output']
             sx_csv_file_path2 = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'second_cs580.csv'
             append_to_csv(sx_csv_file_path2, sx_data_row2, sx_column_headers2)
+    if SR_instance is not None and SR_instance.is_connected():
+        x_val, y_val, r_val, o_val = SR_instance.read_xyr0()
+        sens_val = SR_instance.read_sensitivity()
+        time_const_val = SR_instance.read_time_constant()
+        slope_val = SR_instance.read_slope()
+        synch_filter_val = SR_instance.read_synch_filter()
+        input_config_val = SR_instance.read_input_config()
+        couple_val = SR_instance.read_couple()
+        shield_val = SR_instance.read_shield()
+        freq_val = SR_instance.read_freq()
+        ref_source_val = SR_instance.read_reference_source()
+        sr_data_row = [timestamp, x_val, y_val, r_val, o_val, sens_val, time_const_val, slope_val, synch_filter_val,
+                        input_config_val, couple_val, shield_val, freq_val, ref_source_val]
+        sr_column_headers = ['timestamp', 'x_value', 'y_value', 'r_value', 'O_value', 'sensitivity', 'time_constant',
+                              'slope', 'synch_filter', 'input_config', 'couple', 'shield', 'frequency',
+                              'frequency_source']
+        sr_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'sr830.csv'
+        append_to_csv(sr_csv_file_path, sr_data_row, sr_column_headers)
 
     return JsonResponse(data)
 
@@ -1324,6 +1343,7 @@ Dlaser_status = None
 Dmercury_status = None
 Dcaylar_status = None
 Dsx_status = None
+Dsr_status = None
 Dtime = None
 
 
@@ -1342,11 +1362,13 @@ def status(request):
     global UCaylar
     global UmercuryITC
     global SX_instance
+    global SR_instance
     global Drfsoc_status
     global Dlaser_status
     global Dmercury_status
     global Dcaylar_status
     global Dsx_status
+    global Dsr_status
     global Dtime
 
     status = {
@@ -1355,6 +1377,7 @@ def status(request):
         'mercury_status': Dmercury_status,
         'caylar_status': Dcaylar_status,
         'sx_status': Dsx_status,
+        'sr_status': Dsr_status,
         'Dtime': Dtime
     }
 
@@ -1373,7 +1396,6 @@ def statusSX(request):
     if SX.is_connected():
         sx_status = "ON"
         SX_instance = SX
-        # Laser.disconnect()
         Dsx_status = sx_status
     else:
         sx_status = "OFF"
@@ -1381,6 +1403,30 @@ def statusSX(request):
 
     status = {
         'sx_status': sx_status,
+    }
+    return JsonResponse(status)
+
+
+def statusSR(request):
+    # global URFSoC
+    global SR_instance
+    global Dsr_status
+    if SR_instance is not None:
+        SR_instance.disconnect()
+        SR_instance = None
+    SR = construct_sr()
+
+    if SR.is_connected():
+        sr_status = "ON"
+        SR_instance = SR
+
+        Dsr_status = sr_status
+    else:
+        sr_status = "OFF"
+        Dsr_status = sr_status
+
+    status = {
+        'sr_status': sr_status,
     }
     return JsonResponse(status)
 

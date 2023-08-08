@@ -665,6 +665,7 @@
     let statusRFSoCElement = $("#rfsoc_status");
     let statusMercuryElement = $("#mercury_status");
     let statusSXElement = $("#sx_status");
+    let statusSRElement = $("#sr_status");
 
     function updateStatusColor(statusElement) {
         let statusText = statusElement.text().trim();
@@ -806,11 +807,13 @@
                 document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
                 document.getElementById("caylar_status").innerHTML = data.caylar_status == "ON" ? "Connected" : "Not Connected";
                 document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
+                document.getElementById("sr_status").innerHTML = data.sr_status == "ON" ? "Connected" : "Not Connected";
                 updateStatusColor(statusLaserElement);
                 updateStatusColor(statusCaylarElement);
                 updateStatusColor(statusMercuryElement);
                 updateStatusColor(statusRFSoCElement);
                 updateStatusColor(statusSXElement);
+                updateStatusColor(statusSRElement);
                 $("#messageLastUpdate").html('<div class="alert alert-info" role="alert">Last Update Status: ' + data.Dtime + "</div>");
             },
             error: function (xhr, errmsg, err) {
@@ -834,11 +837,13 @@
         document.getElementById("mercury_status").innerHTML = "Connecting";
         document.getElementById("caylar_status").innerHTML = "Connecting";
         document.getElementById("sx_status").innerHTML = "Connecting";
+        document.getElementById("sr_status").innerHTML = "Connecting";
         updateStatusColor(statusLaserElement);
         updateStatusColor(statusRFSoCElement);
         updateStatusColor(statusMercuryElement);
         updateStatusColor(statusCaylarElement);
         updateStatusColor(statusSXElement);
+        updateStatusColor(statusSRElement);
         $("#messageUpdateExpContainer").html('<div class="alert alert-info" role="alert">Please Wait Until The Status Loading Finished Before Starting the Experiment</div>');
         $.ajax({
             url: "{% url 'statuslaser' %}", // URL mapped to the status view
@@ -865,6 +870,24 @@
             success: function (data) {
                 document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
                 updateStatusColor(statusSXElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusSR();
+            },
+        });
+    }
+
+    function updateStatusSR() {
+        $.ajax({
+            url: "{% url 'statussr' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("sr_status").innerHTML = data.sr_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusSRElement);
             },
             error: function (xhr, errmsg, err) {
                 console.log(xhr.status + ": " + xhr.responseText);
@@ -942,6 +965,7 @@
         updateStatusColor(statusMercuryElement);
         updateStatusColor(statusRFSoCElement);
         updateStatusColor(statusSXElement);
+        updateStatusColor(statusSRElement);
         isDashboardUpdating = false;
         let scriptExecuted = sessionStorage.getItem("script_executed");
         sessionStorage.setItem("script_executed", false);
@@ -962,6 +986,7 @@
             updateStatusColor(statusMercuryElement);
             updateStatusColor(statusRFSoCElement);
             updateStatusColor(statusSXElement);
+            updateStatusColor(statusSRElement);
             updateStatusLaser(); // Update the status immediately when the page loads
         } else {
             updateStatusColor(statusLaserElement);
@@ -969,6 +994,7 @@
             updateStatusColor(statusMercuryElement);
             updateStatusColor(statusRFSoCElement);
             updateStatusColor(statusSXElement);
+            updateStatusColor(statusSRElement);
             updateStatus();
         }
     });
