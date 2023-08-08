@@ -60,41 +60,34 @@ class SR830Device():
     # last set parameters, and parameters set now. This will compare two xml files and set only the values, that are
     # different from the last updating.
     # Only for first CS580
-    """def update_link_1_xml(self, xml_update, xml_old_update):
+    def update_parameters(self, xml_update, xml_old_update):
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
-        self.update_link(1)
-        sleep(0.0001)
         for attribute, actual_value in actual_config.items():
             last_value = last_config.get(attribute)
             if actual_value != last_value:
-                if attribute == "cs_gain_1":
-                    print(f"setting gain to {actual_value}")
-                    self.update_gain(actual_value)
-                elif attribute == "cs_input_1":
+                if attribute == "sensitivity":
+                    print(f"setting sensitivity to {actual_value}")
+                    self.write_sensitivity(actual_value)
+                elif attribute == "time_constant":
+                    print(f"setting time constant to {actual_value}")
+                    self.write_time_constant(actual_value)
+                elif attribute == "slope":
+                    print(f"setting slope to {actual_value}")
+                    self.write_slope(actual_value)
+                elif attribute == "synch_filter":
+                    print(f"setting synch filter to {actual_value}")
+                    self.write_synch_filter(actual_value)
+                elif attribute == "input":
                     print(f"setting input to {actual_value}")
-                    self.update_input(actual_value)
-                elif attribute == "cs_speed_1":
-                    print(f"setting speed to {actual_value}")
-                    self.update_speed(actual_value)
-                elif attribute == "cs_shield_1":
+                    self.write_input_config(actual_value)
+                elif attribute == "couple":
+                    print(f"setting couple to {actual_value}")
+                    self.write_couple(actual_value)
+                elif attribute == "shield":
                     print(f"setting shield to {actual_value}")
-                    self.update_inner_shield(actual_value)
-                elif attribute == "cs_isolation_1":
-                    print(f"setting isolation to {actual_value}")
-                    self.update_isolation(actual_value)
-                elif attribute == "cs_output_1":
-                    print(f"setting output to {actual_value}")
-                    self.update_output(actual_value)
-                elif attribute == "cs_curr_1":
-                    print(f"setting curr to {actual_value}")
-                    self.update_curr(actual_value)
-                elif attribute == "cs_volt_1":
-                    print(f"setting volt to {actual_value}")
-                    self.update_volt(actual_value)
-            sleep(0.000001)
-        self.escape()
-        print("CS580 1 Updated")"""
+                    self.write_shield(actual_value)
+        print("SR830 Updated")
 
     # This will get every parameter from CS580 that is connected to the link number {link}, and return them.
     """def all_report_link(self, link):

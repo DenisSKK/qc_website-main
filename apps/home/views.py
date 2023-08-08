@@ -26,7 +26,7 @@ from .construct_object import construct_object, construct_caylar, construct_itc,
     construct_sx, construct_sr
 from .forms import LaserForm, RFSoCConfigForm, RFSoCConfigFormIP, CaylarForm, MercuryForm, ExperimentForm, \
     LaserFormConfig, LaserFormIP, RFSoCEOMSequenceForm, RFSoCAOMSequenceForm, CaylarFormIP, MercuryFormConfig, \
-    MercuryFormIP, SX199Form, CaylarFormCurrent, CaylarFormField
+    MercuryFormIP, SX199Form, CaylarFormCurrent, CaylarFormField, SR830Form
 from staticfiles.update_configs import update_yaml_from_xml_mercury, update_yaml_from_xml_rfsoc, \
     update_yaml_from_xml_toptica, update_yaml_from_xml_caylar
 
@@ -764,7 +764,6 @@ def sr_page_view(request):
     connected = SR_instance.is_connected()
 
     sx_xml_dict = xml_config_to_dict(xml_path)
-    # if connected and connected_link_1:
     if connected:
         sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['O'] = SR_instance.read_xyr0()
         sx_xml_dict['sensitivity'] = SR_instance.read_sensitivity()
@@ -776,9 +775,6 @@ def sr_page_view(request):
         sx_xml_dict['shield'] = SR_instance.read_shield()
         sx_xml_dict['frequency'] = SR_instance.read_freq()
         sx_xml_dict['freq_source'] = SR_instance.read_reference_source()
-        # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
-        #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
-        #     sx_xml_dict["cs_output_1"] = SR_instance.all_report_link(1)
         context["X"] = sx_xml_dict['X']
         context["Y"] = sx_xml_dict['Y']
         context["R"] = sx_xml_dict['R']
@@ -792,13 +788,6 @@ def sr_page_view(request):
         context['shield'] = sx_xml_dict['shield']
         context['frequency'] = sx_xml_dict['frequency']
         context['freq_source'] = sx_xml_dict['freq_source']
-        # context["input1"] = sx_xml_dict["cs_input_1"]
-        # context["speed1"] = sx_xml_dict["cs_speed_1"]
-        # context["shield1"] = sx_xml_dict["cs_shield_1"]
-        # context["isolation1"] = sx_xml_dict["cs_isolation_1"]
-        # context["output1"] = sx_xml_dict["cs_output_1"]
-        # context["curr1"] = sx_xml_dict["cs_curr_1"]
-        # context["volt1"] = sx_xml_dict["cs_volt_1"]
         sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         dict_to_xml_file(sx_xml_dict, xml_path)
         sx_xml_dict = xml_config_to_dict(xml_path)
@@ -812,48 +801,37 @@ def sr_page_view(request):
         # Save old XML before updating
         shutil.copy(xml_path, old_xml_path)
         if "update-all" in request.POST:
-            pass
-            # form = SX199Form(request.POST)
-            # if form.is_valid() and connected:
-            #     sx_xml_dict["cs_gain_1"] = form.cleaned_data['gain1']
-            #     sx_xml_dict["cs_input_1"] = form.cleaned_data['input1']
-            #     sx_xml_dict["cs_speed_1"] = form.cleaned_data['speed1']
-            #     sx_xml_dict["cs_shield_1"] = form.cleaned_data['shield1']
-            #     sx_xml_dict["cs_isolation_1"] = form.cleaned_data['isolation1']
-            #     sx_xml_dict["cs_output_1"] = form.cleaned_data['output1']
-            #     sx_xml_dict["cs_curr_1"] = form.cleaned_data['curr1']
-            #     sx_xml_dict["cs_volt_1"] = form.cleaned_data['volt1']
-            #     dict_to_xml_file(sx_xml_dict, xml_path)
-            #     # if connected and connected_link_1:
-            #     #     print("is connected. attempt to update_xml for 1")
-            #     SR_instance.update_link_1_xml(xml_path, old_xml_path)
-            #     messages.success(request, 'Changes saved successfully in current source 1!')
-            #     # else:
-            #     # Add success message to the Django messages framework
-            #     # messages.warning(request, 'Device not connected, changes saved only to XML!')
-            # else:
-            #     messages.warning(request, 'Invalid current source 1 values! Cannot be updated!')
+            form = SR830Form(request.POST)
+            if form.is_valid() and connected:
+                sx_xml_dict["sensitivity"] = form.cleaned_data['sensitivity']
+                sx_xml_dict["time_constant"] = form.cleaned_data['time_constant']
+                sx_xml_dict["slope"] = form.cleaned_data['slope']
+                sx_xml_dict["synch_filter"] = form.cleaned_data['synch_filter']
+                sx_xml_dict["input"] = form.cleaned_data['input']
+                sx_xml_dict["couple"] = form.cleaned_data['couple']
+                sx_xml_dict["shield"] = form.cleaned_data['shield']
+                dict_to_xml_file(sx_xml_dict, xml_path)
+                # if connected and connected_link_1:
+                #     print("is connected. attempt to update_xml for 1")
+                SR_instance.update_parameters(xml_path, old_xml_path)
+                messages.success(request, 'Changes saved successfully in lock-in amplifier SR830!')
+                # else:
+                # Add success message to the Django messages framework
+                # messages.warning(request, 'Device not connected, changes saved only to XML!')
+            else:
+                messages.warning(request, 'Invalid lock-in amplifier SR830 values! Cannot be updated!')
         return redirect('sr_page')
 
     else:
         # Initialize the form with the current cryostat information
         form = SX199Form(initial={
-            'gain1': sx_xml_dict.get("cs_gain_1", ""),
-            'gain2': sx_xml_dict.get("cs_gain_2", ""),
-            'input1': sx_xml_dict.get("cs_input_1", ""),
-            'input2': sx_xml_dict.get("cs_input_2", ""),
-            'shield1': sx_xml_dict.get("cs_shield_1", ""),
-            'shield2': sx_xml_dict.get("cs_shield_2", ""),
-            'speed1': sx_xml_dict.get("cs_speed_1", ""),
-            'speed2': sx_xml_dict.get("cs_speed_2", ""),
-            'isolation1': sx_xml_dict.get("cs_isolation_1", ""),
-            'isolation2': sx_xml_dict.get("cs_isolation_2", ""),
-            'output1': sx_xml_dict.get("cs_output_1", ""),
-            'output2': sx_xml_dict.get("cs_output_2", ""),
-            'curr1': sx_xml_dict.get("cs_curr_1", ""),
-            'curr2': sx_xml_dict.get("cs_curr_2", ""),
-            'volt1': sx_xml_dict.get("cs_volt_1", ""),
-            'volt2': sx_xml_dict.get("cs_volt_2", ""),
+            'sensitivity': sx_xml_dict.get("sensitivity", ""),
+            'time_constant': sx_xml_dict.get("time_constant", ""),
+            'slope': sx_xml_dict.get("slope", ""),
+            'synch_filter': sx_xml_dict.get("synch_filter", ""),
+            'input': sx_xml_dict.get("input", ""),
+            'couple': sx_xml_dict.get("couple", ""),
+            'shield': sx_xml_dict.get("shield", ""),
         })
 
     # Assign the variables with the initial values
