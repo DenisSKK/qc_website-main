@@ -771,6 +771,9 @@ def sr_page_view(request):
         sx_xml_dict['time_constant'] = SR_instance.read_time_constant()
         sx_xml_dict['slope'] = SR_instance.read_slope()
         sx_xml_dict['synch_filter'] = SR_instance.read_synch_filter()
+        sx_xml_dict['input'] = SR_instance.read_input_config()
+        sx_xml_dict['couple'] = SR_instance.read_couple()
+        sx_xml_dict['shield'] = SR_instance.read_shield()
         # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
         #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
         #     sx_xml_dict["cs_output_1"] = SR_instance.all_report_link(1)
@@ -782,6 +785,9 @@ def sr_page_view(request):
         context["time_constant"] = sx_xml_dict['time_constant']
         sx_xml_dict['slope'] = sx_xml_dict['slope']
         sx_xml_dict['synch_filter'] = sx_xml_dict['synch_filter']
+        sx_xml_dict['input'] = sx_xml_dict['input']
+        sx_xml_dict['couple'] = sx_xml_dict['couple']
+        sx_xml_dict['shield'] = sx_xml_dict['shield']
         # context["input1"] = sx_xml_dict["cs_input_1"]
         # context["speed1"] = sx_xml_dict["cs_speed_1"]
         # context["shield1"] = sx_xml_dict["cs_shield_1"]

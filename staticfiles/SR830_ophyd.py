@@ -144,6 +144,24 @@ class SR830Device():
     def write_synch_filter(self, value):
         return self.sr_ophyd.synch_filter_status.set(value)
 
+    def read_input_config(self):
+        return self.sr_ophyd.in_conf.get()
+
+    def write_input_config(self, value):
+        return self.sr_ophyd.in_conf.set(value)
+
+    def read_couple(self):
+        return self.sr_ophyd.in_coupling.get()
+
+    def write_couple(self, value):
+        return self.sr_ophyd.in_coupling.set(value)
+
+    def read_shield(self):
+        return self.sr_ophyd.in_shield_gnd.get()
+
+    def write_shield(self, value):
+        return self.sr_ophyd.in_shield_gnd.set(value)
+
     def report_id(self):
         return self.sr_ophyd.id.get()
 

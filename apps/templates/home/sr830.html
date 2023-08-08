@@ -225,6 +225,50 @@
                     {% endif %}
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-input">CS580 Input</label>
+                    {% if connected %}
+                    <select name="input" id="input-input" class="form-control" disabled>
+                      <option value="0" {% if input == 0 %}selected{% endif %}>A</option>
+                      <option value="1" {% if input == 1 %}selected{% endif %}>A-B</option>
+                      <option value="2" {% if input == 2 %}selected{% endif %}>I(1MΩ)</option>
+                      <option value="3" {% if input == 3 %}selected{% endif %}>I(100MΩ)</option>
+                    </select>
+                    {% else %}
+                    <input id="input-input" class="form-control" name="input" placeholder="N/A"
+                           type="text" value="Disconnected" disabled/>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-couple">CS580 Couple</label>
+                    {% if connected %}
+                    <select name="couple" id="input-couple" class="form-control" disabled>
+                      <option value="0" {% if couple == 0 %}selected{% endif %}>AC</option>
+                      <option value="1" {% if couple == 1 %}selected{% endif %}>DC</option>
+                    </select>
+                    {% else %}
+                    <input id="input-couple" class="form-control" name="couple" placeholder="N/A"
+                           type="text" value="Disconnected" disabled/>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-couple">CS580 Input Shield Grounding</label>
+                    {% if connected %}
+                    <select name="shield" id="input-shield" class="form-control" disabled>
+                      <option value="0" {% if shield == 0 %}selected{% endif %}>Float</option>
+                      <option value="1" {% if shield == 1 %}selected{% endif %}>Ground</option>
+                    </select>
+                    {% else %}
+                    <input id="input-shield" class="form-control" name="shield" placeholder="N/A"
+                           type="text" value="Disconnected" disabled/>
+                    {% endif %}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="pl-lg-4">
