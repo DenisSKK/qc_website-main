@@ -102,26 +102,26 @@
                     <label class="form-control-label" for="input-time-constant">SR830 Time Constant</label>
                     <select name="time_constant" id="input-time-constant" class="form-control"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.time_constant.value == 0 %}selected{% endif %}>10µs</option>
-                      <option value="1" {% if form.time_constant.value == 1 %}selected{% endif %}>30µs</option>
-                      <option value="2" {% if form.time_constant.value == 2 %}selected{% endif %}>100µs</option>
-                      <option value="3" {% if form.time_constant.value == 3 %}selected{% endif %}>300µs</option>
-                      <option value="4" {% if form.time_constant.value == 4 %}selected{% endif %}>1ms</option>
-                      <option value="5" {% if form.time_constant.value == 5 %}selected{% endif %}>3ms</option>
-                      <option value="6" {% if form.time_constant.value == 6 %}selected{% endif %}>10ms</option>
-                      <option value="7" {% if form.time_constant.value == 7 %}selected{% endif %}>30ms</option>
-                      <option value="8" {% if form.time_constant.value == 8 %}selected{% endif %}>100ms</option>
-                      <option value="9" {% if form.time_constant.value == 9 %}selected{% endif %}>300ms</option>
-                      <option value="10" {% if form.time_constant.value == 10 %}selected{% endif %}>1s</option>
-                      <option value="11" {% if form.time_constant.value == 11 %}selected{% endif %}>3s</option>
-                      <option value="12" {% if form.time_constant.value == 12 %}selected{% endif %}>10s</option>
-                      <option value="13" {% if form.time_constant.value == 13 %}selected{% endif %}>30s</option>
-                      <option value="14" {% if form.time_constant.value == 14 %}selected{% endif %}>100s</option>
-                      <option value="15" {% if form.time_constant.value == 15 %}selected{% endif %}>300s</option>
-                      <option value="16" {% if form.time_constant.value == 16 %}selected{% endif %}>1ks</option>
-                      <option value="17" {% if form.time_constant.value == 17 %}selected{% endif %}>3ks</option>
-                      <option value="18" {% if form.time_constant.value == 18 %}selected{% endif %}>10ks</option>
-                      <option value="19" {% if form.time_constant.value == 19 %}selected{% endif %}>30ks</option>
+                      <option value="0" {% if time_constant == 0 %}selected{% endif %}>10µs</option>
+                      <option value="1" {% if time_constant == 1 %}selected{% endif %}>30µs</option>
+                      <option value="2" {% if time_constant == 2 %}selected{% endif %}>100µs</option>
+                      <option value="3" {% if time_constant == 3 %}selected{% endif %}>300µs</option>
+                      <option value="4" {% if time_constant == 4 %}selected{% endif %}>1ms</option>
+                      <option value="5" {% if time_constant == 5 %}selected{% endif %}>3ms</option>
+                      <option value="6" {% if time_constant == 6 %}selected{% endif %}>10ms</option>
+                      <option value="7" {% if time_constant == 7 %}selected{% endif %}>30ms</option>
+                      <option value="8" {% if time_constant == 8 %}selected{% endif %}>100ms</option>
+                      <option value="9" {% if time_constant == 9 %}selected{% endif %}>300ms</option>
+                      <option value="10" {% if time_constant == 10 %}selected{% endif %}>1s</option>
+                      <option value="11" {% if time_constant == 11 %}selected{% endif %}>3s</option>
+                      <option value="12" {% if time_constant == 12 %}selected{% endif %}>10s</option>
+                      <option value="13" {% if time_constant == 13 %}selected{% endif %}>30s</option>
+                      <option value="14" {% if time_constant == 14 %}selected{% endif %}>100s</option>
+                      <option value="15" {% if time_constant == 15 %}selected{% endif %}>300s</option>
+                      <option value="16" {% if time_constant == 16 %}selected{% endif %}>1ks</option>
+                      <option value="17" {% if time_constant == 17 %}selected{% endif %}>3ks</option>
+                      <option value="18" {% if time_constant == 18 %}selected{% endif %}>10ks</option>
+                      <option value="19" {% if time_constant == 19 %}selected{% endif %}>30ks</option>
                     </select>
                   </div>
                 </div>
@@ -130,10 +130,10 @@
                     <label class="form-control-label" for="input-slope">SR830 Slope</label>
                     <select name="slope" id="input-slope" class="form-control"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.slope.vlaue == 0 %}selected{% endif %}>6 dB/oct</option>
-                      <option value="1" {% if form.slope.vlaue == 1 %}selected{% endif %}>12 dB/oct</option>
-                      <option value="2" {% if form.slope.vlaue == 2 %}selected{% endif %}>18 dB/oct</option>
-                      <option value="3" {% if form.slope.vlaue == 3 %}selected{% endif %}>24 dB/oct</option>
+                      <option value="0" {% if slope == 0 %}selected{% endif %}>6 dB/oct</option>
+                      <option value="1" {% if slope == 1 %}selected{% endif %}>12 dB/oct</option>
+                      <option value="2" {% if slope == 2 %}selected{% endif %}>18 dB/oct</option>
+                      <option value="3" {% if slope == 3 %}selected{% endif %}>24 dB/oct</option>
                     </select>
                   </div>
                 </div>
@@ -142,8 +142,8 @@
                     <label class="form-control-label" for="input-synch-filter">SR830 Synch Filter</label>
                     <select class="form-control" name="synch_filter" id="input-synch-filter"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.synch_filter.value == 0 %}selected{% endif %}>OFF</option>
-                      <option value="1" {% if form.synch_filter.value == 1 %}selected{% endif %}>ON</option>
+                      <option value="0" {% if synch_filter == 0 %}selected{% endif %}>OFF</option>
+                      <option value="1" {% if synch_filter == 1 %}selected{% endif %}>ON</option>
                     </select>
                   </div>
                 </div>
@@ -152,10 +152,10 @@
                     <label class="form-control-label" for="input-input">SR830 Input</label>
                     <select name="input" id="input-input" class="form-control"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.input.value == 0 %}selected{% endif %}>A</option>
-                      <option value="1" {% if form.input.value == 1 %}selected{% endif %}>A-B</option>
-                      <option value="2" {% if form.input.value == 2 %}selected{% endif %}>I(1MΩ)</option>
-                      <option value="3" {% if form.input.value == 3 %}selected{% endif %}>I(100MΩ)</option>
+                      <option value="0" {% if input == 0 %}selected{% endif %}>A</option>
+                      <option value="1" {% if input == 1 %}selected{% endif %}>A-B</option>
+                      <option value="2" {% if input == 2 %}selected{% endif %}>I(1MΩ)</option>
+                      <option value="3" {% if input == 3 %}selected{% endif %}>I(100MΩ)</option>
                     </select>
                   </div>
                 </div>
@@ -164,8 +164,8 @@
                     <label class="form-control-label" for="input-couple">SR830 Couple</label>
                     <select name="couple" id="input-couple" class="form-control"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.couple.value == 0 %}selected{% endif %}>AC</option>
-                      <option value="1" {% if form.couple.value == 1 %}selected{% endif %}>DC</option>
+                      <option value="0" {% if couple == 0 %}selected{% endif %}>AC</option>
+                      <option value="1" {% if couple == 1 %}selected{% endif %}>DC</option>
                     </select>
                   </div>
                 </div>
@@ -174,8 +174,8 @@
                     <label class="form-control-label" for="input-couple">SR830 Input Shield Grounding</label>
                     <select name="shield" id="input-shield" class="form-control"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.shield.value == 0 %}selected{% endif %}>Float</option>
-                      <option value="1" {% if form.shield.value == 1 %}selected{% endif %}>Ground</option>
+                      <option value="0" {% if shield == 0 %}selected{% endif %}>Float</option>
+                      <option value="1" {% if shield == 1 %}selected{% endif %}>Ground</option>
                     </select>
                   </div>
                 </div>
@@ -184,7 +184,7 @@
                     <label class="form-control-label" for="input-frequency">SR830 Frequency</label>
                     <input id="input-frequency" class="form-control" name="frequency"
                            placeholder="SR830 Frequency value" type="number" step="any"
-                           value="{{ form.frequency.value }}"
+                           value="{{ frequency }}"
                            {% if not connected %}disabled{% endif %}/>
                   </div>
                 </div>
@@ -193,8 +193,8 @@
                     <label class="form-control-label" for="input-freq-source">SR830 Frequency Source</label>
                     <select name="freq_source" id="input-freq-source" class="form-control"
                             {% if not connected %}disabled{% endif %}>
-                      <option value="0" {% if form.freq_source.value == 0 %}selected{% endif %}>External</option>
-                      <option value="1" {% if form.freq_source.value == 1 %}selected{% endif %}>Internal</option>
+                      <option value="0" {% if freq_source == 0 %}selected{% endif %}>External</option>
+                      <option value="1" {% if freq_source == 1 %}selected{% endif %}>Internal</option>
                     </select>
                   </div>
                 </div>
