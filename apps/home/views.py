@@ -1374,7 +1374,7 @@ def update_live_plot(request):
             data['itc_temperature1'] = itc_temperature,
             data['timestampM'] = timestamp,
         else:
-            data['itc_heater_power'] = find_csv(itc_csv_file_path, 'Heater Power'),
+            data['itc_heater_power'] = find_csv(itc_csv_file_path, 'heater power (W)'),
             data['itc_temperature'] = find_csv(itc_csv_file_path, 'temperature (K)'),
             data['itc_heater_power1'] = itc_heater_power,
             data['itc_temperature1'] = itc_temperature,
