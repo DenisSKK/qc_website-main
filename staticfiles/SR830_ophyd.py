@@ -162,6 +162,18 @@ class SR830Device():
     def write_shield(self, value):
         return self.sr_ophyd.in_shield_gnd.set(value)
 
+    def read_freq(self):
+        return self.sr_ophyd.ref_freq.get()
+
+    def write_freq(self, value):
+        return self.sr_ophyd.ref_freq.set(value)
+
+    def read_reference_source(self):
+        return self.sr_ophyd.ref_source.get()
+
+    def write_reference_source(self, value):
+        return self.sr_ophyd.ref_source.set(value)
+
     def report_id(self):
         return self.sr_ophyd.id.get()
 

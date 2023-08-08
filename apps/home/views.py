@@ -774,6 +774,8 @@ def sr_page_view(request):
         sx_xml_dict['input'] = SR_instance.read_input_config()
         sx_xml_dict['couple'] = SR_instance.read_couple()
         sx_xml_dict['shield'] = SR_instance.read_shield()
+        sx_xml_dict['frequency'] = SR_instance.read_freq()
+        sx_xml_dict['freq_source'] = SR_instance.read_reference_source()
         # sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
         #     sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
         #     sx_xml_dict["cs_output_1"] = SR_instance.all_report_link(1)
@@ -788,6 +790,8 @@ def sr_page_view(request):
         context['input'] = sx_xml_dict['input']
         context['couple'] = sx_xml_dict['couple']
         context['shield'] = sx_xml_dict['shield']
+        context['frequency'] = sx_xml_dict['frequency']
+        context['freq_source'] = sx_xml_dict['freq_source']
         # context["input1"] = sx_xml_dict["cs_input_1"]
         # context["speed1"] = sx_xml_dict["cs_speed_1"]
         # context["shield1"] = sx_xml_dict["cs_shield_1"]
