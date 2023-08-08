@@ -763,34 +763,34 @@ def sr_page_view(request):
     # SR_instance.connect()
     connected = SR_instance.is_connected()
 
-    sx_xml_dict = xml_config_to_dict(xml_path)
+    sr_xml_dict = xml_config_to_dict(xml_path)
     if connected:
-        sx_xml_dict['X'], sx_xml_dict['Y'], sx_xml_dict['R'], sx_xml_dict['O'] = SR_instance.read_xyr0()
-        sx_xml_dict['sensitivity'] = SR_instance.read_sensitivity()
-        sx_xml_dict['time_constant'] = SR_instance.read_time_constant()
-        sx_xml_dict['slope'] = SR_instance.read_slope()
-        sx_xml_dict['synch_filter'] = SR_instance.read_synch_filter()
-        sx_xml_dict['input'] = SR_instance.read_input_config()
-        sx_xml_dict['couple'] = SR_instance.read_couple()
-        sx_xml_dict['shield'] = SR_instance.read_shield()
-        sx_xml_dict['frequency'] = SR_instance.read_freq()
-        sx_xml_dict['freq_source'] = SR_instance.read_reference_source()
-        context["X"] = sx_xml_dict['X']
-        context["Y"] = sx_xml_dict['Y']
-        context["R"] = sx_xml_dict['R']
-        context["O"] = sx_xml_dict['O']
-        context["sensitivity"] = sx_xml_dict['sensitivity']
-        context["time_constant"] = sx_xml_dict['time_constant']
-        context['slope'] = sx_xml_dict['slope']
-        context['synch_filter'] = sx_xml_dict['synch_filter']
-        context['input'] = sx_xml_dict['input']
-        context['couple'] = sx_xml_dict['couple']
-        context['shield'] = sx_xml_dict['shield']
-        context['frequency'] = sx_xml_dict['frequency']
-        context['freq_source'] = sx_xml_dict['freq_source']
-        sx_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        dict_to_xml_file(sx_xml_dict, xml_path)
-        sx_xml_dict = xml_config_to_dict(xml_path)
+        sr_xml_dict['X'], sr_xml_dict['Y'], sr_xml_dict['R'], sr_xml_dict['O'] = SR_instance.read_xyr0()
+        sr_xml_dict['sensitivity'] = SR_instance.read_sensitivity()
+        sr_xml_dict['time_constant'] = SR_instance.read_time_constant()
+        sr_xml_dict['slope'] = SR_instance.read_slope()
+        sr_xml_dict['synch_filter'] = SR_instance.read_synch_filter()
+        sr_xml_dict['input'] = SR_instance.read_input_config()
+        sr_xml_dict['couple'] = SR_instance.read_couple()
+        sr_xml_dict['shield'] = SR_instance.read_shield()
+        sr_xml_dict['frequency'] = SR_instance.read_freq()
+        sr_xml_dict['freq_source'] = SR_instance.read_reference_source()
+        context["X"] = sr_xml_dict['X']
+        context["Y"] = sr_xml_dict['Y']
+        context["R"] = sr_xml_dict['R']
+        context["O"] = sr_xml_dict['O']
+        context["sensitivity"] = sr_xml_dict['sensitivity']
+        context["time_constant"] = sr_xml_dict['time_constant']
+        context['slope'] = sr_xml_dict['slope']
+        context['synch_filter'] = sr_xml_dict['synch_filter']
+        context['input'] = sr_xml_dict['input']
+        context['couple'] = sr_xml_dict['couple']
+        context['shield'] = sr_xml_dict['shield']
+        context['frequency'] = sr_xml_dict['frequency']
+        context['freq_source'] = sr_xml_dict['freq_source']
+        sr_xml_dict["time_update"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        dict_to_xml_file(sr_xml_dict, xml_path)
+        sr_xml_dict = xml_config_to_dict(xml_path)
     else:
         info = f'SR830 is not connected!'
         messages.error(request, info)
@@ -803,16 +803,16 @@ def sr_page_view(request):
         if "update-all" in request.POST:
             form = SR830Form(request.POST)
             if form.is_valid() and connected:
-                sx_xml_dict["sensitivity"] = form.cleaned_data['sensitivity']
-                sx_xml_dict["time_constant"] = form.cleaned_data['time_constant']
-                sx_xml_dict["slope"] = form.cleaned_data['slope']
-                sx_xml_dict["synch_filter"] = form.cleaned_data['synch_filter']
-                sx_xml_dict["input"] = form.cleaned_data['input']
-                sx_xml_dict["couple"] = form.cleaned_data['couple']
-                sx_xml_dict["shield"] = form.cleaned_data['shield']
-                sx_xml_dict["freq_source"] = form.cleaned_data['freq_source']
-                sx_xml_dict["frequency"] = form.cleaned_data['frequency']
-                dict_to_xml_file(sx_xml_dict, xml_path)
+                sr_xml_dict["sensitivity"] = form.cleaned_data['sensitivity']
+                sr_xml_dict["time_constant"] = form.cleaned_data['time_constant']
+                sr_xml_dict["slope"] = form.cleaned_data['slope']
+                sr_xml_dict["synch_filter"] = form.cleaned_data['synch_filter']
+                sr_xml_dict["input"] = form.cleaned_data['input']
+                sr_xml_dict["couple"] = form.cleaned_data['couple']
+                sr_xml_dict["shield"] = form.cleaned_data['shield']
+                sr_xml_dict["freq_source"] = form.cleaned_data['freq_source']
+                sr_xml_dict["frequency"] = form.cleaned_data['frequency']
+                dict_to_xml_file(sr_xml_dict, xml_path)
                 # if connected and connected_link_1:
                 #     print("is connected. attempt to update_xml for 1")
                 SR_instance.update_parameters(xml_path, old_xml_path)
@@ -826,16 +826,16 @@ def sr_page_view(request):
 
     else:
         # Initialize the form with the current cryostat information
-        form = SX199Form(initial={
-            'sensitivity': sx_xml_dict.get("sensitivity", ""),
-            'time_constant': sx_xml_dict.get("time_constant", ""),
-            'slope': sx_xml_dict.get("slope", ""),
-            'synch_filter': sx_xml_dict.get("synch_filter", ""),
-            'input': sx_xml_dict.get("input", ""),
-            'couple': sx_xml_dict.get("couple", ""),
-            'shield': sx_xml_dict.get("shield", ""),
-            'freq_source': sx_xml_dict.get("freq_source", ""),
-            'frequency': sx_xml_dict.get("frequency", ""),
+        form = SR830Form(initial={
+            'sensitivity': sr_xml_dict.get("sensitivity", ""),
+            'time_constant': sr_xml_dict.get("time_constant", ""),
+            'slope': sr_xml_dict.get("slope", ""),
+            'synch_filter': sr_xml_dict.get("synch_filter", ""),
+            'input': sr_xml_dict.get("input", ""),
+            'couple': sr_xml_dict.get("couple", ""),
+            'shield': sr_xml_dict.get("shield", ""),
+            'freq_source': sr_xml_dict.get("freq_source", ""),
+            'frequency': sr_xml_dict.get("frequency", ""),
         })
 
     # Assign the variables with the initial values
@@ -1301,12 +1301,12 @@ def update_live_plot(request):
         if SX_instance.is_cs_connected(1):
             sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
                 SX_instance.all_report_link(1)
-            sr_data_row = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
+            sx_data_row = [timestamp, sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1,
                             sx_isolation_1, sx_output_1]
-            sr_column_headers = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
+            sx_column_headers = ['timestamp', 'current', 'voltage', 'gain', 'input', 'speed', 'shield', 'isolation',
                                   'output']
-            sr_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
-            append_to_csv(sr_csv_file_path, sr_data_row, sr_column_headers)
+            sx_csv_file_path = 'logging/' + datetime.now().strftime("%Y%m%d/") + 'first_cs580.csv'
+            append_to_csv(sx_csv_file_path, sx_data_row, sx_column_headers)
         elif SX_instance.is_cs_connected(2):
             sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2 = \
                 SX_instance.all_report_link(2)

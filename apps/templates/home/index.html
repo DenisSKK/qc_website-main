@@ -857,42 +857,6 @@
                 console.log(xhr.status + ": " + xhr.responseText);
             },
             complete: function () {
-                updateStatusSX();
-            },
-        });
-    }
-
-    function updateStatusSX() {
-        $.ajax({
-            url: "{% url 'statussx' %}", // URL mapped to the status view
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
-                updateStatusColor(statusSXElement);
-            },
-            error: function (xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
-            },
-            complete: function () {
-                updateStatusSR();
-            },
-        });
-    }
-
-    function updateStatusSR() {
-        $.ajax({
-            url: "{% url 'statussr' %}", // URL mapped to the status view
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                document.getElementById("sr_status").innerHTML = data.sr_status == "ON" ? "Connected" : "Not Connected";
-                updateStatusColor(statusSRElement);
-            },
-            error: function (xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
-            },
-            complete: function () {
                 updateStatusRFSoC();
             },
         });
@@ -924,6 +888,42 @@
             success: function (data) {
                 document.getElementById("mercury_status").innerHTML = data.mercury_status == "ON" ? "Connected" : "Not Connected";
                 updateStatusColor(statusMercuryElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusSX();
+            },
+        });
+    }
+
+    function updateStatusSX() {
+        $.ajax({
+            url: "{% url 'statussx' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("sx_status").innerHTML = data.sx_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusSXElement);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            },
+            complete: function () {
+                updateStatusSR();
+            },
+        });
+    }
+
+    function updateStatusSR() {
+        $.ajax({
+            url: "{% url 'statussr' %}", // URL mapped to the status view
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("sr_status").innerHTML = data.sr_status == "ON" ? "Connected" : "Not Connected";
+                updateStatusColor(statusSRElement);
             },
             error: function (xhr, errmsg, err) {
                 console.log(xhr.status + ": " + xhr.responseText);
