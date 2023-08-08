@@ -119,6 +119,11 @@ SHIELD_CHOICES = {
     1: 'Ground',
 }
 
+FREQ_SOURCE_CHOICES = {
+    0: 'External',
+    1: 'Ground',
+}
+
 
 def two_decimal(number):
     return round(number, 2)
@@ -1416,8 +1421,9 @@ def update_live_plot(request):
         shield_label = SHIELD_CHOICES.get(shield_val, shield_val)
         freq_val = SR_instance.read_freq()
         ref_source_val = SR_instance.read_reference_source()
+        ref_source_label = FREQ_SOURCE_CHOICES.get(ref_source_val, ref_source_val)
         sr_data_row = [timestamp, x_val, y_val, r_val, o_val, sens_label, time_const_label, slope_label,
-                       synch_filter_label, input_label, couple_label, shield_label, freq_val, ref_source_val]
+                       synch_filter_label, input_label, couple_label, shield_label, freq_val, ref_source_label]
         sr_column_headers = ['timestamp', 'x_value', 'y_value', 'r_value', 'O_value', 'sensitivity', 'time_constant',
                              'slope', 'synch_filter', 'input_config', 'couple', 'shield', 'frequency',
                              'frequency_source']
