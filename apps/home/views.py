@@ -573,15 +573,9 @@ def sx_page_view(request):
     if connected:
         connected_link_1 = SX_instance.is_cs_connected(1)
         connected_link_2 = SX_instance.is_cs_connected(2)
-    else:
-        info = f'SX199 is not connected!'
-        messages.error(request, info)
-        SX_instance.disconnect()
-        SX_instance = None
 
     sx_xml_dict = xml_config_to_dict(xml_path)
-    # if connected and connected_link_1:
-    if connected_link_1:
+    if connected and connected_link_1:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
             sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
@@ -602,8 +596,7 @@ def sx_page_view(request):
             "time_update"] + " because not connected with the device!"
         messages.warning(request, info)
 
-    # if connected and connected_link_2:
-    if connected_link_2:
+    if connected and connected_link_2:
         # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_curr_2"], sx_xml_dict["cs_volt_2"], sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], \
             sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], sx_xml_dict["cs_isolation_2"], \
