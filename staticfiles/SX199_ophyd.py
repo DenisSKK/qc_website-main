@@ -46,6 +46,7 @@ class SX199Device():
             self.sx_instr = open_by_name(name=self.name)
             self.sx_instr.name = self.name
 
+            # Ophyd function to create ophyd object. We will be using mainly that
             SX, component_dict = generate_ophyd_obj(name=self.name, scpi_obj=self.sx_instr)
             self.sx_ophyd = SX(name=self.name)
 
