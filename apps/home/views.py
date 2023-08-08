@@ -121,7 +121,7 @@ SHIELD_CHOICES = {
 
 FREQ_SOURCE_CHOICES = {
     0: 'External',
-    1: 'Ground',
+    1: 'Internal',
 }
 
 
