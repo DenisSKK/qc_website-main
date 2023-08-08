@@ -39,16 +39,16 @@ class SX199Device():
     # I have bad experience with open_by_name() function, when it doesn't connect until 3rd try when in Jupyter
     # Notebook. Therefore, the for loop with 3 attempts to connect.
     def connect(self):
-        if self.sx_instr is not None and self.sx_ophyd is not None and self.is_connected():
-            return True
+        # if self.sx_instr is not None and self.sx_ophyd is not None:
+        #     return True
         for _ in range(3):
             # Open by name function is from Instrbuilder library.
             self.sx_instr = open_by_name(name=self.name)
             self.sx_instr.name = self.name
 
             # Ophyd function to create ophyd object. We will be using mainly that
-            SX, component_dict = generate_ophyd_obj(name=self.name, scpi_obj=self.sx_instr)
-            self.sx_ophyd = SX(name=self.name)
+            Sx, component_dict = generate_ophyd_obj(name=self.name, scpi_obj=self.sx_instr)
+            self.sx_ophyd = Sx(name=self.name)
 
             # Making sure connection was established.
             if self.is_connected():
