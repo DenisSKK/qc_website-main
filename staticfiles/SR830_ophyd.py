@@ -87,6 +87,12 @@ class SR830Device():
                 elif attribute == "shield":
                     print(f"setting shield to {actual_value}")
                     self.write_shield(actual_value)
+                elif attribute == "freq_source":
+                    print(f"setting freq source to {actual_value}")
+                    self.write_shield(actual_value)
+                elif attribute == "frequency":
+                    print(f"setting frequency to {actual_value}")
+                    self.write_shield(actual_value)
         print("SR830 Updated")
 
     # This will get every parameter from CS580 that is connected to the link number {link}, and return them.

@@ -810,6 +810,8 @@ def sr_page_view(request):
                 sx_xml_dict["input"] = form.cleaned_data['input']
                 sx_xml_dict["couple"] = form.cleaned_data['couple']
                 sx_xml_dict["shield"] = form.cleaned_data['shield']
+                sx_xml_dict["freq_source"] = form.cleaned_data['freq_source']
+                sx_xml_dict["frequency"] = form.cleaned_data['frequency']
                 dict_to_xml_file(sx_xml_dict, xml_path)
                 # if connected and connected_link_1:
                 #     print("is connected. attempt to update_xml for 1")
@@ -832,6 +834,8 @@ def sr_page_view(request):
             'input': sx_xml_dict.get("input", ""),
             'couple': sx_xml_dict.get("couple", ""),
             'shield': sx_xml_dict.get("shield", ""),
+            'freq_source': sx_xml_dict.get("freq_source", ""),
+            'frequency': sx_xml_dict.get("frequency", ""),
         })
 
     # Assign the variables with the initial values
