@@ -411,10 +411,12 @@ class ITCHeaterPower(ITCSignalBase):
         logger.info("Heater power is set to " + str(val))
         self.ITC.heater_power_setter(val)
 
+
 class ITCTemperature(ITCSignalRO):
     # @threadlocked
     def _get(self):
         return self.ITC.temperature()
+
 
 class ITCFlowPercentage(ITCSignalBase):
     # @threadlocked
@@ -489,6 +491,7 @@ class MercuryITCDevice(Device):
 
     def __init__(self, prefix, name, host, port=None, kind=None, configuration_attrs=None, parent=None,
                  config_host=None, **kwargs):
+        self._connected = False
         if config_host == None:
             self.itccontroller = ITCController(host=host, port=port)
         else:
@@ -502,8 +505,15 @@ class MercuryITCDevice(Device):
             parent=parent,
             **kwargs,
         )
+        # Get a list of all methods and attributes in the class
+        all_members = dir(MercuryITCDevice)
+        # Filter only the methods you consider useful
+        self.device_read_functions = [member for member in all_members if member.startswith('read_')]
+        self.device_write_functions = [member for member in all_members if member.startswith('write_')]
         self.name = name
         self.tolerance = kwargs.pop("tolerance", 0.5)
+        self.is_connected()
+
     def disconnect(self):
         """
         The `disconnect` function turns off the controller by calling the `off` method on the
@@ -514,6 +524,10 @@ class MercuryITCDevice(Device):
 
     def try_connect(self):
         return self.itccontroller.connect()
+
+    def is_connected(self):
+        self._connected = self.itccontroller.connected
+        return self._connected
 
     def update_all_xml(self, xml):
         """
@@ -552,7 +566,8 @@ class MercuryITCDevice(Device):
             print("ITC Updated")
         except:
             print("XML not Found")
-    def update_heater_power(self,val):
+
+    def update_heater_power(self, val):
         """
         The function updates the power of a heater in an ITC controller.
         @param val - The parameter "val" is the value that you want to set for the heater power.
@@ -560,18 +575,38 @@ class MercuryITCDevice(Device):
         self.itccontroller.heater_power_setter(val)
 
     def update_flow_percentage(self, val):
+        """
+        The function updates gas flow setpoint in an ITC controller.
+        @param val - The parameter "val" is the value that you want to set for the gas flow setpoint.
+        """
         self.itccontroller.flow_percentage_setter(val)
 
     def update_temperature_set_point(self, val):
+        """
+        The function updates temperature setpoint in an ITC controller.
+        @param val - The parameter "val" is the value that you want to set for the temperature setpoint.
+        """
         self.itccontroller.temperature_set_point_setter(val)
 
     def update_voltage(self, val):
+        """
+        The function updates voltage in an ITC controller.
+        @param val - The parameter "val" is the value that you want to set for the voltage.
+        """
         self.itccontroller.voltage_setter(val)
 
     def update_automatic_heating(self, val):
+        """
+        The function updates automatic heating in an ITC controller.
+        @param val - The parameter "val" is the value that you want to set for the automatic heating (on/off).
+        """
         self.itccontroller.automatic_heating_setter(val)
 
     def update_automatic_pid(self, val):
+        """
+        The function updates automatic pid in an ITC controller.
+        @param val - The parameter "val" is the value that you want to set for the automatic pid (on/off).
+        """
         self.itccontroller.automatic_pid_setter(val)
 
     def report_heater_power(self):
@@ -589,21 +624,45 @@ class MercuryITCDevice(Device):
         return self.temperature.get()
 
     def report_flow_percentage(self):
+        """
+        The function returns the value of the gas flow setpoint attribute.
+        @returns The value of `self.flow_percentage.get()` is being returned.
+        """
         return self.flow_percentage.get()
 
     def report_temperature_set_point(self):
+        """
+        The function returns the value of the temperature setpoint attribute.
+        @returns The value of `self.temperature_set_point.get()` is being returned.
+        """
         return self.temperature_set_point.get()
 
     def report_voltage(self):
+        """
+        The function returns the value of the voltage attribute.
+        @returns The value of `self.voltage.get()` is being returned.
+        """
         return self.voltage.get()
 
     def report_automatic_heating(self):
+        """
+        The function returns the value of the automatic heating attribute.
+        @returns The value of `self.automatic_heating.get()` is being returned.
+        """
         return self.automatic_heating.get()
 
     def report_automatic_pid(self):
+        """
+        The function returns the value of the automatic pid attribute.
+        @returns The value of `self.automatic_pid.get()` is being returned.
+        """
         return self.automatic_pid.get()
 
     def report_valve_open_percentage(self):
+        """
+        The function returns the value of the valve open percentage attribute.
+        @returns The value of `self.valve_open_percentage.get()` is being returned.
+        """
         return self.valve_open_percentage.get()
 
     def stage(self) -> List[object]:

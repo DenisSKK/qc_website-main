@@ -19,26 +19,39 @@ GAIN_CHOICES = {
 }
 
 
-# SX199Device class with functions to connect control and to get parameters of one, or two CS580 current sources.
-# We connect to the SX199 through the network, then we can control current sources with this class.
-# The commands in csv file are not only SX199 commands. There are also CS580 commands. This could be approached with
-# CS580 class as well, but this approach is also efficient.
-# Sleep commands might be confusing. I have tested this with CS580 and if I link to desired port number without delay
-# after that, the next command is ignored and does not return anything. I don't know what's the cause.
 class SX199Device():
+    """
+    SX199Device class with functions to connect control and to get parameters of one, or two CS580 current sources.
+    We connect to the SX199 through the network, then we can control current sources with this class.
+    The commands in csv file are not only SX199 commands. There are also CS580 commands. This could be approached with
+    CS580 class as well, but this approach is also efficient.
+    Sleep commands might be confusing. I have tested this with CS580 and if I link to desired port number without delay
+    after that, the next command is ignored and does not return anything. I don't know what's the cause.
+    """
+
     def __init__(self, name='sx199', **kwargs):
         self.name = name
         if name == None:
             self.name = 'sx199'
         self.sx_instr = None
         self.sx_ophyd = None
+        # Get a list of all methods and attributes in the class
+        all_members = dir(SX199Device)
+        # Filter only the methods you consider useful
+        self.device_read_functions = [member for member in all_members if member.startswith('report_')]
+        self.device_write_functions = [member for member in all_members if member.startswith('update_')]
+        self.device_write_functions = [self.device_write_functions, 'escape']
         # Initialize variables then connect
+        self._connected = False
         self.connect()
 
-    # Connect function for checking if connection is not already established, and connecting if not.
-    # I have bad experience with open_by_name() function, when it doesn't connect until 3rd try when in Jupyter
-    # Notebook. Therefore, the for loop with 3 attempts to connect.
     def connect(self):
+        """
+        Connect function for checking if connection is not already established, and connecting if not.
+        I have bad experience with open_by_name() function, when it doesn't connect until 3rd try when in Jupyter
+        Notebook. Therefore, the for loop with 3 attempts to connect.
+        :return: True if connection was successful and *IDN? works. False if not
+        """
         if self.sx_instr is not None and self.sx_ophyd is not None and self.is_connected():
             return True
         for _ in range(3):
@@ -52,21 +65,33 @@ class SX199Device():
 
             # Making sure connection was established.
             if self.is_connected():
-                print(f"{self.report_id()} connected")
                 return True
         return False
 
-    # Closing PyVisa connection and setting both objects to None
     def disconnect(self):
-        self.sx_instr.comm_handle.close()
+        """
+        Closing PyVisa connection
+        """
+        try:
+            self.sx_instr.comm_handle.close()
+        except:
+            print('Disconnecting error: Object does not have Socket opened.')
 
-    # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
     def is_connected(self):
-        id_string = self.sx_ophyd.id.get()
-        return id_string.startswith("Stanford_Research_Systems,SX199")
+        """
+        Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
+        Value True or False will also be saved into _connected
+        :return: True if *IDN? works. False if not.
+        """
+        self._connected = self.sx_ophyd.id.get().startswith("Stanford_Research_Systems,SX199")
+        return self._connected
 
-    # Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
     def is_cs_connected(self, link):
+        """
+        Checking if device is connected is made by comparing returned string from get ID (*IDN? command)
+        :param link: specifies which port should SX199 connect to
+        :return: True, if *IDN? returns name SRS,CS580. False, if something else.
+        """
         # escape() is used to make sure that if there is a previous-linked port or error, it will be reset.
         self.escape()
         self.update_link(link)
@@ -74,6 +99,7 @@ class SX199Device():
         try:
             id_string = self.sx_ophyd.id.get()
         except:
+            self.escape()
             return False
         sleep(0.000001)
         # escape() after dealing with desired CS is necessary to un-link already linked port.
@@ -81,11 +107,15 @@ class SX199Device():
         # print(f'check: {id_string}')
         return id_string.startswith("Stanford_Research_Systems,CS580")
 
-    # Updating parameters could be expensive operation if there is 8 of them. That's why I compare 2 xml files with
-    # last set parameters, and parameters set now. This will compare two xml files and set only the values, that are
-    # different from the last updating.
-    # Only for first CS580
     def update_link_1_xml(self, xml_update, xml_old_update):
+        """
+        Updating parameters could be expensive operation if there is 8 of them. That's why I compare 2 xml files with
+        last set parameters, and parameters set now. This will compare two xml files and set only the values, that are
+        different from the last updating.
+        Only for 'FIRST' CS580
+        :param xml_update: XML file with new values to set
+        :param xml_old_update: XML file with values that were set last time
+        """
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.escape()
@@ -122,8 +152,15 @@ class SX199Device():
         self.escape()
         print("CS580 1 Updated")
 
-    # Same as update_link_1_xml() but for second CS580
     def update_link_2_xml(self, xml_update, xml_old_update):
+        """
+        Updating parameters could be expensive operation if there is 8 of them. That's why I compare 2 xml files with
+        last set parameters, and parameters set now. This will compare two xml files and set only the values, that are
+        different from the last updating.
+        Only for 'SECOND' CS580
+        :param xml_update: XML file with new values to set
+        :param xml_old_update: XML file with values that were set last time
+        """
         actual_config = xml_config_to_dict(xml_update)
         last_config = xml_config_to_dict(xml_old_update)
         self.escape()
@@ -160,8 +197,12 @@ class SX199Device():
         self.escape()
         print("CS580 2 Updated")
 
-    # This will get every parameter from CS580 that is connected to the link number {link}, and return them.
     def all_report_link(self, link):
+        """
+        This will get every parameter from CS580 that is connected to the link number {link}, and return them.
+        :param link: specifies which port should SX199 connect to
+        :return: values of: curr, volt, gain, input_val, speed, shield, isolation, output
+        """
         self.escape()
         self.update_link(link)
         print(f'SX report, linked {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
@@ -180,9 +221,14 @@ class SX199Device():
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output
 
-    # Unused but may be useful function.
-    # It sets link {link} port, calls function from parameter {func}, unlinks, and returns the value of {func} back.
     def get_value_for(self, link, func):
+        """
+        Unused but may be useful function.
+        It sets link {link} port, calls function from parameter {func}, unlinks, and returns the value of {func} back.
+        :param link: specifies which port should SX199 connect to
+        :param func: what function to call when SX199 is linked
+        :return: returns value of func()
+        """
         self.escape()
         self.sx_ophyd.link.set(link)
         sleep(0.1)
@@ -190,28 +236,37 @@ class SX199Device():
         self.escape()
         return func_return_val
 
-    # Unused but may be useful function.
-    # It sets link on {link} port, calls function from parameter {func}, unlinks.
     def set_value_for(self, link, func, val):
+        """
+        Unused but may be useful function.
+        It sets link on {link} port, calls function from parameter {func}, unlinks.
+        :param link: specifies which port should SX199 connect to
+        :param func: what function to call when SX199 is linked
+        :param val: parameter for 'func'
+        """
         self.escape()
         self.sx_ophyd.link.set(link)
         sleep(0.1)
         func(val)
         self.escape()
 
-    # Function will send termination character to SX199 that will unlink port.
-    # Also clear status from errors if some occur (error may occur when there is no link, and you send termination
-    # character to device anyway).
     def escape(self):
+        """
+        Function will send termination character to SX199 that will unlink port.
+        Also clear status from errors if some occur (error may occur when there is no link, and you send termination
+        character to device anyway).
+        """
         self.sx_ophyd.escape.set('')
         self.sx_ophyd.clear_status.set('')
 
     def update_link(self, val):
         self.sx_ophyd.link.set(val)
 
-    # This function won't probably work because every command is forwarded to linked port. Even the LINK? command like
-    # this one.
     def report_link(self):
+        """
+        This function won't probably work because every command is forwarded to linked port. Even the LINK? command like
+        this one.
+        """
         link = self.sx_ophyd.link.get()
         return link
 
