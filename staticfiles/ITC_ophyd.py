@@ -132,6 +132,7 @@ class ITCController(OphydObject):  # On off laser similar to controller
             labels=None,
             kind=None,
     ):
+        self._connected = False
         if not hasattr(self, "_initialized"):
             super().__init__(
                 name=name, attr_name=attr_name, parent=parent, labels=labels, kind=kind
