@@ -104,7 +104,7 @@ class SR830Device:
             self.name = 'sr830'
         self.sr_instr = None
         self.sr_ophyd = None
-        # Get a list of all methods and attributes in the class
+        # Get a list of all methods and attributes in the class TODO delete this???
         all_members = dir(SR830Device)
         # Filter only the methods you consider useful
         self.device_read_functions = [member for member in all_members if member.startswith('read_')]

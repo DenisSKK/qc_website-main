@@ -221,6 +221,26 @@ class SX199Device():
         # print(f"CS link {link} report")
         return curr, volt, gain, input_val, speed, shield, isolation, output
 
+    def read_device_data(self):
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1, sx_output_1 = \
+            self.all_report_link(1)
+        sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2, sx_output_2 = \
+            self.all_report_link(2)
+        data = [timestamp, ]
+        header = ['timestamp', ]
+        if self.is_cs_connected(1):
+            data = data + [sx_current_1, sx_voltage_1, sx_gain_1, sx_input_1, sx_speed_1, sx_shield_1, sx_isolation_1,
+                           sx_output_1]
+            header = header + ['current_cs_1', 'voltage_cs_1', 'gain_cs_1', 'input_cs_1', 'speed_cs_1', 'shield_cs_1',
+                               'isolation_cs_1', 'output_cs_1']
+        if self.is_cs_connected(2):
+            data = data + [sx_current_2, sx_voltage_2, sx_gain_2, sx_input_2, sx_speed_2, sx_shield_2, sx_isolation_2,
+                           sx_output_2]
+            header = header + ['current_cs_2', 'voltage_cs_2', 'gain_cs_2', 'input_cs_2', 'speed_cs_2', 'shield_cs_2',
+                               'isolation_cs_2', 'output_cs_2']
+        return data, header
+
     def get_value_for(self, link, func):
         """
         Unused but may be useful function.

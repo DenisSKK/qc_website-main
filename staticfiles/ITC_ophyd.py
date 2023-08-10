@@ -8,6 +8,7 @@ import logging
 # config_ophyd_logging(file='/tmp/ophyd.log', level='DEBUG')
 from prettytable import PrettyTable
 from .log_ophyd import log_ophyd
+from datetime import datetime
 
 import numpy as np
 # from bec_utils import BECMessage, MessageEndpoints, bec_logger
@@ -33,6 +34,9 @@ class ITCCommunicationError(Exception):
 
 class ITCError(Exception):
     pass
+
+def two_decimal(number):
+    return round(number, 2)
 
 
 # def retry_once(fcn):
@@ -566,6 +570,22 @@ class MercuryITCDevice(Device):
             print("ITC Updated")
         except:
             print("XML not Found")
+
+    def read_device_data(self):
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        itc_heater_power = self.report_heater_power()
+        itc_temperature = two_decimal(self.report_temperature())
+        itc_flow_percentage = self.report_flow_percentage()
+        itc_temperature_set_point = self.report_temperature_set_point()
+        itc_voltage = self.report_voltage()
+        itc_automatic_heater = self.report_automatic_heating()
+        itc_automatic_pid = self.report_automatic_pid()
+        itc_valve_open_percentage = self.report_valve_open_percentage()
+        data = [timestamp, itc_heater_power, itc_temperature, itc_flow_percentage, itc_temperature_set_point,
+                itc_voltage, itc_automatic_heater, itc_automatic_pid, itc_valve_open_percentage]
+        header = ['timestamp', 'heater power (W)', 'temperature (K)', 'flow percentage (%)', 'set temperature (K)',
+                  'voltage (V)', 'auto heater', 'auto PID', 'valve open percentage (%)']
+        return data, header
 
     def update_heater_power(self, val):
         """
