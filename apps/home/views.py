@@ -643,23 +643,36 @@ def rfsoc_page_view(request):
 
 @login_required(login_url="/login/")
 def sx_page_view(request):
-    # Load the data from the cryostat XML file
+    """
+    The `sx_page_view` function loads data from an XML file, updates the XML file if connected to a
+    device, and handles form submissions to update the XML file with new values.
+
+    @param request The `request` parameter is an object that represents the HTTP request made by the
+    client. It contains information such as the HTTP method (GET, POST, etc.), headers, user session,
+    and any data sent in the request. It is typically passed to view functions in Django to handle the
+    request and
+
+    @return a rendered HTML template called 'sx199.html' with the context variables.
+    """
+    # create variables
     global SX_instance
     context = {}
     connected = False
     connected_link_1 = False
     connected_link_2 = False
+    # paths to xml files
     xml_path = os.path.join("staticfiles", "sx199.xml")
     old_xml_path = os.path.join("staticfiles", "sx199-old.xml")
+    # creating sx instance with initial connection
     if SX_instance is None:
         print("Constructing sx")
         SX_instance = construct_sx()
+    # making sure connection is alive
     else:
         SX_instance.disconnect()
         SX_instance = None
         SX_instance = construct_sx()
 
-    # SX_instance.connect()
     connected = SX_instance.is_connected()
     if connected:
         connected_link_1 = SX_instance.is_cs_connected(1)
@@ -671,9 +684,8 @@ def sx_page_view(request):
         SX_instance = None
 
     sx_xml_dict = xml_config_to_dict(xml_path)
-    # if connected and connected_link_1:
+    # reading values of first CS580 and saving them to 'context' (variable that is forwarded to website)
     if connected_link_1:
-        # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_curr_1"], sx_xml_dict["cs_volt_1"], sx_xml_dict["cs_gain_1"], sx_xml_dict["cs_input_1"], \
             sx_xml_dict["cs_speed_1"], sx_xml_dict["cs_shield_1"], sx_xml_dict["cs_isolation_1"], \
             sx_xml_dict["cs_output_1"] = SX_instance.all_report_link(1)
@@ -693,9 +705,8 @@ def sx_page_view(request):
             "time_update"] + " because not connected with the device!"
         messages.warning(request, info)
 
-    # if connected and connected_link_2:
+    # reading values of second CS580 and saving them to 'context' (variable that is forwarded to website)
     if connected_link_2:
-        # SX_instance.update_link_2_xml(xml_path, old_xml_path)
         sx_xml_dict["cs_curr_2"], sx_xml_dict["cs_volt_2"], sx_xml_dict["cs_gain_2"], sx_xml_dict["cs_input_2"], \
             sx_xml_dict["cs_speed_2"], sx_xml_dict["cs_shield_2"], sx_xml_dict["cs_isolation_2"], \
             sx_xml_dict["cs_output_2"] = SX_instance.all_report_link(2)
@@ -717,6 +728,7 @@ def sx_page_view(request):
     if isinstance(sx_xml_dict, str):
         sx_xml_dict = {}
 
+    # handling POST request of form from the website
     if request.method == 'POST':
         # Save old XML before updating
         shutil.copy(xml_path, old_xml_path)
@@ -742,6 +754,7 @@ def sx_page_view(request):
             '7': '10mA',
             '8': '50mA',
         }
+        # handling updating first CS580
         if "update-link-1" in request.POST:
             form = SX199Form(request.POST)
             if form.is_valid() and connected and connected_link_1:
@@ -756,13 +769,8 @@ def sx_page_view(request):
                     sx_xml_dict["cs_curr_1"] = form.cleaned_data['curr1']
                     sx_xml_dict["cs_volt_1"] = form.cleaned_data['volt1']
                     dict_to_xml_file(sx_xml_dict, xml_path)
-                    # if connected and connected_link_1:
-                    #     print("is connected. attempt to update_xml for 1")
                     SX_instance.update_link_1_xml(xml_path, old_xml_path)
                     messages.success(request, 'Changes saved successfully in current source 1!')
-                    # else:
-                    # Add success message to the Django messages framework
-                    # messages.warning(request, 'Device not connected, changes saved only to XML!')
                 else:
                     messages.error(request,
                                    f"Invalid current value {form.cleaned_data['curr1']} for Gain "
@@ -770,6 +778,7 @@ def sx_page_view(request):
                                    f"{min_current} to {max_current}")
             else:
                 messages.warning(request, 'Invalid current source 1 values! Cannot be updated!')
+        # handling updating second CS580
         elif "update-link-2" in request.POST:
             form = SX199Form(request.POST)
             if form.is_valid() and connected and connected_link_2:
@@ -784,26 +793,19 @@ def sx_page_view(request):
                     sx_xml_dict["cs_curr_2"] = form.cleaned_data['curr2']
                     sx_xml_dict["cs_volt_2"] = form.cleaned_data['volt2']
                     dict_to_xml_file(sx_xml_dict, xml_path)
-                    # if connected and connected_link_2:
-                    #     print("is connected. attempt to update_xml for 2")
                     SX_instance.update_link_2_xml(xml_path, old_xml_path)
                     messages.success(request, 'Changes saved successfully in current source 2!')
-                    # else:
-                    # Add success message to the Django messages framework
-                    # messages.warning(request, 'Device not connected, changes saved only to XML!')
                 else:
                     messages.error(request,
                                    f"Invalid current value {form.cleaned_data['curr2']} for Gain "
                                    f"{GAIN_CHOICES.get(form.cleaned_data['gain2'])}. Valid range: "
                                    f"{min_current} to {max_current}")
-
-                # Redirect to the cryostat page to reload the page with the updated values
             else:
                 messages.warning(request, 'Invalid current source 2 values! Cannot be updated!')
+        # Redirect to the sx page to reload the page with the updated values
         return redirect('sx_page')
-
     else:
-        # Initialize the form with the current cryostat information
+        # Initialize the form with the sx information
         form = SX199Form(initial={
             'gain1': sx_xml_dict.get("cs_gain_1", ""),
             'gain2': sx_xml_dict.get("cs_gain_2", ""),
@@ -833,7 +835,17 @@ def sx_page_view(request):
 
 @login_required(login_url="/login/")
 def sr_page_view(request):
-    # Load the data from the cryostat XML file
+    """
+    The `sr_page_view` function loads data from an XML file, updates the XML file if connected to a
+    device, and handles form submissions to update the XML file with new values.
+
+    @param request The `request` parameter is an object that represents the HTTP request made by the
+    client. It contains information such as the HTTP method (GET, POST, etc.), headers, user session,
+    and any data sent in the request. It is typically passed to view functions in Django to handle the
+    request and
+
+    @return a rendered HTML template called 'sr830.html' with the context variables.
+    """
     global SR_instance
     context = {}
     connected = False
@@ -847,7 +859,6 @@ def sr_page_view(request):
         SR_instance = None
         SR_instance = construct_sr()
 
-    # SR_instance.connect()
     connected = SR_instance.is_connected()
 
     sr_xml_dict = xml_config_to_dict(xml_path)
@@ -900,13 +911,8 @@ def sr_page_view(request):
                 sr_xml_dict["freq_source"] = form.cleaned_data['freq_source']
                 sr_xml_dict["frequency"] = form.cleaned_data['frequency']
                 dict_to_xml_file(sr_xml_dict, xml_path)
-                # if connected and connected_link_1:
-                #     print("is connected. attempt to update_xml for 1")
                 SR_instance.update_parameters(xml_path, old_xml_path)
                 messages.success(request, 'Changes saved successfully in lock-in amplifier SR830!')
-                # else:
-                # Add success message to the Django messages framework
-                # messages.warning(request, 'Device not connected, changes saved only to XML!')
             else:
                 messages.warning(request, 'Invalid lock-in amplifier SR830 values! Cannot be updated!')
         return redirect('sr_page')

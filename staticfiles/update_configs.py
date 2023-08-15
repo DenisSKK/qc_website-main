@@ -12,6 +12,7 @@ with open(config_file_src, "r") as config_yaml:
     config_data_src = yaml_src.load(config_yaml)
 
 
+# updating all needed files after starting server
 def update_configs():
     update_sx_config()
     update_itc_config()
@@ -23,6 +24,9 @@ def update_configs():
 
 
 def update_sx_config():
+    """
+    updates .instrbuilder/config.yaml file with user config.yaml file information about sx199
+    """
     # Extract sx199 host and port
     sx199_host = config_data_src["instruments"]["sx199"]["host"]
     sx199_port = config_data_src["instruments"]["sx199"]["port"]
@@ -43,6 +47,9 @@ def update_sx_config():
 
 
 def update_sr830_config():
+    """
+    updates .instrbuilder/config.yaml file with user config.yaml file information about sr830
+    """
     # Extract sr830 host and port
     sr830_address = config_data_src["instruments"]["sr830"]["address"]
     sr830_port = config_data_src["instruments"]["sr830"]["port"]
@@ -63,6 +70,9 @@ def update_sr830_config():
 
 
 def update_itc_config():
+    """
+    updates mercury.xml file with user config.yaml file information
+    """
     # Extract itc host and port
     itc_host = config_data_src["instruments"]["itc"]["host"]
     itc_port = config_data_src["instruments"]["itc"]["port"]
@@ -78,6 +88,9 @@ def update_itc_config():
 
 
 def update_rfsoc_config():
+    """
+    updates xilinx_host.xml file with user config.yaml file information
+    """
     # Read data from staticfiles/config.yaml
     yaml_src = ruamel.yaml.YAML()
     with open(config_file_src, "r") as f:
@@ -102,6 +115,9 @@ def update_rfsoc_config():
 
 
 def update_toptica_config():
+    """
+    updates toptica.xml file with user config.yaml file information
+    """
     # Extract itc host and port
     toptica_host = config_data_src["instruments"]["toptica"]["host"]
     toptica_port = config_data_src["instruments"]["toptica"]["port"]
@@ -117,6 +133,9 @@ def update_toptica_config():
 
 
 def update_caylar_config():
+    """
+    updates caylar.xml file with user config.yaml file information
+    """
     # Extract itc host and port
     caylar_host = config_data_src["instruments"]["caylar"]["host"]
     caylar_port = config_data_src["instruments"]["caylar"]["port"]
@@ -132,6 +151,9 @@ def update_caylar_config():
 
 
 def update_instrbuilder_config_path():
+    """
+    updates .instrbuilder/config.yaml file with correct path to the instruments folder
+    """
     # Create path for .instrbuilder/config.yaml and yaml object
     yaml_dest = ruamel.yaml.YAML()
 
@@ -148,6 +170,9 @@ def update_instrbuilder_config_path():
 
 
 def update_yaml_from_xml_mercury():
+    """
+    updates config.yaml file with user mercury.xml file information
+    """
     # Read data from staticfiles/mercuryITC.xml
     mercuryITC_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mercuryITC.xml")
     mercuryITC_config_dict = xml_config_to_dict(mercuryITC_config_path)
@@ -170,6 +195,9 @@ def update_yaml_from_xml_mercury():
 
 
 def update_yaml_from_xml_rfsoc():
+    """
+    updates config.yaml file with user xilinx_host.xml file information
+    """
     # Read data from staticfiles/xilinx_host.xml
     rfsoc_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "xilinx_host.xml")
     rfsoc_config_dict = xml_config_to_dict(rfsoc_config_path)
@@ -194,6 +222,9 @@ def update_yaml_from_xml_rfsoc():
 
 
 def update_yaml_from_xml_toptica():
+    """
+    updates config.yaml file with user toptica.xml file information
+    """
     # Read data from staticfiles/toptica.xml
     toptica_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "toptica.xml")
     toptica_config_dict = xml_config_to_dict(toptica_config_path)
@@ -215,6 +246,9 @@ def update_yaml_from_xml_toptica():
 
 
 def update_yaml_from_xml_caylar():
+    """
+    updates config.yaml file with user caylar.xml file information
+    """
     # Read data from staticfiles/caylar.xml
     caylar_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "caylar.xml")
     caylar_config_dict = xml_config_to_dict(caylar_config_path)
